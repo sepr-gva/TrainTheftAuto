@@ -1,6 +1,10 @@
 package com.TeamHEC.LocomotionCommotion.MapActors;
 
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
+import com.TeamHEC.LocomotionCommotion.Map.Connection;
+import com.TeamHEC.LocomotionCommotion.Map.Junction;
+import com.TeamHEC.LocomotionCommotion.Map.MapObj;
+import com.TeamHEC.LocomotionCommotion.Map.Station;
 import com.TeamHEC.LocomotionCommotion.Map.WorldMap;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.Train.TrainInfoUI;
@@ -8,6 +12,7 @@ import com.TeamHEC.LocomotionCommotion.UI_Elements.GameScreenUI;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Sprite;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.SpriteButton;
+import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -32,11 +37,18 @@ public class Game_Map_Manager {
 	private final static Array<Actor> infoactors = new Array<Actor>();
 	private final static Array<Actor> trainInfoActors = new Array<Actor>();
 
-	public static Sprite map;
-	public static Sprite mapInfo;
+	public static Sprite mapInfo, mapLines, cityNames;
+	
+	public static Array<ConnectionSprite> connectionSprites = new Array<ConnectionSprite>();
 	
 	public static Sprite stationInfo;
 	public static Game_Map_StationBtn stationSelect;
+	
+	public static boolean firstAddCity = false, secondAddCity = false, firstRemoveCity = false,
+			secondRemoveCity = false;
+	
+	public static MapObj currentCity = null;
+	
 
     // Checks if a train is moving or not.
     public static boolean isMoving = false;
@@ -64,6 +76,42 @@ public class Game_Map_Manager {
 		mapActors=0;
 		stationTracker=0;
 		numberOfStations=0;
+		
+		// Create the broken connection sprites
+		
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAmsterdamBerlin, WorldMap.getInstance().stationsList.get(4), WorldMap.getInstance().stationsList.get(18)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAmsterdamDublin, WorldMap.getInstance().stationsList.get(4), WorldMap.getInstance().stationsList.get(3)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAthensRome, WorldMap.getInstance().stationsList.get(17), WorldMap.getInstance().stationsList.get(13)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAthensVienna, WorldMap.getInstance().stationsList.get(17), WorldMap.getInstance().stationsList.get(12)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBerlinJunct, WorldMap.getInstance().stationsList.get(18), WorldMap.getInstance().junction[0]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBerlinOslo, WorldMap.getInstance().stationsList.get(18), WorldMap.getInstance().stationsList.get(5)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsWarsawBerlin, WorldMap.getInstance().stationsList.get(10), WorldMap.getInstance().stationsList.get(18)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernJunct, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().junction[0]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernMonaco, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().stationsList.get(16)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernPrague, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().stationsList.get(11)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernRome, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().stationsList.get(13)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsDublinLondon, WorldMap.getInstance().stationsList.get(3), WorldMap.getInstance().stationsList.get(0)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsDublinReykjavic, WorldMap.getInstance().stationsList.get(3), WorldMap.getInstance().stationsList.get(2)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsHelsinkiMoscow, WorldMap.getInstance().stationsList.get(7), WorldMap.getInstance().stationsList.get(9)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsHelsinkiStockholm, WorldMap.getInstance().stationsList.get(7), WorldMap.getInstance().stationsList.get(6)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsHelsinkiVilnius, WorldMap.getInstance().stationsList.get(7), WorldMap.getInstance().stationsList.get(8)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsLisbonMadrid, WorldMap.getInstance().stationsList.get(15), WorldMap.getInstance().stationsList.get(14)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsLisbonRome, WorldMap.getInstance().stationsList.get(15), WorldMap.getInstance().stationsList.get(13)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsLondonParis, WorldMap.getInstance().stationsList.get(0), WorldMap.getInstance().stationsList.get(1)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMadridMonaco, WorldMap.getInstance().stationsList.get(14), WorldMap.getInstance().stationsList.get(16)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMadridParis, WorldMap.getInstance().stationsList.get(14), WorldMap.getInstance().stationsList.get(1)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMonacoParis, WorldMap.getInstance().stationsList.get(16), WorldMap.getInstance().stationsList.get(1)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMoscowJunct, WorldMap.getInstance().stationsList.get(9), WorldMap.getInstance().junction[1]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsOsloReykjavic, WorldMap.getInstance().stationsList.get(5), WorldMap.getInstance().stationsList.get(2)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsOsloStockholm, WorldMap.getInstance().stationsList.get(5), WorldMap.getInstance().stationsList.get(6)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsParisJunct, WorldMap.getInstance().stationsList.get(1), WorldMap.getInstance().junction[0]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueLjunct, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().junction[0]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueRjunct, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().junction[1]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueVienna, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().stationsList.get(12)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueWarsaw, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().stationsList.get(10)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsStockholmWarsaw, WorldMap.getInstance().stationsList.get(6), WorldMap.getInstance().stationsList.get(10)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsVilniusJunct, WorldMap.getInstance().stationsList.get(8), WorldMap.getInstance().junction[1]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsWarsawJunct, WorldMap.getInstance().stationsList.get(10), WorldMap.getInstance().junction[1]));
 
 		planBackground = new Sprite(-1,50,Game_TextureManager.getInstance().game_pause_blackoutscreen);
 		planBackground.setVisible(false);
@@ -115,8 +163,16 @@ public class Game_Map_Manager {
 		cancelRouteBtn.setVisible(false);
 		actors.add(cancelRouteBtn);
 
-		map = new Sprite(100, 60, Game_Map_TextureManager.getInstance().map);		
-		actors.add(map);
+		mapLines = new Sprite(100, 60, Game_Map_TextureManager.getInstance().mapLines);		
+		actors.add(mapLines);
+		
+		for (ConnectionSprite sprite : connectionSprites){
+			sprite.setVisible(true);
+			actors.add(sprite);
+		}
+		
+		cityNames = new Sprite(100, 60, Game_Map_TextureManager.getInstance().cityNames);
+		actors.add(cityNames);
 	
 		stationTracker=stage.getActors().size;
 		for(int i = 0; i < WorldMap.getInstance().stationsList.size(); i++)
@@ -348,5 +404,291 @@ public class Game_Map_Manager {
 				}
 			}
 		}
+	}
+	
+	public static void removeConnection(MapObj start, MapObj end){
+		//boolean for checking whether a valid connection is ever found between the map objects
+		boolean validConnection = false;
+		Connection connection1 = null, connection2 = null;
+		//iterate through all the stations in the world to find the one we are given
+		for (Station station : WorldMap.getInstance().stationsList){
+			if (start == station){
+				//iterate over all the stations connections to find the one correlating to the other map object
+				for (Connection connection : station.connections){
+					if (connection.getDestination() == end){
+						//if it is already broken, dont break it, print a warning
+						if (!connection.getTraversable()){
+							System.out.println("Connection between " + start.getName() +
+							" and " + end.getName() + " is already broken.");
+						}
+						else{
+							//set first connection to this connection if it isnt broken
+							connection1 = connection;
+						}
+					}
+				}
+			}
+			else if (end == station){
+				for (Connection connection : station.connections){
+					if (connection.getDestination() == start){
+						//if the opposite connection is found set this to the second connection to be broken
+						connection2 = connection;
+					}
+				}
+			}
+		}
+		//do the exact same with junctions
+		for (Junction junction : WorldMap.getInstance().junction){
+			if (start == junction){
+				for (Connection connection : junction.connections){
+					if (connection.getDestination() == end){
+						if (!connection.getTraversable()){
+							System.out.println("Connection between " + start.getName() +
+							" and " + end.getName() + " is already broken.");
+						}
+						connection1 = connection;
+					}
+				}
+			}
+			else if (end == junction){
+				for (Connection connection : junction.connections){
+					if (connection.getDestination() == start){
+						connection2 = connection;
+					}
+				}
+			}
+		}
+		
+		//boolean to show whether there is a train on the rail
+		boolean trainOnRail = false;
+		//iterate over all player 1's trains if they have any
+		if (GameScreen.game.getPlayer1().getTrains().size() > 0){
+			for (Train train : GameScreen.game.getPlayer1().getTrains()){
+				//if the train is on a route, find the connection it is currently on, and if it connection1
+				//or connection2 then set trainonroute to true and break from the loop
+				if (train.route.getRoute().size() > 0){
+					if (train.route.getRoute().get(train.route.getRouteIndex()) == connection1 ||
+							train.route.getRoute().get(train.route.getRouteIndex()) == connection2){
+						trainOnRail = true;
+						break;
+					}
+				}
+			}
+		}
+		//if player 1 has no trains on the connections do the same check for player 2s trains
+		if (!trainOnRail){
+			if (GameScreen.game.getPlayer1().getTrains().size() > 0){
+				for (Train train : GameScreen.game.getPlayer2().getTrains()){
+					if (train.route.getRoute().size() > 0){
+						if (train.route.getRoute().get(train.route.getRouteIndex()) == connection1 ||
+								train.route.getRoute().get(train.route.getRouteIndex()) == connection2){
+							trainOnRail = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		//if there is a train on the rail then dont break it
+		if (trainOnRail){
+			WarningMessage.fireWarningWindow("DANGER", "Breaking a rail with a train on it is against the \nGeneva Convention.");
+		}
+		else{
+			//otherwise set both connections to untraversable and find the correct connectionSprite to draw
+			connection1.setTraversable(false);
+			connection2.setTraversable(false);
+			validConnection = true;
+			for (ConnectionSprite sprite : connectionSprites){
+				if ((connection1.getStartMapObj() == sprite.getCity1() &&
+						connection1.getDestination() == sprite.getCity2()) ||
+						connection1.getDestination() == sprite.getCity1() &&
+						connection1.getStartMapObj() == sprite.getCity2()){
+					sprite.setVisible(true);
+				}
+			}
+		}
+		
+		//if no valid connection is found print a warning to the console
+		if (!validConnection){
+			System.out.println("There is no connection between " + start.getName() + 
+					" and " + end.getName() + ".");
+		}
+	}
+	
+	/**
+	 * Purely for testing purposes, removes the check for whether a train is on the
+	 * piece of rail as when the test is run, the game is not fully set up and causes 
+	 * a crash
+	 * @param start - start Map Object for the connection to be broken
+	 * @param end - end Map Object for the connection to be broken
+	 * @param testForOnRail - if any boolean is put in here it tells us that the test for
+	 * on rail will not be done
+	 */
+	public static void removeConnection(MapObj start, MapObj end, boolean dontTestForOnRail){
+		boolean validConnection = false;
+		Connection connection1 = null, connection2 = null;
+		for (Station station : WorldMap.getInstance().stationsList){
+			if (start == station){
+				for (Connection connection : station.connections){
+					if (connection.getDestination() == end){
+						if (!connection.getTraversable()){
+							System.out.println("Connection between " + start.getName() +
+							" and " + end.getName() + " is already broken.");
+						}
+						else{
+							connection1 = connection;
+						}
+					}
+				}
+			}
+			else if (end == station){
+				for (Connection connection : station.connections){
+					if (connection.getDestination() == start){
+						connection2 = connection;
+					}
+				}
+			}
+		}
+		for (Junction junction : WorldMap.getInstance().junction){
+			if (start == junction){
+				for (Connection connection : junction.connections){
+					if (connection.getDestination() == end){
+						if (!connection.getTraversable()){
+							System.out.println("Connection between " + start.getName() +
+							" and " + end.getName() + " is already broken.");
+						}
+						connection1 = connection;
+					}
+				}
+			}
+			else if (end == junction){
+				for (Connection connection : junction.connections){
+					if (connection.getDestination() == start){
+						connection2 = connection;
+					}
+				}
+			}
+		}
+		
+		if (connection1 != null && connection2 != null){
+			connection1.setTraversable(false);
+			connection2.setTraversable(false);
+			validConnection = true;
+			for (ConnectionSprite sprite : connectionSprites){
+				if ((connection1.getStartMapObj() == sprite.getCity1() &&
+					connection1.getDestination() == sprite.getCity2()) ||
+					connection1.getDestination() == sprite.getCity1() &&
+					connection1.getStartMapObj() == sprite.getCity2()){
+					sprite.setVisible(true);
+				}
+			}
+		}
+		
+		if (!validConnection){
+			System.out.println("There is no connection between " + start.getName() + 
+					" and " + end.getName() + ".");
+		}
+	}
+	
+	//done the exact same way as break rail, however as soon as a valid connection is found it is set to traversable
+	//because we dont have to worry about whether there is a train on the rail, connectionSprite also found
+	public static void addConnection(MapObj start, MapObj end){
+		boolean validConnection = false;
+		for (Station station : WorldMap.getInstance().stationsList){
+			if (start == station){
+				for (Connection connection : station.connections){
+					if (connection.getDestination() == end){
+						if (connection.getTraversable()){
+							System.out.println("Connection between " + start.getName() +
+							" and " + end.getName() + " is not broken.");
+						}
+						connection.setTraversable(true);
+						validConnection = true;
+						for (ConnectionSprite sprite : connectionSprites){
+							if ((connection.getStartMapObj() == sprite.getCity1() &&
+									connection.getDestination() == sprite.getCity2()) ||
+									(connection.getDestination() == sprite.getCity1() &&
+									connection.getStartMapObj() == sprite.getCity2())){
+								sprite.setVisible(false);
+							}
+						}
+					}
+				}
+			}
+			else if (end == station){
+				for (Connection connection : station.connections){
+					if (connection.getDestination() == start){
+						connection.setTraversable(true);
+					}
+				}
+			}
+		}
+		for (Junction junction : WorldMap.getInstance().junction){
+			if (start == junction){
+				for (Connection connection : junction.connections){
+					if (connection.getDestination() == end){
+						if (connection.getTraversable()){
+							System.out.println("Connection between " + start.getName() +
+							" and " + end.getName() + " is not broken.");
+						}
+						connection.setTraversable(true);
+						validConnection = true;
+						for (ConnectionSprite sprite : connectionSprites){
+							if ((connection.getStartMapObj() == sprite.getCity1() &&
+									connection.getDestination() == sprite.getCity2()) ||
+									(connection.getDestination() == sprite.getCity1() &&
+									connection.getStartMapObj() == sprite.getCity2())){
+								sprite.setVisible(false);
+							}
+						}
+					}
+				}
+			}
+			else if (end == junction){
+				for (Connection connection : junction.connections){
+					if (connection.getDestination() == start){
+						connection.setTraversable(true);
+					}
+				}
+			}
+		}
+		if (!validConnection){
+			System.out.println("There is no connection between " + start.getName() + 
+					" and " + end.getName() + ".");
+		}
+	}
+	
+	public static void trainsUntouchable(){
+		// Allows you to click on stations that are covered by trains:
+				for(Train t : GameScreen.game.getPlayer1().getTrains())
+				{
+					t.getActor().setTouchable(Touchable.disabled);
+				}
+				for(Train t : GameScreen.game.getPlayer2().getTrains())
+				{
+					t.getActor().setTouchable(Touchable.disabled);
+				}
+	}
+	
+	public static void trainsTouchable(){
+		//Makes trains clickable again
+				for(Train t : GameScreen.game.getPlayer1().getTrains())
+				{
+					t.getActor().setTouchable(Touchable.enabled);
+				}
+				for(Train t : GameScreen.game.getPlayer2().getTrains())
+				{
+					t.getActor().setTouchable(Touchable.enabled);
+				}
+	}
+	
+	public static void implementAddConnection(){
+		firstAddCity = true;
+		WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to add.");
+	}
+	
+	public static void implementRemoveConnection(){
+		firstRemoveCity = true;
+		WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to remove.");
 	}
 }

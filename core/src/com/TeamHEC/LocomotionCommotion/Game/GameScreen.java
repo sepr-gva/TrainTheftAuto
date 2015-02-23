@@ -13,6 +13,7 @@ import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_Shop;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_StartingSequence;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -107,6 +108,13 @@ public class GameScreen implements Screen {
 
 		getStage().act(Gdx.graphics.getDeltaTime());
 		getStage().draw();
+		
+		if (Gdx.input.isKeyJustPressed(Keys.A)){
+			Game_Map_Manager.implementAddConnection();
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.R)){
+			Game_Map_Manager.implementRemoveConnection();
+		}
 
 	}
 

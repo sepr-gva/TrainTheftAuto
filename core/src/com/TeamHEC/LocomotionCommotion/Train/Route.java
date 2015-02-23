@@ -120,12 +120,24 @@ public class Route{
 	 */
 	public ArrayList<Connection> getAdjacentConnections()
 	{
+		ArrayList<Connection> availableConnections = new ArrayList<Connection>();
 		if(path.isEmpty())
 		{
-			return currentMapObj.connections;
+			for (Connection connection : currentMapObj.connections){
+				if (connection.getTraversable()){
+					availableConnections.add(connection);
+				}
+			}
 		}
 		else
-			return path.get(path.size()-1).getDestination().connections;
+		{
+			for (Connection connection : path.get(path.size()-1).getDestination().connections){
+				if (connection.getTraversable()){
+					availableConnections.add(connection);
+				}
+			}
+		}
+		return availableConnections;
 	}
 
 	/**
@@ -241,7 +253,7 @@ public class Route{
 		{
 			// Player has insufficient fuel to add connection to route, Warning message:
 			WarningMessage.fireWarningWindow("INSUFFICIENT FUEL!", "You need " + fuelCost
-					+ " more " + train.getFuelType());
+					+ " more " + train.getFuelType() + ".");
 		}
 	}
 
@@ -303,14 +315,16 @@ public class Route{
 	 */
 	public void abortRoute()
 	{	
-		currentMapObj = path.get(routeIndex).getStartMapObj();
-		hideRouteBlips();
-		updateRouteText();
-		
-		while(removeConnection()){}
-		
-		routeIndex = 0;
-		connectionTravelled = 0;
+		if (path.size() > 0){
+			currentMapObj = path.get(routeIndex).getStartMapObj();
+			hideRouteBlips();
+			updateRouteText();
+			
+			while(removeConnection()){}
+			
+			routeIndex = 0;
+			connectionTravelled = 0;
+		}
 	}
 	
 	/**
@@ -327,6 +341,19 @@ public class Route{
 				
 		showRouteBlips();
 		updateRouteText();
+	}
+	
+	public void endRouteEarly(){
+		// Refund player:
+		
+		int fuelCost = train.getFuelLengthCost(path.get(path.size() - 1).getLength());
+		train.getOwner().addFuel(train.getFuelType(), fuelCost);
+		System.out.println(train.getOwner().getName() + " was refunded " + fuelCost + " " +
+		train.getFuelType());
+		
+		currentMapObj = path.get(routeIndex).getStartMapObj();
+		path.clear();
+		routeIndex = 0;
 	}
 	
 	/**
@@ -476,6 +503,12 @@ public class Route{
 			routeIndex++;
 			connectionTravelled = 0;
 			
+			if (routeIndex < path.size()){
+				if (!path.get(routeIndex).getTraversable()){
+					endRouteEarly();
+				}
+			}
+			
 			// Triggers a listener so we can implement station tax and Goal completion validation:
 			notifyStationPassed();
 			
@@ -491,6 +524,8 @@ public class Route{
 			}
 		}
 	}
+	
+	
 
 	/**
 	 * Adds an object to the listener array
