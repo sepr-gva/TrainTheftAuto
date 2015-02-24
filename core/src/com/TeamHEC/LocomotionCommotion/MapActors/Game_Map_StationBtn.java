@@ -117,6 +117,7 @@ public class Game_Map_StationBtn extends SpriteButton {
 								Game_Map_Manager.currentCity.getName() + " and " + selectedStation.getStation().getName() + 
 								"\nhas been removed.");
 						Game_Map_Manager.trainsTouchable();
+						Game_Map_Manager.planBackground.setVisible(false);
 					}
 					else{
 						WarningMessage.fireWarningWindow("NOT THERE", "The connection you want to remove doesn't exist yet, \nchoose a new starting city.");
@@ -167,6 +168,7 @@ public class Game_Map_StationBtn extends SpriteButton {
 								Game_Map_Manager.currentCity.getName() + " and " + selectedStation.getStation().getName() + 
 								"\nhas been added.");
 						Game_Map_Manager.trainsTouchable();
+						Game_Map_Manager.planBackground.setVisible(false);
 					}
 					else{
 						WarningMessage.fireWarningWindow("ALREADY THERE", "The connection you want to add already exists, \nchoose a new starting city.");

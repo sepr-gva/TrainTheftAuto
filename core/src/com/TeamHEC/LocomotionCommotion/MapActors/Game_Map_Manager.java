@@ -684,11 +684,15 @@ public class Game_Map_Manager {
 	
 	public static void implementAddConnection(){
 		firstAddCity = true;
+		trainsUntouchable();
+		planBackground.setVisible(true);
 		WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to add.");
 	}
 	
 	public static void implementRemoveConnection(){
 		firstRemoveCity = true;
+		trainsUntouchable();
+		planBackground.setVisible(true);
 		WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to remove.");
 	}
 }

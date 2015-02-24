@@ -57,6 +57,7 @@ public class Game_Map_Junction extends Game_Map_MapObj{
 							Game_Map_Manager.currentCity.getName() + " and " + this.junction.getName() + 
 							"\nhas been removed.");
 					Game_Map_Manager.trainsTouchable();
+					Game_Map_Manager.planBackground.setVisible(false);
 				}
 				else{
 					WarningMessage.fireWarningWindow("NOT THERE", "The connection you want to remove doesn't exist yet, \nchoose a new starting city.");
@@ -104,9 +105,10 @@ public class Game_Map_Junction extends Game_Map_MapObj{
 				if (!con.getTraversable()){
 					Game_Map_Manager.addConnection(Game_Map_Manager.currentCity, this.junction);
 					WarningMessage.fireWarningWindow("CONNECTION ADDED", "Connection between " + 
-							Game_Map_Manager.currentCity.getName() + " and " + this.junction + 
+							Game_Map_Manager.currentCity.getName() + " and " + this.junction.getName() + 
 							"\nhas been added.");
 					Game_Map_Manager.trainsTouchable();
+					Game_Map_Manager.planBackground.setVisible(false);
 				}
 				else{
 					WarningMessage.fireWarningWindow("ALREADY THERE", "The connection you want to add already exists, \nchoose a new starting city.");
