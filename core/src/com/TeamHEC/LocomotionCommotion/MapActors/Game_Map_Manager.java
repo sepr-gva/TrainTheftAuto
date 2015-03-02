@@ -1,5 +1,6 @@
 package com.TeamHEC.LocomotionCommotion.MapActors;
 
+import com.TeamHEC.LocomotionCommotion.Card.TeleportCard;
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Map.Connection;
 import com.TeamHEC.LocomotionCommotion.Map.Junction;
@@ -45,7 +46,9 @@ public class Game_Map_Manager {
 	public static Game_Map_StationBtn stationSelect;
 	
 	public static boolean firstAddCity = false, secondAddCity = false, firstRemoveCity = false,
-			secondRemoveCity = false;
+			secondRemoveCity = false, teleportCity = false;
+	
+	public static TeleportCard currentTeleportCard = null;
 	
 	public static MapObj currentCity = null;
 	
@@ -79,39 +82,39 @@ public class Game_Map_Manager {
 		
 		// Create the broken connection sprites
 		
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAmsterdamBerlin, WorldMap.getInstance().stationsList.get(4), WorldMap.getInstance().stationsList.get(18)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAmsterdamDublin, WorldMap.getInstance().stationsList.get(4), WorldMap.getInstance().stationsList.get(3)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAthensRome, WorldMap.getInstance().stationsList.get(17), WorldMap.getInstance().stationsList.get(13)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAthensVienna, WorldMap.getInstance().stationsList.get(17), WorldMap.getInstance().stationsList.get(12)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBerlinJunct, WorldMap.getInstance().stationsList.get(18), WorldMap.getInstance().junction[0]));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBerlinOslo, WorldMap.getInstance().stationsList.get(18), WorldMap.getInstance().stationsList.get(5)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsWarsawBerlin, WorldMap.getInstance().stationsList.get(10), WorldMap.getInstance().stationsList.get(18)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernJunct, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().junction[0]));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernMonaco, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().stationsList.get(16)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernPrague, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().stationsList.get(11)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernRome, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().stationsList.get(13)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsDublinLondon, WorldMap.getInstance().stationsList.get(3), WorldMap.getInstance().stationsList.get(0)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsDublinReykjavic, WorldMap.getInstance().stationsList.get(3), WorldMap.getInstance().stationsList.get(2)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsHelsinkiMoscow, WorldMap.getInstance().stationsList.get(7), WorldMap.getInstance().stationsList.get(9)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsHelsinkiStockholm, WorldMap.getInstance().stationsList.get(7), WorldMap.getInstance().stationsList.get(6)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsHelsinkiVilnius, WorldMap.getInstance().stationsList.get(7), WorldMap.getInstance().stationsList.get(8)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsLisbonMadrid, WorldMap.getInstance().stationsList.get(15), WorldMap.getInstance().stationsList.get(14)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsLisbonRome, WorldMap.getInstance().stationsList.get(15), WorldMap.getInstance().stationsList.get(13)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsLondonParis, WorldMap.getInstance().stationsList.get(0), WorldMap.getInstance().stationsList.get(1)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMadridMonaco, WorldMap.getInstance().stationsList.get(14), WorldMap.getInstance().stationsList.get(16)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMadridParis, WorldMap.getInstance().stationsList.get(14), WorldMap.getInstance().stationsList.get(1)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMonacoParis, WorldMap.getInstance().stationsList.get(16), WorldMap.getInstance().stationsList.get(1)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMoscowJunct, WorldMap.getInstance().stationsList.get(9), WorldMap.getInstance().junction[1]));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsOsloReykjavic, WorldMap.getInstance().stationsList.get(5), WorldMap.getInstance().stationsList.get(2)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsOsloStockholm, WorldMap.getInstance().stationsList.get(5), WorldMap.getInstance().stationsList.get(6)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsParisJunct, WorldMap.getInstance().stationsList.get(1), WorldMap.getInstance().junction[0]));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueLjunct, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().junction[0]));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueRjunct, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().junction[1]));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueVienna, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().stationsList.get(12)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueWarsaw, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().stationsList.get(10)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsStockholmWarsaw, WorldMap.getInstance().stationsList.get(6), WorldMap.getInstance().stationsList.get(10)));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsVilniusJunct, WorldMap.getInstance().stationsList.get(8), WorldMap.getInstance().junction[1]));
-		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsWarsawJunct, WorldMap.getInstance().stationsList.get(10), WorldMap.getInstance().junction[1]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAmsterdamBerlin, Game_Map_TextureManager.getInstance().obsAmsterdamBerlinG, WorldMap.getInstance().stationsList.get(4), WorldMap.getInstance().stationsList.get(18)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAmsterdamDublin, Game_Map_TextureManager.getInstance().obsAmsterdamDublinG, WorldMap.getInstance().stationsList.get(4), WorldMap.getInstance().stationsList.get(3)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAthensRome, Game_Map_TextureManager.getInstance().obsAthensRomeG, WorldMap.getInstance().stationsList.get(17), WorldMap.getInstance().stationsList.get(13)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAthensVienna, Game_Map_TextureManager.getInstance().obsAthensViennaG, WorldMap.getInstance().stationsList.get(17), WorldMap.getInstance().stationsList.get(12)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBerlinJunct, Game_Map_TextureManager.getInstance().obsBerlinJunctG, WorldMap.getInstance().stationsList.get(18), WorldMap.getInstance().junction[0]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBerlinOslo, Game_Map_TextureManager.getInstance().obsBerlinOsloG, WorldMap.getInstance().stationsList.get(18), WorldMap.getInstance().stationsList.get(5)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsWarsawBerlin, Game_Map_TextureManager.getInstance().obsWarsawBerlinG, WorldMap.getInstance().stationsList.get(10), WorldMap.getInstance().stationsList.get(18)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernJunct, Game_Map_TextureManager.getInstance().obsBernJunctG, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().junction[0]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernMonaco, Game_Map_TextureManager.getInstance().obsBernMonacoG, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().stationsList.get(16)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernPrague, Game_Map_TextureManager.getInstance().obsBernPragueG, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().stationsList.get(11)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsBernRome, Game_Map_TextureManager.getInstance().obsBernRomeG, WorldMap.getInstance().stationsList.get(19), WorldMap.getInstance().stationsList.get(13)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsDublinLondon, Game_Map_TextureManager.getInstance().obsDublinLondonG, WorldMap.getInstance().stationsList.get(3), WorldMap.getInstance().stationsList.get(0)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsDublinReykjavic, Game_Map_TextureManager.getInstance().obsDublinReykjavicG, WorldMap.getInstance().stationsList.get(3), WorldMap.getInstance().stationsList.get(2)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsHelsinkiMoscow, Game_Map_TextureManager.getInstance().obsHelsinkiMoscowG, WorldMap.getInstance().stationsList.get(7), WorldMap.getInstance().stationsList.get(9)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsHelsinkiStockholm, Game_Map_TextureManager.getInstance().obsHelsinkiStockholmG, WorldMap.getInstance().stationsList.get(7), WorldMap.getInstance().stationsList.get(6)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsHelsinkiVilnius, Game_Map_TextureManager.getInstance().obsHelsinkiVilniusG, WorldMap.getInstance().stationsList.get(7), WorldMap.getInstance().stationsList.get(8)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsLisbonMadrid, Game_Map_TextureManager.getInstance().obsLisbonMadridG, WorldMap.getInstance().stationsList.get(15), WorldMap.getInstance().stationsList.get(14)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsLisbonRome, Game_Map_TextureManager.getInstance().obsLisbonRomeG, WorldMap.getInstance().stationsList.get(15), WorldMap.getInstance().stationsList.get(13)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsLondonParis, Game_Map_TextureManager.getInstance().obsLondonParisG, WorldMap.getInstance().stationsList.get(0), WorldMap.getInstance().stationsList.get(1)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMadridMonaco, Game_Map_TextureManager.getInstance().obsMadridMonacoG, WorldMap.getInstance().stationsList.get(14), WorldMap.getInstance().stationsList.get(16)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMadridParis, Game_Map_TextureManager.getInstance().obsMadridParisG, WorldMap.getInstance().stationsList.get(14), WorldMap.getInstance().stationsList.get(1)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMonacoParis, Game_Map_TextureManager.getInstance().obsMonacoParisG, WorldMap.getInstance().stationsList.get(16), WorldMap.getInstance().stationsList.get(1)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsMoscowJunct, Game_Map_TextureManager.getInstance().obsMoscowJunctG, WorldMap.getInstance().stationsList.get(9), WorldMap.getInstance().junction[1]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsOsloReykjavic, Game_Map_TextureManager.getInstance().obsOsloReykjavicG, WorldMap.getInstance().stationsList.get(5), WorldMap.getInstance().stationsList.get(2)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsOsloStockholm, Game_Map_TextureManager.getInstance().obsOsloStockholmG, WorldMap.getInstance().stationsList.get(5), WorldMap.getInstance().stationsList.get(6)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsParisJunct, Game_Map_TextureManager.getInstance().obsParisJunctG, WorldMap.getInstance().stationsList.get(1), WorldMap.getInstance().junction[0]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueLjunct, Game_Map_TextureManager.getInstance().obsPragueLjunctG, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().junction[0]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueRjunct, Game_Map_TextureManager.getInstance().obsPragueRjunctG, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().junction[1]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueVienna, Game_Map_TextureManager.getInstance().obsPragueViennaG, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().stationsList.get(12)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsPragueWarsaw, Game_Map_TextureManager.getInstance().obsPragueWarsawG, WorldMap.getInstance().stationsList.get(11), WorldMap.getInstance().stationsList.get(10)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsStockholmWarsaw, Game_Map_TextureManager.getInstance().obsStockholmWarsawG, WorldMap.getInstance().stationsList.get(6), WorldMap.getInstance().stationsList.get(10)));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsVilniusJunct, Game_Map_TextureManager.getInstance().obsVilniusJunctG, WorldMap.getInstance().stationsList.get(8), WorldMap.getInstance().junction[1]));
+		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsWarsawJunct, Game_Map_TextureManager.getInstance().obsWarsawJunctG, WorldMap.getInstance().stationsList.get(10), WorldMap.getInstance().junction[1]));
 
 		planBackground = new Sprite(-1,50,Game_TextureManager.getInstance().game_pause_blackoutscreen);
 		planBackground.setVisible(false);
@@ -169,6 +172,8 @@ public class Game_Map_Manager {
 		for (ConnectionSprite sprite : connectionSprites){
 			sprite.setVisible(true);
 			actors.add(sprite);
+			sprite.getGreySprite().setVisible(false);
+			actors.add(sprite.getGreySprite());
 		}
 		
 		cityNames = new Sprite(100, 60, Game_Map_TextureManager.getInstance().cityNames);
@@ -298,16 +303,12 @@ public class Game_Map_Manager {
 	public static void enterRoutingMode()
 	{		
 		trainInfo.train.getRoute().showRouteBlips();
+		
+		for (ConnectionSprite sprite : connectionSprites){
+			sprite.toggleGrey();
+		}
 				
-		// Allows you to click on stations that are covered by trains:
-		for(Train t : GameScreen.game.getPlayer1().getTrains())
-		{
-			t.getActor().setTouchable(Touchable.disabled);
-		}
-		for(Train t : GameScreen.game.getPlayer2().getTrains())
-		{
-			t.getActor().setTouchable(Touchable.disabled);
-		}
+		trainsUntouchable();
 		
 		GameScreenUI.game_menuobject_endturnbutton.setVisible(false);
 		
@@ -329,15 +330,11 @@ public class Game_Map_Manager {
 		trainInfo.unhighlightAdjacent();
 		trainInfo.train.getRoute().hideRouteBlips();
 		
-		//Makes trains clickable again
-		for(Train t : GameScreen.game.getPlayer1().getTrains())
-		{
-			t.getActor().setTouchable(Touchable.enabled);
+		for (ConnectionSprite sprite : connectionSprites){
+			sprite.toggleGrey();
 		}
-		for(Train t : GameScreen.game.getPlayer2().getTrains())
-		{
-			t.getActor().setTouchable(Touchable.enabled);
-		}
+		
+		trainsTouchable();
 		
 		GameScreenUI.game_menuobject_endturnbutton.setVisible(true);
 		
@@ -683,16 +680,43 @@ public class Game_Map_Manager {
 	}
 	
 	public static void implementAddConnection(){
-		firstAddCity = true;
-		trainsUntouchable();
-		planBackground.setVisible(true);
-		WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to add.");
+		boolean addAvailable = false;
+		for (ConnectionSprite sprite : connectionSprites){
+			if (sprite.isVisible()){
+				addAvailable = true;
+				break;
+			}
+		}
+		if (addAvailable){
+			firstAddCity = true;
+			trainsUntouchable();
+			planBackground.setVisible(true);
+			WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to add.");
+		}
+		else{
+			WarningMessage.fireWarningWindow("MAP IS FULL", "There are no more connections available to add.");
+		}
 	}
 	
 	public static void implementRemoveConnection(){
-		firstRemoveCity = true;
-		trainsUntouchable();
-		planBackground.setVisible(true);
-		WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to remove.");
+		boolean removeAvailable = false;
+		for (ConnectionSprite sprite : connectionSprites){
+			if (!sprite.isVisible()){
+				removeAvailable = true;
+				break;
+			}
+		}
+		if (removeAvailable){
+			firstRemoveCity = true;
+			for (ConnectionSprite sprite : connectionSprites){
+				sprite.toggleGrey();
+			}
+			trainsUntouchable();
+			planBackground.setVisible(true);
+			WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to remove.");
+		}
+		else{
+			WarningMessage.fireWarningWindow("MAP IS EMPTY", "There are no connections in the map to remove.");
+		}
 	}
 }

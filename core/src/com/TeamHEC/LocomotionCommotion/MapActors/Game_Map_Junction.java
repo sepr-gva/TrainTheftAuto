@@ -3,6 +3,7 @@ package com.TeamHEC.LocomotionCommotion.MapActors;
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Map.Connection;
 import com.TeamHEC.LocomotionCommotion.Map.Junction;
+import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
 
 public class Game_Map_Junction extends Game_Map_MapObj{
@@ -119,6 +120,14 @@ public class Game_Map_Junction extends Game_Map_MapObj{
 				Game_Map_Manager.firstAddCity = true;
 			}
 			Game_Map_Manager.hideInfoBox();
+		}
+		else if (Game_Map_Manager.teleportCity){
+			Train train = Game_Map_Manager.currentTeleportCard.train;
+			train.route.getRoute().clear();
+			train.route.setRouteIndex(0);
+			train.route.setConnectionTravelled(0);
+			
+			train.route.setCurrentMapObj(junction);
 		}
 	}
 }

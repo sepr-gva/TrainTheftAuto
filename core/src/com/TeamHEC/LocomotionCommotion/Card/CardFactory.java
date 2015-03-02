@@ -20,6 +20,8 @@ public class CardFactory{
 	
 	TeleportCard teleport;
 	GoFasterStripesCard goFaster;
+	AddRailCard addRail;
+	RemoveRailCard removeRail;
 	
 	CoalCard coal;
 	OilCard oil;
@@ -38,6 +40,8 @@ public class CardFactory{
 		
 		teleport = new TeleportCard(this.player);
 		goFaster = new GoFasterStripesCard(this.player);
+		addRail = new AddRailCard(this.player);
+		removeRail = new RemoveRailCard(this.player);
 		
 		coal = new CoalCard(this.player);
 		oil = new OilCard(this.player);
@@ -48,6 +52,8 @@ public class CardFactory{
 		magicCardList = new ArrayList<Card>();
 		magicCardList.add(teleport);
 		magicCardList.add(goFaster);
+		magicCardList.add(addRail);
+		magicCardList.add(removeRail);
 				
 		resourceCardList = new ArrayList<Card>();
 		resourceCardList.add(coal);

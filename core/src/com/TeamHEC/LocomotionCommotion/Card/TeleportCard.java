@@ -2,6 +2,7 @@ package com.TeamHEC.LocomotionCommotion.Card;
 
 import com.TeamHEC.LocomotionCommotion.Map.MapObj;
 import com.TeamHEC.LocomotionCommotion.Map.WorldMap;
+import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.Player.Player;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
@@ -13,6 +14,8 @@ import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
  */
 
 public class TeleportCard extends Card{
+	
+	public Train train;
 	
 	/**
 	 * Initialises the card
@@ -31,15 +34,9 @@ public class TeleportCard extends Card{
 	public void implementCard()
 	{
 		// Need a way to choose the train:
-		Train train = getOwner().getTrains().get(0);
+		train = getOwner().getTrains().get(0);
 		
-		// Need a way to choose station:
-		MapObj chosenLocation = WorldMap.getInstance().stationsList.get(0);
-		
-		train.route.getRoute().clear();
-		train.route.setRouteIndex(0);
-		train.route.setConnectionTravelled(0);
-		
-		train.route.setCurrentMapObj(chosenLocation);
+		Game_Map_Manager.teleportCity = true;
+		Game_Map_Manager.currentTeleportCard = this;
 	}
 }

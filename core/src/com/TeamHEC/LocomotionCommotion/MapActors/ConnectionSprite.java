@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class ConnectionSprite extends Sprite {
 	
 	private MapObj city1, city2;
+	private Sprite greySprite;
 	
 	/**
 	 * Creates a sprite that can be decisively drawn based on the start and end city 
@@ -19,8 +20,9 @@ public class ConnectionSprite extends Sprite {
 	 * @param city1 - start city of broken connection
 	 * @param city2 - end city of broken connection
 	 */
-	public ConnectionSprite(float x, float y, Texture texture, MapObj city1, MapObj city2){
+	public ConnectionSprite(float x, float y, Texture texture, Texture texture2, MapObj city1, MapObj city2){
 		super(x, y, texture);
+		this.greySprite = new Sprite(x, y, texture2);
 		this.city1 = city1;
 		this.city2 = city2;
 	}
@@ -44,5 +46,21 @@ public class ConnectionSprite extends Sprite {
 		city1 = cities.get(0);
 		city2 = cities.get(1);
 	}
+	
+	public Sprite getGreySprite(){
+		return this.greySprite;
+	}
+	
+	public void toggleGrey(){
+		if (this.isVisible()){
+			this.setVisible(false);
+			this.greySprite.setVisible(true);
+		}
+		else if (this.greySprite.isVisible()){
+			this.greySprite.setVisible(false);
+			this.setVisible(true);
+		}
+	}
+		
 
 }

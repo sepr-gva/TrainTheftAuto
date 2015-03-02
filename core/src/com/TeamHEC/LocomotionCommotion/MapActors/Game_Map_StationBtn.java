@@ -3,7 +3,9 @@ package com.TeamHEC.LocomotionCommotion.MapActors;
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Map.Connection;
+import com.TeamHEC.LocomotionCommotion.Map.MapObj;
 import com.TeamHEC.LocomotionCommotion.Map.Station;
+import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.GameScreenUI;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_StartingSequence;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
@@ -112,6 +114,9 @@ public class Game_Map_StationBtn extends SpriteButton {
 					//If the connection is not broken, break it and give a message to say what
 					//has happened
 					if (con.getTraversable()){
+						for (ConnectionSprite sprite : Game_Map_Manager.connectionSprites){
+							sprite.toggleGrey();
+						}
 						Game_Map_Manager.removeConnection(Game_Map_Manager.currentCity, selectedStation.getStation());
 						WarningMessage.fireWarningWindow("CONNECTION REMOVED", "Connection between " + 
 								Game_Map_Manager.currentCity.getName() + " and " + selectedStation.getStation().getName() + 
@@ -179,6 +184,14 @@ public class Game_Map_StationBtn extends SpriteButton {
 					Game_Map_Manager.firstAddCity = true;
 				}
 				Game_Map_Manager.hideInfoBox();
+			}
+			else if (Game_Map_Manager.teleportCity){
+				Train train = Game_Map_Manager.currentTeleportCard.train;
+				train.route.getRoute().clear();
+				train.route.setRouteIndex(0);
+				train.route.setConnectionTravelled(0);
+				
+				train.route.setCurrentMapObj(selectedStation.getStation());
 			}
 			else
 			{

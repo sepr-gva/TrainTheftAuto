@@ -102,10 +102,15 @@ public class PlayerGoals {
 				}
 				if(touchedDown)
 				{
-					WarningMessage.fireWarningWindow("", "Please Select a Train");
-					chooseTrain = true;
-					touchedDown=false;
-					started =false;
+					if (GameScreen.game.getPlayerTurn().getTrains().get(0).getRoute().getStation() == selectedGoal.getSStationObject().getStation()){
+						WarningMessage.fireWarningWindow("", "Please Select a Train");
+						chooseTrain = true;
+					}
+					else{
+						WarningMessage.fireWarningWindow("TRAIN NOT AT START STATION", "You do not have a train at the start location of the Goal.");
+					}
+					touchedDown = false;
+					started = false;
 				}
 			}
 		};
