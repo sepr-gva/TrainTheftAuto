@@ -6,6 +6,7 @@ import com.TeamHEC.LocomotionCommotion.Scene.SceneManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import java.util.ArrayList;
 /**
  * 
  * @author Robert Precious <rp825@york.ac.uk>
@@ -22,6 +23,8 @@ public class LocomotionCommotion extends Game {
 	public static int screenX = 1680;
 	public static int screenY = 1050;
 
+	public final static ArrayList<LocomotionCommotion> gameStateList = new ArrayList<LocomotionCommotion>();
+	
 	//StartMenuOptions
 	public static String gameMode, player1name, player2name;
 	public static int turnChoice;
@@ -34,7 +37,7 @@ public class LocomotionCommotion extends Game {
 	}
 
 	private LocomotionCommotion(){}
-	public static final String TITLE = "LOCOMOTION COMOTION", VERSION = "0.0.0.1";
+	public static final String TITLE = "Train Theft Auto", VERSION = "0.0.0.1";
 
 	/**
 	 * Create sets the screen to show the start scene
@@ -47,7 +50,7 @@ public class LocomotionCommotion extends Game {
 
 	/**
 	 * This Method sets the screen to the gameScreen, We dispose the startScene, create a new gameScreen reset the screen which resets the booleans to the start 
-	 * setting for all the relevant gamescreen objects.
+	 * setting for all the relevant gameScreen objects.
 	 * Finally we set the screen to gameScreen.
 	 */
 	public void setGameScreen()

@@ -205,6 +205,11 @@ public class GameScreenUI {
                         + "     Turn " + GameScreen.game.getTurnCount() + "/" + GameScreen.game.getTurnLimit());
 				currentPlayerName.setText(GameScreen.game.getPlayerTurn().getName()+"'s TURN");
 				GoalMenu.fillGoalScreen();
+				LocomotionCommotion.gameStateList.add(LocomotionCommotion.getInstance());
+				
+				for (int i = 0; i < LocomotionCommotion.gameStateList.size(); i++){
+					System.out.println("Turn " + i + ": " + LocomotionCommotion.gameStateList.get(i).gameScreen.game.getPlayer1().getTrains().get(0).isInStation());
+				}
 			}
 		};
 		actors.add(game_menuobject_endturnbutton);
