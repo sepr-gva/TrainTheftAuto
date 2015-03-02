@@ -2,6 +2,8 @@ package com.TeamHEC.LocomotionCommotion.UI_Elements;
 
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
+import com.TeamHEC.LocomotionCommotion.Map.Station;
+import com.TeamHEC.LocomotionCommotion.Map.WorldMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -96,6 +98,9 @@ public class Game_PauseMenu {
 			game_pause_mainmenu = new SpriteButton(Game_PauseMenu.actorManager.game_pause_resume.getX(),Game_PauseMenu.actorManager.game_pause_resume.getY()-300,Game_TextureManager.getInstance().game_pause_mainmenu){
 				@Override
 				protected void onClicked(){
+					for (Station station : WorldMap.getInstance().stationsList){
+						station.setOwner(null);
+					}
 					LocomotionCommotion.getInstance().setMenuScreen();
 				}
 			};

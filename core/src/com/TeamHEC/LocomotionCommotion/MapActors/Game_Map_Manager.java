@@ -170,7 +170,7 @@ public class Game_Map_Manager {
 		actors.add(mapLines);
 		
 		for (ConnectionSprite sprite : connectionSprites){
-			sprite.setVisible(true);
+			sprite.setVisible(false);
 			actors.add(sprite);
 			sprite.getGreySprite().setVisible(false);
 			actors.add(sprite.getGreySprite());

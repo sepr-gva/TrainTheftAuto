@@ -13,7 +13,7 @@ public class Connection{
 	
 	private MapObj startMapObj, endMapObj;
 	private float length;
-	private boolean traversable = false;
+	private boolean traversable = true;
 	
 	private Vector2 vector;
 	
