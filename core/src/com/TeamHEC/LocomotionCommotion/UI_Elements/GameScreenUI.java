@@ -210,6 +210,7 @@ public class GameScreenUI {
 				for (int i = 0; i < LocomotionCommotion.gameStateList.size(); i++){
 					System.out.println("Turn " + i + ": " + LocomotionCommotion.gameStateList.get(i).gameScreen.game.getPlayer1().getTrains().get(0).isInStation());
 				}
+				System.out.println();
 			}
 		};
 		actors.add(game_menuobject_endturnbutton);
