@@ -70,7 +70,6 @@ public class GameScreen implements Screen {
 		GameScreenUI actorManager = new GameScreenUI();
 		actorManager.create(getStage());
 
-
 		TrainDepotUI trainDepot = new TrainDepotUI();
 		trainDepot.create(getStage());
 
@@ -115,7 +114,6 @@ public class GameScreen implements Screen {
 		if (Gdx.input.isKeyJustPressed(Keys.R)){
 			Game_Map_Manager.implementRemoveConnection();
 		}
-
 	}
 
 	@Override
@@ -128,28 +126,24 @@ public class GameScreen implements Screen {
 	@Override
 	public void show() {
 		GameScreen.create();
-
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-
 	}
-	public static void resetStage(){
-	}
+	
+	public static void resetStage(){}
 
 	@Override
 	public  void dispose() {
