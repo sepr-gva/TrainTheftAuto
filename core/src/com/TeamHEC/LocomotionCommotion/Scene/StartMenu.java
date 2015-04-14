@@ -33,8 +33,8 @@ public class StartMenu extends Scene{
 	private SpriteButton homeButton, nextButton, prevButton, preferencesBackButton;
 
 	// Other stuff
-	public static String gameMode, player1name, player2name;
-	public static int turnChoice;
+	public static String player1name, player2name;
+	public static int turnChoice = 50;
 	public static TextField textbox1, textbox2;
 	private static boolean player1NameEntered, player2NameEntered;
 
@@ -245,7 +245,7 @@ public class StartMenu extends Scene{
 			{
 				textbox1.setText("");
 				textbox2.setText("");
-				turn50Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn50_unselected_Btn);
+				turn50Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn50Btn);
 				turn100Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn);
 				turn150Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn);
 				player1name= null;
@@ -291,7 +291,7 @@ public class StartMenu extends Scene{
 			public void resetNewGameScreen(){
 				StartMenu.textbox1.setText("");
 				StartMenu.textbox2.setText("");
-				turn50Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn50_unselected_Btn);
+				turn50Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn50Btn);
 				turn100Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn);
 				turn150Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn);
 				StartMenu.player1name= null;
@@ -301,7 +301,7 @@ public class StartMenu extends Scene{
 		};
 		actors.add(newGameBackButton);
 
-		turn50Button = new SpriteButton(490, 1497, SM_TextureManager.getInstance().sm_newgame_Turn50_unselected_Btn){
+		turn50Button = new SpriteButton(490, 1497, SM_TextureManager.getInstance().sm_newgame_Turn50Btn){
 
 			@Override
 			public void onClicked()
