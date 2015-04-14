@@ -197,6 +197,11 @@ public class Player implements RouteListener{
 		if(!Game_StartingSequence.inProgress)
 			GameScreenUI.refreshResources();
 	}
+	
+	//Train
+	public void addTrain(Train train) {
+		trains.add(train);
+	}
 
 	//Cards
 	public void addCard(Card card)
@@ -213,6 +218,8 @@ public class Player implements RouteListener{
 	{
 		return cards.size();
 	}
+	
+	
 
 	public ArrayList<Card> getCards()
 	{

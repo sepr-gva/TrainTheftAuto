@@ -54,6 +54,8 @@ public class Game_Map_Manager {
 	
 	public static MapObj currentCity = null;
 	
+	public static boolean buyTrain = false, sellTrain = false;
+	
 
     // Checks if a train is moving or not.
     public static boolean isMoving = false;
@@ -129,6 +131,18 @@ public class Game_Map_Manager {
 		confirmRouteBtn = new SpriteButton(20, 125, Game_TextureManager.getInstance().confirmroutingModebtn){
 			@Override
 			protected void onClicked(){
+				if (sellTrain){
+					GameScreen.game.getPlayerTurn().getTrains().remove(Game_Map_Manager.trainInfo.train);
+					Game_Map_Manager.trainInfo.train.getActor().setTouchable(Touchable.disabled);
+					Game_Map_Manager.trainInfo.train.getActor().setVisible(false);
+					Game_Map_Manager.trainInfo.makeVisible(false);
+					WarningMessage.fireWarningWindow("Train Sold!", Game_Map_Manager.trainInfo.train.getName() + " has been sold for 1000 gold.");
+					GameScreen.game.getPlayerTurn().addGold(1000);
+					sellTrain = false;
+					confirmRouteBtn.setVisible(false);
+					cancelRouteBtn.setVisible(false);
+					System.out.println(GameScreen.game.getPlayerTurn().getTrains().size());
+				}
 				exitRoutingMode();
 			}
 		};
@@ -161,8 +175,16 @@ public class Game_Map_Manager {
 			@Override
 			protected void onClicked()
 			{
-				if(Game_Map_Manager.trainInfo.train != null)
-					Game_Map_Manager.trainInfo.train.route.cancelRoute();;
+				if(Game_Map_Manager.trainInfo.train != null){
+					Game_Map_Manager.trainInfo.train.route.cancelRoute();
+				}
+				else if (Game_Map_Manager.sellTrain){
+					WarningMessage.fireWarningWindow("Sale Aborted!", "You did not sell a train.");
+					sellTrain = false;
+					confirmRouteBtn.setVisible(false);
+					cancelRouteBtn.setVisible(false);
+					
+				}
 			}
 		};
 		cancelRouteBtn.setVisible(false);

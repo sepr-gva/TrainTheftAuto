@@ -1,6 +1,10 @@
 package com.TeamHEC.LocomotionCommotion.Player;
 
+import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.TeamHEC.LocomotionCommotion.Card.CardFactory;
+import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
+import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
+import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_Shop;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
 
 /**
@@ -125,6 +129,84 @@ public class Shop {
 					WarningMessage.fireWarningWindow("SORRY", "You have too many cards already");
 				}
 			}
+		}
+	}
+	
+	public void buyTrain()
+	{
+		if (customer.getTrains().size() < 5 && customer.getGold() >= 1500)
+		{
+			//Adds a new train to the "customer's" list of trains.Need to consider choosing a city.
+			Game_Shop.actorManager.buy=false;
+			Game_Shop.actorManager.sell=false;
+			if (Game_Shop.actorManager.open== false)
+			{
+				Game_Shop.actorManager.open= true;
+				for(int i=Game_Shop.actorManager.getStageStart(); i<=Game_Shop.actorManager.getStageEnd();i++){
+					if (i > GameScreen.getStage().getActors().size-1){}
+					else {
+						GameScreen.getStage().getActors().get(i).setVisible(true);
+					}
+				}			
+			}
+			
+			else
+			{	
+				Game_Shop.actorManager.open= false;
+				for(int i=Game_Shop.actorManager.getStageStart(); i<=Game_Shop.actorManager.getStageEnd();i++){
+					if (i > GameScreen.getStage().getActors().size-1){}
+					else {
+						GameScreen.getStage().getActors().get(i).setVisible(false);
+					}
+				}
+			}
+			
+			WarningMessage.fireWarningWindow("NEW TRAIN", "Choose a station for your new train.");
+			Game_Map_Manager.buyTrain = true;
+		}
+		else if (customer.getGold() < 1500)
+		{
+			WarningMessage.fireWarningWindow("SORRY", "You don't have enough gold!");
+		}
+		else if (customer.getTrains().size() >= 5)
+		{
+			WarningMessage.fireWarningWindow("SORRY", "You have too many trains already!");
+		}
+	}
+	
+	public void sellTrain(){
+		if (customer.getTrains().size() > 1){
+			//Adds a new train to the "customer's" list of trains.Need to consider choosing a city.
+			Game_Shop.actorManager.buy=false;
+			Game_Shop.actorManager.sell=false;
+			if (Game_Shop.actorManager.open== false)
+			{
+				Game_Shop.actorManager.open= true;
+				for(int i=Game_Shop.actorManager.getStageStart(); i<=Game_Shop.actorManager.getStageEnd();i++){
+					if (i > GameScreen.getStage().getActors().size-1){}
+					else {
+						GameScreen.getStage().getActors().get(i).setVisible(true);
+					}
+				}			
+			}
+			
+			else
+			{	
+				Game_Shop.actorManager.open= false;
+				for(int i=Game_Shop.actorManager.getStageStart(); i<=Game_Shop.actorManager.getStageEnd();i++){
+					if (i > GameScreen.getStage().getActors().size-1){}
+					else {
+						GameScreen.getStage().getActors().get(i).setVisible(false);
+					}
+				}
+			}
+			WarningMessage.fireWarningWindow("SELL TRAIN", "Choose a train to sell and then click confirm.");
+			Game_Map_Manager.sellTrain = true;
+			Game_Map_Manager.confirmRouteBtn.setVisible(true);
+			Game_Map_Manager.cancelRouteBtn.setVisible(true);
+		}
+		else{
+			WarningMessage.fireWarningWindow("SORRY", "You cannot sell your only train!");
 		}
 	}
 }

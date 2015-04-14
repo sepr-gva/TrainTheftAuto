@@ -5,6 +5,11 @@ import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Map.Connection;
 import com.TeamHEC.LocomotionCommotion.Map.MapObj;
 import com.TeamHEC.LocomotionCommotion.Map.Station;
+import com.TeamHEC.LocomotionCommotion.Train.CoalTrain;
+import com.TeamHEC.LocomotionCommotion.Train.ElectricTrain;
+import com.TeamHEC.LocomotionCommotion.Train.NuclearTrain;
+import com.TeamHEC.LocomotionCommotion.Train.OilTrain;
+import com.TeamHEC.LocomotionCommotion.Train.Route;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.GameScreenUI;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_StartingSequence;
@@ -195,6 +200,26 @@ public class Game_Map_StationBtn extends SpriteButton {
 			}
 			else
 			{
+				//Placing new train on map
+				if (Game_Map_Manager.buyTrain == true){
+					Train testTrain;
+					
+					String fuelType = selectedStation.getStation().getResourceString();
+					if (fuelType.equals("Coal"))
+						testTrain = new CoalTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+					else if (fuelType.equals("Nuclear"))
+						testTrain = new NuclearTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+					else if (fuelType.equals("Electric"))
+						testTrain = new ElectricTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+					else if (fuelType.equals("Oil"))
+						testTrain = new OilTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+					else
+						testTrain = new OilTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+					
+					GameScreen.game.getPlayerTurn().addTrain(testTrain);
+					GameScreen.game.getPlayerTurn().subGold(1500);
+					Game_Map_Manager.buyTrain = false;
+				}
 				//Buy Stations in game
 				GameScreen.game.getPlayerTurn().purchaseStation(selectedStation.getStation());
 				Game_Map_Manager.hideInfoBox();

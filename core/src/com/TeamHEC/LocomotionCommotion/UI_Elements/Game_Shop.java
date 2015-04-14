@@ -977,48 +977,66 @@ public class Game_Shop {
 
 		//Train
 		public static class Game_shop_train {
-			ArrayList<Actor> actors ;
-			public static Label quantityLabel;
+			ArrayList<Actor> actors;	
+			public Label quantityLabel;
 			public Label costLabel;
 			public static Label goldLabel;
-			public int quantity, cost, posx=1100, posy=100;
+			public int quantity, cost;
+			public static int posx=1100;
+			public static int posy=100;
 			public static LabelStyle style;
 			SpriteButton buyButton;
+			
 			public Game_shop_train(){
 				this.actors = new ArrayList<Actor>();
-				@SuppressWarnings("unused")
+				
 				Sprite trainItem = new Sprite(posx,posy,Game_TextureManager.getInstance().game_shop_trainitem);
-				buyButton = new SpriteButton(posx+75,posy+20,Game_TextureManager.getInstance().game_shop_blankbuybtn);
-				// Not implemented. Hidden.
-				//actors.add(trainItem);
-				//actors.add(buyButton);
+				buyButton = new SpriteButton(posx+75,posy+20,Game_TextureManager.getInstance().game_shop_buybtn){
+					@Override
+					protected void onClicked(){
+						
+						if (Game_Shop.actorManager.buy){
+							GameScreen.game.getPlayerTurn().getShop().buyTrain();
+						}
+						
+						else if (Game_Shop.actorManager.sell){
+							GameScreen.game.getPlayerTurn().getShop().sellTrain();;
+						}
 
+						GameScreenUI.refreshResources();
+						Game_ShopManager.refreshgold(GameScreen.game.getPlayerTurn().getGold());
+					}
+
+				};
+
+				actors.add(trainItem);
+				actors.add(buyButton);
+				
 				//Stuff for Labels
 				FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/gillsans.ttf"));
 				FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 				parameter.size = 32;
 
 				BitmapFont font = generator.generateFont(parameter); 
-				font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 				generator.dispose();
 				style = new LabelStyle();
 				style.font = font;
 
-				//end
-
 				quantity =100;
 
-
-
 				costLabel= new Label(null,style);
-				costLabel.setX(posx+ 100);
+				costLabel.setX(posx +160);
 				costLabel.setY(posy +43);
 				costLabel.setColor(0,0,0,1);
-				costLabel.setText("Buy Trains"); // EEP: Modified from "Buy Trains" to ""
-
+				
+				if(Game_Shop.actorManager.sell)
+				{
+					costLabel.setText(""+1000);
+				}
+				else
+					costLabel.setText(""+1500);
+				
 				actors.add(costLabel);
-
-
 			}
 			public ArrayList<Actor> getActors() {
 				return this.actors;
