@@ -1,6 +1,8 @@
 package com.TeamHEC.LocomotionCommotion.Game;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -284,9 +286,13 @@ public class CoreGame {
 				+ System.getProperty("file.separator")
 				+ "LocomotionCommotion"
 				+ System.getProperty("file.separator") + gameName + ".json");
-		saveLocation.getParentFile().mkdirs();
-		saveLocation.createNewFile();
-		PrintWriter out = new PrintWriter(saveLocation);
+		
+		if (!saveLocation.exists()){
+			saveLocation.getParentFile().mkdirs();
+			saveLocation.createNewFile();
+		}
+		
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(saveLocation, true)));
 		out.println(finalJSON);
 		out.close();
 
