@@ -28,7 +28,7 @@ public class SM_TextureManager {
 	public CustomTexture sm_main_linesimg = new CustomTexture(Gdx.files.internal("startMenu/sm_main/lines.png"));
 	
 	//Start Menu NewGame Page
-	public CustomTexture sm_newgame_MenuText = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/newgamescreen.png"));
+	public CustomTexture sm_newgame_MenuText = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/newgamescreen_nomodes.png"));
 	public CustomTexture sm_newgame_BackBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/backButton.png"));
 	public CustomTexture sm_newgame_GoBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/goBtn.png"));
 	public CustomTexture sm_newgame_TempTextBox = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/tempTextBox.png"));

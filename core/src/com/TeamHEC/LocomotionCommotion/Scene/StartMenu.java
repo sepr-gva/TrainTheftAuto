@@ -10,16 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 
 public class StartMenu extends Scene{
 
-    // (EEP) The minimum length allowed for a player's name
-    public static final int MIN_NAME_LENGTH = 1;
-
 	private Sprite sm_main_title, sm_main_lines;
 	@SuppressWarnings("unused")
 	private SpriteButton newGameButton, loadGameButton, preferencesButton, howToPlayButton, exitButton;
 
 	//Start Menu NewGame Page
 	private Sprite sm_newgame_menutext;
-	private SpriteButton newGameBackButton, turnTimeOutButton, stationDomButton, newGameGoButton;
+	private SpriteButton newGameBackButton, newGameGoButton;
 	private SpriteButton turn50Button, turn100Button, turn150Button;
 
 	//Start Menu LoadGame Page
@@ -32,15 +29,14 @@ public class StartMenu extends Scene{
 	private Sprite sm_howtoplay_line, sm_howtoplay_title;
 	private Sprite sm_howtoplay_frame;
 	private SpriteButton loadGameBckButton, prefBackButton, settingsButton;
-
 	private SpriteButton displayButton, soundButton, controlButton;
 	private SpriteButton homeButton, nextButton, prevButton, preferencesBackButton;
 
 	// Other stuff
-
 	public static String gameMode, player1name, player2name;
 	public static int turnChoice;
 	public static TextField textbox1, textbox2;
+	private static boolean player1NameEntered, player2NameEntered;
 
 	public StartMenu()
 	{
@@ -223,36 +219,35 @@ public class StartMenu extends Scene{
 			@Override
 			public void onClicked()
 			{
-
-                if (        textbox1.getText().length() < MIN_NAME_LENGTH
-                        ||  textbox2.getText().length() < MIN_NAME_LENGTH
-                        ) {
-                    // Name is too short.
-                    // You could fire a warning window here, if only fireWarningWindow worked here.
-                    // But it does not.
-                    return;
-                }
-
-
-				LocomotionCommotion.player1name=textbox1.getText();
-				LocomotionCommotion.player2name=textbox2.getText();
-				LocomotionCommotion.gameMode= gameMode;
+				if (player1NameEntered){
+					LocomotionCommotion.player1name=textbox1.getText();
+				}
+				
+				else{
+					LocomotionCommotion.player1name="Blue";
+				}
+				
+				if (player2NameEntered){
+					LocomotionCommotion.player2name=textbox2.getText();
+				}
+				
+				else{
+					LocomotionCommotion.player2name="Orange";
+				}
+				
 				LocomotionCommotion.turnChoice = turnChoice;
 				LocomotionCommotion.getInstance().setGameScreen();
 
 				resetNewGameScreen();
-
 			}
+			
 			public void resetNewGameScreen()
 			{
-				turnTimeOutButton.setTexture(SM_TextureManager.getInstance().sm_newgameTurnTimeOut_unselected_Btn);
-				stationDomButton.setTexture(SM_TextureManager.getInstance().sm_newgame_StationDom_unselected_Btn);
 				textbox1.setText("");
 				textbox2.setText("");
 				turn50Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn50_unselected_Btn);
 				turn100Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn);
 				turn150Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn);
-				gameMode=null;
 				player1name= null;
 				player2name= null;
 				turnChoice=0;
@@ -294,14 +289,11 @@ public class StartMenu extends Scene{
 			}
 
 			public void resetNewGameScreen(){
-				turnTimeOutButton.setTexture(SM_TextureManager.getInstance().sm_newgameTurnTimeOut_unselected_Btn);
-				stationDomButton.setTexture(SM_TextureManager.getInstance().sm_newgame_StationDom_unselected_Btn);
 				StartMenu.textbox1.setText("");
 				StartMenu.textbox2.setText("");
 				turn50Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn50_unselected_Btn);
 				turn100Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn);
 				turn150Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn);
-				StartMenu.gameMode=null;
 				StartMenu.player1name= null;
 				StartMenu.player2name= null;
 				StartMenu.turnChoice=0;
@@ -309,34 +301,7 @@ public class StartMenu extends Scene{
 		};
 		actors.add(newGameBackButton);
 
-		turnTimeOutButton = new SpriteButton(400, 1680, SM_TextureManager.getInstance().sm_newgameTurnTimeOut_unselected_Btn){
-
-			@Override
-			public void onClicked()
-			{
-				StartMenu.gameMode = "turntimeout";
-				setTexture(SM_TextureManager.getInstance().sm_newgame_TurnTimeOutBtn);
-				stationDomButton.setTexture(SM_TextureManager.getInstance().sm_newgame_StationDom_unselected_Btn);
-			}
-
-		};
-		actors.add(turnTimeOutButton);
-
-		stationDomButton = new SpriteButton(660, 1680, SM_TextureManager.getInstance().sm_newgame_StationDom_unselected_Btn){
-
-			@Override
-			public void onClicked()
-			{
-				StartMenu.gameMode = "stationdomination";
-				setTexture(SM_TextureManager.getInstance().sm_newgame_StationDomBtn);
-				turnTimeOutButton.setTexture(SM_TextureManager.getInstance().sm_newgameTurnTimeOut_unselected_Btn);
-			}
-
-		};
-        // Not yet implemented. Hidden.
-        // actors.add(stationDomButton);
-
-		turn50Button = new SpriteButton(490, 1400, SM_TextureManager.getInstance().sm_newgame_Turn50_unselected_Btn){
+		turn50Button = new SpriteButton(490, 1497, SM_TextureManager.getInstance().sm_newgame_Turn50_unselected_Btn){
 
 			@Override
 			public void onClicked()
@@ -350,7 +315,7 @@ public class StartMenu extends Scene{
 		};
 		actors.add(turn50Button);
 
-		turn100Button = new SpriteButton(590, 1400, SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn){
+		turn100Button = new SpriteButton(590, 1497, SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn){
 
 			@Override
 			public void onClicked()
@@ -364,7 +329,7 @@ public class StartMenu extends Scene{
 		};
 		actors.add(turn100Button);
 
-		turn150Button = new SpriteButton(680, 1400, SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn){
+		turn150Button = new SpriteButton(690, 1497, SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn){
 
 			@Override
 			public void onClicked()
@@ -594,26 +559,30 @@ public class StartMenu extends Scene{
 		textbox1 = new TextField("", skin);
 		skin.getFont("default-font").setScale(1.5f, 1.5f);
 		textbox1.setX(480);
-		textbox1.setY(1150+430);
+		textbox1.setY(1150+532);
 		textbox1.setSize(430, 60);
 		textbox1.setMessageText("Player 1");
+		player1NameEntered = false;
 		TextFieldListener player1 = new TextFieldListener() {
 			public void keyTyped (TextField textbox1, char key) {
 				if (key == '\n') textbox1.getOnscreenKeyboard().show(false);
 				player1name = textbox1.getText();
+				player1NameEntered = true;
 			}};
 
 			textbox1.setTextFieldListener(player1);
 
 			textbox2 = new TextField("", skin);
 			textbox2.setX(480);
-			textbox2.setY(1150+350);
+			textbox2.setY(1150+447);
 			textbox2.setSize(430, 60);
 			textbox2.setMessageText("Player 2");
+			player2NameEntered = false;
 			TextFieldListener player2 = new TextFieldListener() {
 				public void keyTyped (TextField textbox2, char key) {
 					if (key == '\n') textbox2.getOnscreenKeyboard().show(false);
 					player2name = textbox2.getText();
+					player2NameEntered = true;
 				}};
 				textbox2.setTextFieldListener(player2);
 

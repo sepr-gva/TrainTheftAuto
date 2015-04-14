@@ -302,7 +302,7 @@ public class Game_Shop {
 			};
 			this.actors.add(back);
 
-			SpriteButton shopbuyButton = new SpriteButton(250,350,Game_TextureManager.getInstance().game_shop_startbuy){
+			SpriteButton shopbuyButton = new SpriteButton(445,350,Game_TextureManager.getInstance().game_shop_startbuy){
 				@Override
 				protected void onClicked(){
 					setToBuy();
@@ -332,7 +332,7 @@ public class Game_Shop {
 			};
 			this.actors.add(shopbuyButton);
 
-			SpriteButton shopsellButton = new SpriteButton(650,350,Game_TextureManager.getInstance().game_shop_startsell){
+			SpriteButton shopsellButton = new SpriteButton(889,350,Game_TextureManager.getInstance().game_shop_startsell){
 				@Override
 				protected void onClicked(){
 					setToSell();
@@ -388,13 +388,14 @@ public class Game_Shop {
 			Game_Shop.actorManager.electricityitem.buyButton.setTexture(t);
 			Game_Shop.actorManager.nuclearitem.buyButton.setTexture(t);
 			Game_Shop.actorManager.carditem.buyButton.setTexture(t);
-			Game_Shop.actorManager.trainitem.costLabel.setText(""); // EEP: Modified from "Sell Trains" to ""
+			Game_Shop.actorManager.trainitem.buyButton.setTexture(t);
 			Game_Shop.actorManager.titleLabel.setText("Sell");
 
 			//Cost is different if selling
 			if(Game_Shop.actorManager.sell && !Game_StartingSequence.inProgress)
 			{
 				Game_Shop.actorManager.carditem.costLabel.setText(""+Shop.cardSellPrice);
+				Game_Shop.actorManager.trainitem.costLabel.setText(""+Shop.trainSellPrice);
 				Game_Shop.actorManager.coalitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.coalitem.quantityLabel.getText())*Shop.coalSellPrice);
 				Game_Shop.actorManager.oilitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.oilitem.quantityLabel.getText())*Shop.oilSellPrice);
 				Game_Shop.actorManager.electricityitem.costLabel.setText(""+Math.ceil((strToInt(Game_Shop.actorManager.electricityitem.quantityLabel.getText())*Shop.electricSellPrice)));
@@ -403,6 +404,7 @@ public class Game_Shop {
 			else
 			{
 				Game_Shop.actorManager.carditem.costLabel.setText(""+Shop.cardPrice);
+				Game_Shop.actorManager.trainitem.costLabel.setText(""+Shop.trainPrice);
 				Game_Shop.actorManager.coalitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.coalitem.quantityLabel.getText())*Shop.coalPrice);
 				Game_Shop.actorManager.oilitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.oilitem.quantityLabel.getText())*Shop.oilPrice);
 				Game_Shop.actorManager.electricityitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.electricityitem.quantityLabel.getText())*Shop.electricPrice);
@@ -419,13 +421,14 @@ public class Game_Shop {
 			Game_Shop.actorManager.electricityitem.buyButton.setTexture(t);
 			Game_Shop.actorManager.nuclearitem.buyButton.setTexture(t);
 			Game_Shop.actorManager.carditem.buyButton.setTexture(t);
-			Game_Shop.actorManager.trainitem.costLabel.setText(""); // EEP: Modified from "Buy Trains" to ""
+			Game_Shop.actorManager.trainitem.buyButton.setTexture(t);
 			Game_Shop.actorManager.titleLabel.setText("Buy");
 			
 			//Cost is different if selling
 			if(Game_Shop.actorManager.sell && !Game_StartingSequence.inProgress)
 			{
 				Game_Shop.actorManager.carditem.costLabel.setText(""+Shop.cardSellPrice);
+				Game_Shop.actorManager.trainitem.costLabel.setText(""+Shop.trainSellPrice);
 				Game_Shop.actorManager.coalitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.coalitem.quantityLabel.getText())*Shop.coalSellPrice);
 				Game_Shop.actorManager.oilitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.oilitem.quantityLabel.getText())*Shop.oilSellPrice);
 				Game_Shop.actorManager.electricityitem.costLabel.setText(""+Math.ceil((strToInt(Game_Shop.actorManager.electricityitem.quantityLabel.getText())*Shop.electricSellPrice)));
@@ -434,6 +437,7 @@ public class Game_Shop {
 			else
 			{
 				Game_Shop.actorManager.carditem.costLabel.setText(""+Shop.cardPrice);
+				Game_Shop.actorManager.trainitem.costLabel.setText(""+Shop.trainPrice);
 				Game_Shop.actorManager.coalitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.coalitem.quantityLabel.getText())*Shop.coalPrice);
 				Game_Shop.actorManager.oilitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.oilitem.quantityLabel.getText())*Shop.oilPrice);
 				Game_Shop.actorManager.electricityitem.costLabel.setText(""+strToInt(Game_Shop.actorManager.electricityitem.quantityLabel.getText())*Shop.electricPrice);
@@ -792,7 +796,6 @@ public class Game_Shop {
 						GameScreenUI.refreshResources();
 						Game_ShopManager.refreshgold(GameScreen.game.getPlayerTurn().getGold());
 					}
-
 				};
 
 				actors.add(electricitem);
@@ -978,10 +981,9 @@ public class Game_Shop {
 		//Train
 		public static class Game_shop_train {
 			ArrayList<Actor> actors;	
-			public Label quantityLabel;
 			public Label costLabel;
 			public static Label goldLabel;
-			public int quantity, cost;
+			public int cost;
 			public static int posx=1100;
 			public static int posy=100;
 			public static LabelStyle style;
@@ -1022,8 +1024,6 @@ public class Game_Shop {
 				style = new LabelStyle();
 				style.font = font;
 
-				quantity =100;
-
 				costLabel= new Label(null,style);
 				costLabel.setX(posx +160);
 				costLabel.setY(posy +43);
@@ -1031,12 +1031,13 @@ public class Game_Shop {
 				
 				if(Game_Shop.actorManager.sell)
 				{
-					costLabel.setText(""+1000);
+					costLabel.setText(""+Shop.trainSellPrice);
 				}
 				else
-					costLabel.setText(""+1500);
+					costLabel.setText(""+Shop.trainPrice);
 				
 				actors.add(costLabel);
+				
 			}
 			public ArrayList<Actor> getActors() {
 				return this.actors;

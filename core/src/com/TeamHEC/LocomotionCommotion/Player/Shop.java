@@ -30,6 +30,8 @@ public class Shop {
 	public final static float nuclearSellPrice = 2.8f;
 	public final static int cardPrice = 1000;
 	public final static float cardSellPrice = 700f;
+	public final static int trainPrice = 1500;
+	public final static float trainSellPrice = 1000f;
 	
 	/**
 	 * The initialiser for shop. Creates cardFactory and assigns customer.
