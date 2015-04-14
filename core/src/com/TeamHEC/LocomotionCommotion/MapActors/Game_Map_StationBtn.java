@@ -59,7 +59,7 @@ public class Game_Map_StationBtn extends SpriteButton {
 					
 					Game_StartingSequence.selectLabel.setVisible(true);
 					Game_StartingSequence.getStartedWindow.setVisible(true);
-					Game_StartingSequence.selectLabel.setText(LocomotionCommotion.player2name + " please select your start station!");
+					Game_StartingSequence.selectLabel.setText(LocomotionCommotion.player2name + ", please select your start station!");
 					Game_StartingSequence.player1 = false;
 				}
 				else	
@@ -82,7 +82,7 @@ public class Game_Map_StationBtn extends SpriteButton {
 					Game_StartingSequence.getStartedWindow.setX(130);
 					Game_StartingSequence.getStartedWindow.setTexture(Game_TextureManager.getInstance().game_start_getstartedwindow2);
 					
-					Game_StartingSequence.selectLabel.setText(GameScreen.game.getPlayerTurn().getName()+" select a new Goal from the Goal Screen!");
+					Game_StartingSequence.selectLabel.setText(GameScreen.game.getPlayerTurn().getName()+", select a new goal from the Goal Screen!");
 					Game_StartingSequence.selectLabel.setX(950);
 				}
 			}

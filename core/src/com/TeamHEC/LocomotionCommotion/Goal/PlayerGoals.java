@@ -110,11 +110,11 @@ public class PlayerGoals {
 						}
 					}
 					if (trainInStation == true){
-						WarningMessage.fireWarningWindow("", "Please Select a Train");
+						WarningMessage.fireWarningWindow("TRAIN SELECTION", "Please select a train for this goal");
 						chooseTrain = true;
 					}
 					else{
-						WarningMessage.fireWarningWindow("TRAIN NOT AT START STATION", "You do not have a train at the start location of the Goal.");
+						WarningMessage.fireWarningWindow("TRAIN NOT AT START STATION", "You do not have a train at the start location of the goal.");
 					}
 					touchedDown = false;
 					started = false;

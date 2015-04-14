@@ -131,7 +131,7 @@ public class Game_CardHand {
 		}
 
 		/**
-		 * useCard is called from the usecard button and implements the card's action and removes it.
+		 * useCard is called from the useCard button and implements the card's action and removes it.
 		 * @param cardNum
 		 */
 		public void useCard(int cardNum){						//Method useCard lets the player use their card.

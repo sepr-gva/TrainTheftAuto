@@ -128,7 +128,7 @@ public class Shop {
 				}
 				else 
 				{
-					WarningMessage.fireWarningWindow("SORRY", "You have too many cards already");
+					WarningMessage.fireWarningWindow("SORRY", "You have too many cards already!");
 				}
 			}
 		}

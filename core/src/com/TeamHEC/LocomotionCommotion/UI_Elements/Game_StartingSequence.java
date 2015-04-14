@@ -66,7 +66,7 @@ public class Game_StartingSequence {
 		style.font = font;
 
 		selectLabel = new Label(null, style);
-		selectLabel.setText(LocomotionCommotion.player1name + " please select your start station!");
+		selectLabel.setText(LocomotionCommotion.player1name + ", please select your start station!");
 		selectLabel.setColor(0,0,0,1);
 		selectLabel.setAlignment(Align.center);
 		selectLabel.setX(790);

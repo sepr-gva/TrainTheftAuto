@@ -184,7 +184,7 @@ public class GameScreenUI {
 			{
 
                 if ( Game_Map_Manager.isMoving ) {
-                    WarningMessage.fireWarningWindow("Too fast!", "Your train is still moving.");
+                    WarningMessage.fireWarningWindow("TURN STILL IN PROGESS", "Your train is still moving.");
                     return;
                 }
 

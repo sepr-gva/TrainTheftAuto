@@ -137,8 +137,8 @@ public class Goal implements RouteListener{
             return false;
         }
 
-		WarningMessage.fireWarningWindow("GOAL COMPLETE!", "You've successfully complete the route: " + getSStation()
-				+ " to " + getFStation() + "\n you've won " + getReward() + " gold and scored " +calculatePoints() +" points!");
+		WarningMessage.fireWarningWindow("GOAL COMPLETE!", "You've successfully completed the route: " + getSStation()
+				+ " to " + getFStation() + ".\n You've won " + getReward() + " gold and scored " +calculatePoints() +" points!");
 		
 		train.getOwner().addGold(getReward());
         train.getOwner().incrementPoints(calculatePoints()); //Added by Team EEP

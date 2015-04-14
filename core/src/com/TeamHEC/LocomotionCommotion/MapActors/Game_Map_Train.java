@@ -137,11 +137,11 @@ public class Game_Map_Train extends Actor{
 			if (PlayerGoals.selectedGoal.getSStationObject().getStation() == train.getRoute().getStation()){
 				PlayerGoals.selectedGoal.assignTrain(train);
 				PlayerGoals.selectedGoal.setActor(PlayerGoals.selectedGoalActor);
-				WarningMessage.fireWarningWindow("Assigned Goal to Train!", "Plan your route");
+				WarningMessage.fireWarningWindow("GOAL ASSIGNED", "Goal assigned to train. Now plan your route!");
 				PlayerGoals.chooseTrain = false;
 			}
 			else {
-				WarningMessage.fireWarningWindow("Train not in the right Station!", "This train is not in the start station of the goal, choose another.");
+				WarningMessage.fireWarningWindow("TRAIN NOT AT START STATION", "This train is not in the start station of the goal, choose another.");
 			}
 		}
 	}

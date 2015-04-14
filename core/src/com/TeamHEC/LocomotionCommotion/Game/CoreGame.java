@@ -210,7 +210,7 @@ public class CoreGame {
             return; //Game should not end if there is a draw
         }
 
-        WarningMessage.fireWarningWindow("End of Game", "Congratulations to " + winner.getName() + " you have won!");
+        WarningMessage.fireWarningWindow("End of Game", "Congratulations to " + winner.getName() + ". You have won!");
 	}
 
 	/**

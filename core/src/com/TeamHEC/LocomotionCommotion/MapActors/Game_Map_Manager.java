@@ -136,7 +136,7 @@ public class Game_Map_Manager {
 					Game_Map_Manager.trainInfo.train.getActor().setTouchable(Touchable.disabled);
 					Game_Map_Manager.trainInfo.train.getActor().setVisible(false);
 					Game_Map_Manager.trainInfo.makeVisible(false);
-					WarningMessage.fireWarningWindow("Train Sold!", Game_Map_Manager.trainInfo.train.getName() + " has been sold for 1000 gold.");
+					WarningMessage.fireWarningWindow("TRAIN SOLD", Game_Map_Manager.trainInfo.train.getName() + " has been sold for 1000 gold.");
 					GameScreen.game.getPlayerTurn().addGold(1000);
 					sellTrain = false;
 					confirmRouteBtn.setVisible(false);
@@ -179,7 +179,7 @@ public class Game_Map_Manager {
 					Game_Map_Manager.trainInfo.train.route.cancelRoute();
 				}
 				else if (Game_Map_Manager.sellTrain){
-					WarningMessage.fireWarningWindow("Sale Aborted!", "You did not sell a train.");
+					WarningMessage.fireWarningWindow("SALE ABORTED", "You did not sell a train.");
 					sellTrain = false;
 					confirmRouteBtn.setVisible(false);
 					cancelRouteBtn.setVisible(false);

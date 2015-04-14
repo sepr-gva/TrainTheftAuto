@@ -19,7 +19,8 @@ public class SM_TextureManager {
 	
 	//Start Menu
 	//Start Menu Main Page
-	public CustomTexture sm_main_title = new CustomTexture(Gdx.files.internal("startMenu/sm_main/smTitle.png"));
+	//public CustomTexture sm_main_title = new CustomTexture(Gdx.files.internal("startMenu/sm_main/smTitle.png"));
+	public CustomTexture sm_main_title = new CustomTexture(Gdx.files.internal("startMenu/sm_main/smTitle1.png"));
 	public CustomTexture sm_main_newgamebtn = new CustomTexture(Gdx.files.internal("startMenu/sm_main/sm_newgame.png"));
 	public CustomTexture sm_main_loadgamebtn = new CustomTexture(Gdx.files.internal("startMenu/sm_main/sm_loadgame.png"));
 	public CustomTexture sm_main_preferencesbtn = new CustomTexture(Gdx.files.internal("startMenu/sm_main/sm_preferences.png"));
