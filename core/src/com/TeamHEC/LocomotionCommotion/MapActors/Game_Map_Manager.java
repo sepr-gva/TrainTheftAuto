@@ -190,13 +190,13 @@ public class Game_Map_Manager {
 		cancelRouteBtn.setVisible(false);
 		actors.add(cancelRouteBtn);
 
-		mapLines = new Sprite(100, 60, Game_Map_TextureManager.getInstance().mapLines);		
-		actors.add(mapLines);
+		//mapLines = new Sprite(100, 60, Game_Map_TextureManager.getInstance().mapLines);		
+		//actors.add(mapLines);
 		
 		for (ConnectionSprite sprite : connectionSprites){
 			sprite.setVisible(false);
 			actors.add(sprite);
-			sprite.getGreySprite().setVisible(false);
+			sprite.getGreySprite().setVisible(true);
 			actors.add(sprite.getGreySprite());
 		}
 		
@@ -327,10 +327,6 @@ public class Game_Map_Manager {
 	public static void enterRoutingMode()
 	{		
 		trainInfo.train.getRoute().showRouteBlips();
-		
-		for (ConnectionSprite sprite : connectionSprites){
-			sprite.toggleGrey();
-		}
 				
 		trainsUntouchable();
 		
@@ -353,10 +349,6 @@ public class Game_Map_Manager {
 	{
 		trainInfo.unhighlightAdjacent();
 		trainInfo.train.getRoute().hideRouteBlips();
-		
-		for (ConnectionSprite sprite : connectionSprites){
-			sprite.toggleGrey();
-		}
 		
 		trainsTouchable();
 		
@@ -524,7 +516,7 @@ public class Game_Map_Manager {
 						connection1.getDestination() == sprite.getCity2()) ||
 						connection1.getDestination() == sprite.getCity1() &&
 						connection1.getStartMapObj() == sprite.getCity2()){
-					sprite.setVisible(true);
+					sprite.getGreySprite().setVisible(false);
 				}
 			}
 		}
@@ -600,7 +592,7 @@ public class Game_Map_Manager {
 					connection1.getDestination() == sprite.getCity2()) ||
 					connection1.getDestination() == sprite.getCity1() &&
 					connection1.getStartMapObj() == sprite.getCity2()){
-					sprite.setVisible(true);
+					sprite.getGreySprite().setVisible(false);
 				}
 			}
 		}
@@ -630,7 +622,7 @@ public class Game_Map_Manager {
 									connection.getDestination() == sprite.getCity2()) ||
 									(connection.getDestination() == sprite.getCity1() &&
 									connection.getStartMapObj() == sprite.getCity2())){
-								sprite.setVisible(false);
+								sprite.getGreySprite().setVisible(true);
 							}
 						}
 					}
@@ -659,7 +651,7 @@ public class Game_Map_Manager {
 									connection.getDestination() == sprite.getCity2()) ||
 									(connection.getDestination() == sprite.getCity1() &&
 									connection.getStartMapObj() == sprite.getCity2())){
-								sprite.setVisible(false);
+								sprite.getGreySprite().setVisible(true);
 							}
 						}
 					}
@@ -706,7 +698,7 @@ public class Game_Map_Manager {
 	public static void implementAddConnection(){
 		boolean addAvailable = false;
 		for (ConnectionSprite sprite : connectionSprites){
-			if (sprite.isVisible()){
+			if (!sprite.getGreySprite().isVisible()){
 				addAvailable = true;
 				break;
 			}
@@ -715,6 +707,9 @@ public class Game_Map_Manager {
 			firstAddCity = true;
 			trainsUntouchable();
 			planBackground.setVisible(true);
+			for (ConnectionSprite sprite : connectionSprites){
+				sprite.toggleGrey();
+			}
 			WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to add.");
 		}
 		else{
@@ -732,9 +727,6 @@ public class Game_Map_Manager {
 		}
 		if (removeAvailable){
 			firstRemoveCity = true;
-			for (ConnectionSprite sprite : connectionSprites){
-				sprite.toggleGrey();
-			}
 			trainsUntouchable();
 			planBackground.setVisible(true);
 			WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to remove.");

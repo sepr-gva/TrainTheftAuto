@@ -54,10 +54,8 @@ public class ConnectionSprite extends Sprite {
 	public void toggleGrey(){
 		if (this.isVisible()){
 			this.setVisible(false);
-			this.greySprite.setVisible(true);
 		}
-		else if (this.greySprite.isVisible()){
-			this.greySprite.setVisible(false);
+		else if (!this.greySprite.isVisible()){
 			this.setVisible(true);
 		}
 	}

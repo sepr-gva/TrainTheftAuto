@@ -119,9 +119,6 @@ public class Game_Map_StationBtn extends SpriteButton {
 					//If the connection is not broken, break it and give a message to say what
 					//has happened
 					if (con.getTraversable()){
-						for (ConnectionSprite sprite : Game_Map_Manager.connectionSprites){
-							sprite.toggleGrey();
-						}
 						Game_Map_Manager.removeConnection(Game_Map_Manager.currentCity, selectedStation.getStation());
 						WarningMessage.fireWarningWindow("CONNECTION REMOVED", "Connection between " + 
 								Game_Map_Manager.currentCity.getName() + " and " + selectedStation.getStation().getName() + 
@@ -173,6 +170,9 @@ public class Game_Map_StationBtn extends SpriteButton {
 					//If the connection is not broken, break it and give a message to say what
 					//has happened
 					if (!con.getTraversable()){
+						for (ConnectionSprite sprite : Game_Map_Manager.connectionSprites){
+							sprite.toggleGrey();
+						}
 						Game_Map_Manager.addConnection(Game_Map_Manager.currentCity, selectedStation.getStation());
 						WarningMessage.fireWarningWindow("CONNECTION ADDED", "Connection between " + 
 								Game_Map_Manager.currentCity.getName() + " and " + selectedStation.getStation().getName() + 
