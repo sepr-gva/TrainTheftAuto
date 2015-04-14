@@ -1,5 +1,7 @@
 package com.TeamHEC.LocomotionCommotion.MapActors;
 
+import java.util.ArrayList;
+
 import com.TeamHEC.LocomotionCommotion.Card.TeleportCard;
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Map.Connection;

@@ -1,5 +1,7 @@
 package com.TeamHEC.LocomotionCommotion.MapActors;
 
+import java.util.ArrayList;
+
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Goal.PlayerGoals;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
@@ -15,6 +17,9 @@ public class Game_Map_Train extends Actor{
 	private Train train;
 	private Texture texture, toggleTexture1, toggleTexture2;
 	private float offset;
+	
+	ArrayList<Train> TrainsInPos = new ArrayList<Train>();
+	int TrainsInPosPointer = 0;
 		
 	public boolean canMove = false;
 	public int moveCounter = 0;
@@ -69,14 +74,31 @@ public class Game_Map_Train extends Actor{
 	
 	public void clickedTrain()
 	{
+		
 		if(clickCount == 0)
 		{
+			TrainsInPos.clear();
+			for (Train train2 : GameScreen.game.getPlayer1().getTrains()){
+				if (train2.getRoute().getStation() == train.getRoute().getStation() && train2 != train){
+					TrainsInPos.add(train2);
+				}
+			}
+			for (Train train2 : GameScreen.game.getPlayer2().getTrains()){
+				if (train2.getRoute().getStation() == train.getRoute().getStation() && train2 != train){
+					TrainsInPos.add(train2);
+				}
+			}
+			
 			Game_Map_Manager.trainInfo.showLabel(train);
 			
-			if(Game_Map_Manager.trainInfo.train.route.inStation())
+			if(Game_Map_Manager.trainInfo.train.route.inStation() 
+					&& TrainsInPos.isEmpty())
 				clickCount = 2;
-			else
+			else if (TrainsInPos.isEmpty())
 				clickCount = 1;
+			else {
+				clickCount = 3;
+			}
 		}
 		else if(clickCount == 1)
 		{
@@ -84,6 +106,7 @@ public class Game_Map_Train extends Actor{
 			
 			if(Game_Map_Manager.trainInfo.train.route.inStation())
 				Game_Map_Manager.trainInfo.train.route.getStation().actor.hideInfoBox();
+			
 			
 			clickCount = 0;
 		}
@@ -98,13 +121,28 @@ public class Game_Map_Train extends Actor{
 			}
 			clickCount = 1;
 		}
+		else if (clickCount == 3){
+			
+			Game_Map_Manager.trainInfo.showLabel(TrainsInPos.get(0));
+			TrainsInPos.remove(0);
+			if(Game_Map_Manager.trainInfo.train.route.inStation() 
+					&& TrainsInPos.isEmpty())
+				clickCount = 2;
+			else if (TrainsInPos.isEmpty())
+				clickCount = 1;
+		}
 		
 		if(PlayerGoals.chooseTrain && GameScreen.game.getPlayerTurn() == train.getOwner())
 		{
-			PlayerGoals.selectedGoal.assignTrain(train);
-			PlayerGoals.selectedGoal.setActor(PlayerGoals.selectedGoalActor);
-			WarningMessage.fireWarningWindow("Assigned Goal to Train!", "Plan your route");
-			PlayerGoals.chooseTrain = false;
+			if (PlayerGoals.selectedGoal.getSStationObject().getStation() == train.getRoute().getStation()){
+				PlayerGoals.selectedGoal.assignTrain(train);
+				PlayerGoals.selectedGoal.setActor(PlayerGoals.selectedGoalActor);
+				WarningMessage.fireWarningWindow("Assigned Goal to Train!", "Plan your route");
+				PlayerGoals.chooseTrain = false;
+			}
+			else {
+				WarningMessage.fireWarningWindow("Train not in the right Station!", "This train is not in the start station of the goal, choose another.");
+			}
 		}
 	}
 	

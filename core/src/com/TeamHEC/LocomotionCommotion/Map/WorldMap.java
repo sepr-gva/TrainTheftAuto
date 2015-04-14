@@ -49,26 +49,26 @@ public class WorldMap {
 	public ArrayList<Station> stationsList = new ArrayList<Station>() {	 		 
 		private static final long serialVersionUID = 1L;
 	{ 
-		add(LONDON);
-		add(PARIS);
-		add(REYKJAVIK);
-		add(DUBLIN);
-		add(AMSTERDAM);
-		add(OSLO);
-		add(STOCKHOLM);
-		add(HELSINKI);
-		add(VILNIUS);
-		add(MOSCOW);
-		add(WARSAW);
-		add(PRAGUE);
-		add(VIENNA);
-		add(ROME);
-		add(MADRID);
-		add(LISBON);
-		add(MONACO);
-		add(ATHENS);
-		add(BERLIN);
-		add(BERN);
+		add(LONDON);		//0
+		add(PARIS);			//1
+		add(REYKJAVIK);		//2
+		add(DUBLIN);		//3
+		add(AMSTERDAM);		//4
+		add(OSLO);			//5
+		add(STOCKHOLM);		//6
+		add(HELSINKI);		//7
+		add(VILNIUS);		//8
+		add(MOSCOW);		//9
+		add(WARSAW);		//10
+		add(PRAGUE);		//11
+		add(VIENNA);		//12
+		add(ROME);			//13
+		add(MADRID);		//14
+		add(LISBON);		//15
+		add(MONACO);		//16
+		add(ATHENS);		//17
+		add(BERLIN);		//18
+		add(BERN);			//19
 	 }};
 	
 	public WorldMap()

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Player.Player;
+import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.GameScreenUI;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.SpriteButton;
@@ -102,7 +103,13 @@ public class PlayerGoals {
 				}
 				if(touchedDown)
 				{
-					if (GameScreen.game.getPlayerTurn().getTrains().get(0).getRoute().getStation() == selectedGoal.getSStationObject().getStation()){
+					boolean trainInStation = false;
+					for(Train train : GameScreen.game.getPlayerTurn().getTrains()){
+						if (train.getRoute().getStation() == selectedGoal.getSStationObject().getStation()){
+							trainInStation = true;
+						}
+					}
+					if (trainInStation == true){
 						WarningMessage.fireWarningWindow("", "Please Select a Train");
 						chooseTrain = true;
 					}
