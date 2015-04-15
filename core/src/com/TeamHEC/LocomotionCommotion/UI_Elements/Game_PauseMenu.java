@@ -23,27 +23,20 @@ public class Game_PauseMenu {
 		actorManager.create(stage);
 	}
 	public static class Game_Pause_Manager {
-
-
 		private final static Array<Actor> actors = new Array<Actor>();
 
 		public  static Sprite game_pause_blackoutscreen, game_pause_background, game_pause_logo;
 		public  SpriteButton game_pause_resume,game_pause_save, game_pause_settings, game_pause_mainmenu;
 
-
-
 		public boolean open=false;
 
 		public static int  stagestart, stageend;
 
-
-		public Game_Pause_Manager(){	}
+		public Game_Pause_Manager(){}
 
 		public void create(Stage stage){
 			stagestart =0;
 			actors.clear();
-
-
 
 			game_pause_blackoutscreen = new Sprite(0, 0, Game_TextureManager.getInstance().game_pause_blackoutscreen);
 			actors.add(game_pause_blackoutscreen);
@@ -51,7 +44,7 @@ public class Game_PauseMenu {
 			actors.add(game_pause_background);
 			game_pause_logo = new Sprite(740, 700, Game_TextureManager.getInstance().game_pause_pauselogo);
 			actors.add(game_pause_logo);
-
+			
 			game_pause_resume = new SpriteButton(590,550,Game_TextureManager.getInstance().game_pause_resumegame){
 				@Override
 				protected void onClicked(){
@@ -84,7 +77,7 @@ public class Game_PauseMenu {
 				@Override
 				protected void onClicked(){
 					String gameName = "test";
-					GameScreen.game.saveGameJSON(gameName);
+					GameScreen.testJSON(gameName);
 				}
 
 			};

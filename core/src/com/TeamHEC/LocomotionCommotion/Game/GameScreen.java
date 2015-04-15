@@ -1,5 +1,7 @@
 package com.TeamHEC.LocomotionCommotion.Game;
 
+import java.io.File;
+
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.TeamHEC.LocomotionCommotion.Card.Game_CardHand;
 import com.TeamHEC.LocomotionCommotion.Goal.GoalMenu;
@@ -19,6 +21,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * 
  * @author Robert Precious <rp825@york.ac.uk>
@@ -179,5 +182,27 @@ public class GameScreen implements Screen {
 		//Map
 		Game_StartingSequence.reset();
 		Game_Map_Manager.resetMap();
+	}
+	
+	public static void testJSON(String gameName) {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			File saveLocation = new File(System.getProperty("user.home")
+					+ System.getProperty("file.separator")
+					+ "LocomotionCommotion"
+					+ System.getProperty("file.separator") + gameName + ".json");
+		
+			if (!saveLocation.exists()){
+				saveLocation.getParentFile().mkdirs();
+				saveLocation.createNewFile();
+			}
+			
+			//Don't want to output the whole "game", just the players and map status really.
+			//mapper.writeValue(saveLocation, game);
+		}
+		catch (Exception ex){
+			ex.printStackTrace();
+		}
 	}
 }
