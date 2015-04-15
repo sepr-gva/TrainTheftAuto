@@ -27,6 +27,8 @@ import com.TeamHEC.LocomotionCommotion.Train.OilTrain;
 import com.TeamHEC.LocomotionCommotion.Train.Route;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 
 /**
  * 
@@ -261,7 +263,12 @@ public class CoreGame {
 	public Player getPlayerTurn() {
 		return playerTurn;
 	}
-
+	
+	public void testJSON() {
+		JsonFactory factory = new JsonFactory();
+		factory.enable(JsonParser.Feature.ALLOW_COMMENTS);
+	}
+	
 	/**
 	 * Saves the game to a .json file in the user's home directory in a folder called LocomotionCommotion.
 	 * @param gameName The name of the .json file the game is saved to. (No extension).
@@ -417,5 +424,4 @@ public class CoreGame {
 		mapObjJSON += "}";
 		return mapObjJSON;
 	}
-	
 }
