@@ -6,6 +6,7 @@ import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.Player.Player;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
+import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
 
 /**
  * 
@@ -33,10 +34,10 @@ public class TeleportCard extends Card{
 	 */
 	public void implementCard()
 	{
-		// Need a way to choose the train:
-		train = getOwner().getTrains().get(0);
+		WarningMessage.fireWarningWindow("Choose a Train!", "Choose a train to teleport.");
 		
-		Game_Map_Manager.teleportCity = true;
+		Game_Map_Manager.teleportTrain = true;
 		Game_Map_Manager.currentTeleportCard = this;
+		Game_Map_Manager.oponentUntouchable();
 	}
 }

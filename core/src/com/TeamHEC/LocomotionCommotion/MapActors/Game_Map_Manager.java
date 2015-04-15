@@ -48,7 +48,7 @@ public class Game_Map_Manager {
 	public static Game_Map_StationBtn stationSelect;
 	
 	public static boolean firstAddCity = false, secondAddCity = false, firstRemoveCity = false,
-			secondRemoveCity = false, teleportCity = false;
+			secondRemoveCity = false, teleportCity = false, teleportTrain = false, goFasterTrain = false;
 	
 	public static TeleportCard currentTeleportCard = null;
 	
@@ -693,6 +693,36 @@ public class Game_Map_Manager {
 				{
 					t.getActor().setTouchable(Touchable.enabled);
 				}
+	}
+	
+	public static void oponentUntouchable(){
+		if (GameScreen.game.getPlayerTurn() == GameScreen.game.getPlayer1()){
+			for(Train t : GameScreen.game.getPlayer2().getTrains())
+			{
+				t.getActor().setTouchable(Touchable.disabled);
+			}
+		}
+		else{
+			for(Train t : GameScreen.game.getPlayer1().getTrains())
+			{
+				t.getActor().setTouchable(Touchable.disabled);
+			}
+		}
+	}
+	
+	public static void oponentTouchable(){
+		if (GameScreen.game.getPlayerTurn() == GameScreen.game.getPlayer1()){
+			for(Train t : GameScreen.game.getPlayer2().getTrains())
+			{
+				t.getActor().setTouchable(Touchable.enabled);
+			}
+		}
+		else{
+			for(Train t : GameScreen.game.getPlayer1().getTrains())
+			{
+				t.getActor().setTouchable(Touchable.enabled);
+			}
+		}
 	}
 	
 	public static void implementAddConnection(){

@@ -165,6 +165,7 @@ public class Shop {
 			
 			WarningMessage.fireWarningWindow("NEW TRAIN", "Choose a station for your new train.");
 			Game_Map_Manager.buyTrain = true;
+			Game_Map_Manager.trainsUntouchable();
 		}
 		else if (customer.getGold() < 1500)
 		{

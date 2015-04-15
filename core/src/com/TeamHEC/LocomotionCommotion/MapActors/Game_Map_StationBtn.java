@@ -197,28 +197,45 @@ public class Game_Map_StationBtn extends SpriteButton {
 				train.route.setConnectionTravelled(0);
 				
 				train.route.setCurrentMapObj(selectedStation.getStation());
+				Game_Map_Manager.hideInfoBox();
+				Game_Map_Manager.teleportCity = false;
+				Game_Map_Manager.trainsTouchable();
 			}
 			else
 			{
 				//Placing new train on map
 				if (Game_Map_Manager.buyTrain == true){
-					Train testTrain;
-					
-					String fuelType = selectedStation.getStation().getResourceString();
-					if (fuelType.equals("Coal"))
-						testTrain = new CoalTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
-					else if (fuelType.equals("Nuclear"))
-						testTrain = new NuclearTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
-					else if (fuelType.equals("Electric"))
-						testTrain = new ElectricTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
-					else if (fuelType.equals("Oil"))
-						testTrain = new OilTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
-					else
-						testTrain = new OilTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
-					
-					GameScreen.game.getPlayerTurn().addTrain(testTrain);
-					GameScreen.game.getPlayerTurn().subGold(1500);
-					Game_Map_Manager.buyTrain = false;
+					if (selectedStation.getStation().getOwner() != null
+							&& selectedStation.getStation().getOwner() != GameScreen.game.getPlayerTurn()){
+						if (GameScreen.game.getPlayerTurn() == GameScreen.game.getPlayer1()){
+							WarningMessage.fireWarningWindow("Station Owned by the Enemy!", "That station is owned by "
+									+ GameScreen.game.getPlayer2().getName() + " \nand so you cannot place a train here, choose another station.");
+						}
+						else{
+							WarningMessage.fireWarningWindow("Station Owned by the Enemy!", "That station is owned by "
+									+ GameScreen.game.getPlayer1().getName() + " \nand so you cannot place a train here, choose another station.");
+						}
+					}
+					else{
+						Train testTrain;
+						
+						String fuelType = selectedStation.getStation().getResourceString();
+						if (fuelType.equals("Coal"))
+							testTrain = new CoalTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+						else if (fuelType.equals("Nuclear"))
+							testTrain = new NuclearTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+						else if (fuelType.equals("Electric"))
+							testTrain = new ElectricTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+						else if (fuelType.equals("Oil"))
+							testTrain = new OilTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+						else
+							testTrain = new OilTrain(0, true, new Route(selectedStation.getStation()), GameScreen.game.getPlayerTurn());
+						
+						GameScreen.game.getPlayerTurn().addTrain(testTrain);
+						GameScreen.game.getPlayerTurn().subGold(1500);
+						Game_Map_Manager.buyTrain = false;
+						Game_Map_Manager.trainsTouchable();
+					}
 				}
 				//Buy Stations in game
 				GameScreen.game.getPlayerTurn().purchaseStation(selectedStation.getStation());

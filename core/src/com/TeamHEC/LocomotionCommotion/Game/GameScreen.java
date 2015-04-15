@@ -112,6 +112,9 @@ public class GameScreen implements Screen {
 		if (Gdx.input.isKeyJustPressed(Keys.R)){
 			Game_Map_Manager.implementRemoveConnection();
 		}
+		if (Gdx.input.isKeyJustPressed(Keys.M)){
+			game.getPlayerTurn().addGold(1000);
+		}
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Goal.PlayerGoals;
+import com.TeamHEC.LocomotionCommotion.Train.SpeedUpgrade;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
 import com.badlogic.gdx.graphics.Texture;
@@ -74,8 +75,28 @@ public class Game_Map_Train extends Actor{
 	
 	public void clickedTrain()
 	{
-		
-		if(clickCount == 0)
+		if (Game_Map_Manager.teleportTrain || Game_Map_Manager.goFasterTrain){
+			if (Game_Map_Manager.teleportTrain == true && GameScreen.game.getPlayerTurn() == train.getOwner()){
+				Game_Map_Manager.currentTeleportCard.train = train;
+				WarningMessage.fireWarningWindow("Choose a City!", "Choose the City you would like to teleport "
+						+ train.getName() + " to.");
+				Game_Map_Manager.teleportTrain = false;
+				Game_Map_Manager.trainsUntouchable();
+				Game_Map_Manager.teleportCity = true;
+			}
+			else if (Game_Map_Manager.goFasterTrain == true && GameScreen.game.getPlayerTurn() == train.getOwner()){
+				Game_Map_Manager.goFasterTrain = false;
+				SpeedUpgrade speedUpgrade = new SpeedUpgrade(train);
+				train.addUpgrade(speedUpgrade);
+				Game_Map_Manager.oponentTouchable();
+				WarningMessage.fireWarningWindow("Go Faster Stripes Added!", "Go Faster Stripes were added to "
+						+ train.getName() + ".");
+			}
+			else{
+				WarningMessage.fireWarningWindow("Not your Train!", "That is not your train, choose another.");
+			}
+		}
+		else if(clickCount == 0)
 		{
 			TrainsInPos.clear();
 			for (Train train2 : GameScreen.game.getPlayer1().getTrains()){
@@ -88,9 +109,9 @@ public class Game_Map_Train extends Actor{
 					TrainsInPos.add(train2);
 				}
 			}
-			
+				
 			Game_Map_Manager.trainInfo.showLabel(train);
-			
+				
 			if(Game_Map_Manager.trainInfo.train.route.inStation() 
 					&& TrainsInPos.isEmpty())
 				clickCount = 2;

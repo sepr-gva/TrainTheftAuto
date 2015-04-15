@@ -1,9 +1,11 @@
 package com.TeamHEC.LocomotionCommotion.Card;
 
+import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.Player.Player;
 import com.TeamHEC.LocomotionCommotion.Train.SpeedUpgrade;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
+import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
 
 public class GoFasterStripesCard extends Card {
 
@@ -15,9 +17,8 @@ public class GoFasterStripesCard extends Card {
 	@Override
 	public void implementCard()
 	{
-		//Need a way to select the train to upgrade
-		Train train = getOwner().getTrains().get(0);
-		SpeedUpgrade speedUpgrade = new SpeedUpgrade(train);
-		train.addUpgrade(speedUpgrade);
+		WarningMessage.fireWarningWindow("Choose a Train!", "Choose the train you want to add Go Faster Stripes to.");
+		Game_Map_Manager.goFasterTrain = true;
+		Game_Map_Manager.oponentUntouchable();
 	}
 }
