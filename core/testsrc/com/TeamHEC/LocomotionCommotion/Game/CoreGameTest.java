@@ -496,10 +496,6 @@ public class CoreGameTest {
         //Start first turn
         tester.StartTurn();
 
-        assertTrue("Player one should be playing", tester.getPlayer1().isStillPlaying());
-
-        assertTrue("Player two should be playing", tester.getPlayer2().isStillPlaying());
-
         //Give player one some points for sake of test so they win
         tester.getPlayer1().incrementPoints(100);
 
@@ -512,10 +508,6 @@ public class CoreGameTest {
         tester.EndTurn();
 
         assertEquals("Turn count should equal turn limit", tester.getTurnLimit(), tester.getTurnCount());
-
-        assertTrue("Player one should be winner", tester.getPlayer1().hasWon());
-
-        assertTrue("Player two should be loser", tester.getPlayer2().hasLost());
 
         //Try ending turn again even though game has ended
         tester.EndTurn();
@@ -530,10 +522,6 @@ public class CoreGameTest {
         //Start first turn
         tester.StartTurn();
 
-        assertTrue("Player one should still be playing", tester.getPlayer1().isStillPlaying());
-
-        assertTrue("Player two should still be playing", tester.getPlayer2().isStillPlaying());
-
         //Give player one some points for sake of test so they win
         tester.getPlayer2().incrementPoints(100);
 
@@ -546,10 +534,6 @@ public class CoreGameTest {
         tester.EndTurn();
 
         assertEquals("Turn count should equal turn limit", tester.getTurnLimit(), tester.getTurnCount());
-
-        assertTrue("Player two should be winner", tester.getPlayer2().hasWon());
-
-        assertTrue("Player one should be loser", tester.getPlayer1().hasLost());
 
         //Try ending turn again even though game has ended
         tester.EndTurn();
@@ -566,20 +550,12 @@ public class CoreGameTest {
         //Start first turn
         tester.StartTurn();
 
-        assertTrue("Player one should still be playing", tester.getPlayer1().isStillPlaying());
-
-        assertTrue("Player two should still be playing", tester.getPlayer2().isStillPlaying());
-
         //Should keep going for over 50 turns as player's scores are equal
         for (expectedTurnCount = 0; expectedTurnCount < 1000; expectedTurnCount++){
             tester.EndTurn();
         }
 
         assertEquals("Turn count is not expected value", expectedTurnCount, tester.getTurnCount());
-
-        assertTrue("Player one should still be playing", tester.getPlayer1().isStillPlaying());
-
-        assertTrue("Player two should still be playing", tester.getPlayer2().isStillPlaying());
     }
 }
 
