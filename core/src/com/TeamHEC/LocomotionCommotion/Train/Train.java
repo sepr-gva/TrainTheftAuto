@@ -2,6 +2,7 @@ package com.TeamHEC.LocomotionCommotion.Train;
 
 import java.util.ArrayList;
 
+import com.TeamHEC.LocomotionCommotion.Goal.Goal;
 import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Train;
 import com.TeamHEC.LocomotionCommotion.Obstacle.Obstacle;
@@ -15,6 +16,7 @@ import com.TeamHEC.LocomotionCommotion.Resource.Fuel;
 public abstract class Train {	
 	private String name;
 	private int baseSpeed, speedMod;
+	public Goal goal = null;
 	
 	private Fuel fuel;
 	public int fuelPerTurn;

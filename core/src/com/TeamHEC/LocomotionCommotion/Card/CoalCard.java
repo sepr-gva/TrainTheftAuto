@@ -1,5 +1,6 @@
 package com.TeamHEC.LocomotionCommotion.Card;
 
+import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Player.Player;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
 

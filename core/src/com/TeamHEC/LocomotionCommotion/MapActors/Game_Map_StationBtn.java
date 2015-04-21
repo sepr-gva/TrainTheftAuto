@@ -2,6 +2,7 @@ package com.TeamHEC.LocomotionCommotion.MapActors;
 
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
+import com.TeamHEC.LocomotionCommotion.Goal.Goal;
 import com.TeamHEC.LocomotionCommotion.Map.Connection;
 import com.TeamHEC.LocomotionCommotion.Map.MapObj;
 import com.TeamHEC.LocomotionCommotion.Map.Station;
@@ -197,6 +198,11 @@ public class Game_Map_StationBtn extends SpriteButton {
 				train.route.setConnectionTravelled(0);
 				
 				train.route.setCurrentMapObj(selectedStation.getStation());
+				if (train.goal != null){
+					if (train.goal.getFStationObject() == selectedStation.getStation()){
+						train.goal.goalComplete();
+					}
+				}
 				Game_Map_Manager.hideInfoBox();
 				Game_Map_Manager.teleportCity = false;
 				Game_Map_Manager.trainsTouchable();

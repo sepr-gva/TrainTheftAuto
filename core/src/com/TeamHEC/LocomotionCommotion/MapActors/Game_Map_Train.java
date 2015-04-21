@@ -160,6 +160,7 @@ public class Game_Map_Train extends Actor{
 				PlayerGoals.selectedGoal.setActor(PlayerGoals.selectedGoalActor);
 				WarningMessage.fireWarningWindow("GOAL ASSIGNED", "Goal assigned to train. Now plan your route!");
 				PlayerGoals.chooseTrain = false;
+				Game_Map_Manager.oponentTouchable();
 			}
 			else {
 				WarningMessage.fireWarningWindow("TRAIN NOT AT START STATION", "This train is not in the start station of the goal, choose another.");

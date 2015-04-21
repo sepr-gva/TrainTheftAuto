@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.TeamHEC.LocomotionCommotion.Card.Game_CardHand;
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
+import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.Player.Shop;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_Shop.ShopHomeScreen.Game_shop_card;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_Shop.ShopHomeScreen.Game_shop_coal;
@@ -474,6 +475,22 @@ public class Game_Shop {
 									GameScreenUI.refreshResources();
 									Game_ShopManager.refreshgold(GameScreen.game.getPlayerTurn().getGold());
 								}
+							}
+						}
+						if (Game_Shop.actorManager.sell){
+							if (GameScreen.game.getPlayerTurn().getCards().size() > 0){
+								Game_Map_Manager.sellCard = true;
+								WarningMessage.fireWarningWindow("Choose Card", "Choose a card to sell.");
+								Game_Shop.actorManager.open= false;
+								for(int i=Game_Shop.actorManager.getStageStart(); i<=Game_Shop.actorManager.getStageEnd();i++){
+									if (i > GameScreen.getStage().getActors().size-1){}
+									else {
+										GameScreen.getStage().getActors().get(i).setVisible(false);
+									}
+								}
+							}
+							else{
+								WarningMessage.fireWarningWindow("No Cards!", "You have no cards to sell.");
 							}
 						}
 					}

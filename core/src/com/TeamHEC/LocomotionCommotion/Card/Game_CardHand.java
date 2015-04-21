@@ -160,6 +160,32 @@ public class Game_CardHand {
 
 
 		}
+		
+		public void sellCard(int cardNum){
+			if (cardNum !=0){												//if the the number of card is not 0
+				GameScreenUI.refreshResources();					//refresh the labels showing the resources
+				if (cardNum<Game_CardHand.actorManager.numberofcards){									//Shuffle the cards up
+					for(int i=cardNum-1;i<Game_CardHand.actorManager.numberofcards-1;i++){
+						cardactors.get(i).setTexture(cardactors.get(i+1).getTexture());
+						cardactors.get(i).setSlot(i+1);
+						cardactors.get(i).setCard(cardactors.get(i+1).getCard());
+
+					}
+				}
+
+				GameScreen.game.getPlayerTurn().getCards().remove(cardNum-1)	;
+				System.out.println(GameScreen.game.getPlayerTurn().getCards());
+				Game_CardHand.actorManager.selectedCard = 0;											//No card is selected
+				cardactors.get(Game_CardHand.actorManager.numberofcards-1).setEmpty(true);					//Set the end slot as empty and hidden
+				cardactors.get(Game_CardHand.actorManager.numberofcards-1).setVisible(false);
+				Game_CardHand.actorManager.numberofcards-=1;											//decrement card number
+				GameScreen.game.getPlayerTurn().addGold(700);
+				GameScreenUI.refreshResources();
+				Game_CardHand.actorManager.organiseHand();
+				Game_CardHand.actorManager.usecardbtn.setVisible(false);			//hide the use card button
+			}
+		}
+		
 		/**
 		 * Adds given card to hand if hand is not full.
 		 * @param newCard - new card passed to be put in the hand.

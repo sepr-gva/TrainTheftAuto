@@ -48,7 +48,7 @@ public class Game_Map_Manager {
 	public static Game_Map_StationBtn stationSelect;
 	
 	public static boolean firstAddCity = false, secondAddCity = false, firstRemoveCity = false,
-			secondRemoveCity = false, teleportCity = false, teleportTrain = false, goFasterTrain = false;
+			secondRemoveCity = false, teleportCity = false, teleportTrain = false, goFasterTrain = false, sellCard = false;
 	
 	public static TeleportCard currentTeleportCard = null;
 	

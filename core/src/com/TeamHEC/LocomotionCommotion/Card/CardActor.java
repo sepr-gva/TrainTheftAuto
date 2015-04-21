@@ -1,7 +1,9 @@
 package com.TeamHEC.LocomotionCommotion.Card;
 
+import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.GameScreenUI;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
+import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -81,6 +83,17 @@ public class CardActor extends Actor {
 		@Override
 		public void act(float delta){
 			if(started){
+				if (Game_Map_Manager.sellCard){
+					int cardNumber = 0;
+					for (int i = 0 ; i < 7 ; i++){
+						if (Game_CardHand.actorManager.cardactors.get(i) == this){
+							cardNumber = i;
+						}
+					}
+					WarningMessage.fireWarningWindow("Card Sold!", "You sold a " + this.getCard().getName() + " Card and recieved 700 gold.");
+					Game_CardHand.actorManager.sellCard(cardNumber+1);
+					Game_Map_Manager.sellCard = false;
+				}
 				if (isExpanded()) //if expanded, we run cardCollapse which puts the card back in position.
 				{
 					this.cardCollapse();

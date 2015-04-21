@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
+import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.Player.Player;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.GameScreenUI;
@@ -111,6 +112,7 @@ public class PlayerGoals {
 					}
 					if (trainInStation == true){
 						WarningMessage.fireWarningWindow("TRAIN SELECTION", "Please select a train for this goal");
+						Game_Map_Manager.oponentUntouchable();
 						chooseTrain = true;
 					}
 					else{

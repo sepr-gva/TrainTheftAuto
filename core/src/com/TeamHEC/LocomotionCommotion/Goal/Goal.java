@@ -116,6 +116,7 @@ public class Goal implements RouteListener{
 	{
 		this.train = train;
 		train.route.register(this);
+		train.goal = this;
 		
 		if(train.route.getStation() == sStation)
 			currentTime = 1;
@@ -133,9 +134,6 @@ public class Goal implements RouteListener{
 	 */	
 	public Boolean goalComplete()
 	{
-        if ( ! (startStationPassed && finalStationPassed )){
-            return false;
-        }
 
 		WarningMessage.fireWarningWindow("GOAL COMPLETE!", "You've successfully completed the route: " + getSStation()
 				+ " to " + getFStation() + ".\n You've won " + getReward() + " gold and scored " +calculatePoints() +" points!");
@@ -237,8 +235,8 @@ public class Goal implements RouteListener{
      * @return 0 if goal is not yet completed, otherwise number of points
      */
     public int calculatePoints(){
-        if (! finalStationPassed || currentGoalDuration == 0){
-            return 0;
+        if (currentGoalDuration == 0){
+        	return reward * estimateOptimalDuration();
         }
 
         return (estimateOptimalDuration() * reward / currentGoalDuration );
