@@ -217,6 +217,10 @@ public class Game_Map_StationBtn extends SpriteButton {
 						}
 					}
 					else{
+						if (selectedStation.getStation().getOwner() == null){
+							selectedStation.getStation().setOwner(GameScreen.game.getPlayerTurn());
+							GameScreen.game.getPlayerTurn().getStations().add(selectedStation.getStation());
+						}
 						Train testTrain;
 						
 						String fuelType = selectedStation.getStation().getResourceString();
