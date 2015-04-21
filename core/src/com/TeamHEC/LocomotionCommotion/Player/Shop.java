@@ -112,25 +112,19 @@ public class Shop {
 	 */
 	public void buyCard(boolean testCase)
 	{
-		if (customer.getCards().size() < 7 && customer.getGold() >= 1000)
+		if ((customer.getCards().size() < 7) && (customer.getGold() >= 1000))
 		{			
 			// Sets the owner to the card and subtract gold from player
 			customer.addCard(cardFactory.createAnyCard());
 			customer.subGold(1000);		
 		}
-		else
+		else if ((!testCase) && (customer.getCards().size() >= 7))
 		{
-			if(!testCase)
-			{
-				if(customer.getGold() < 1000)
-				{
-					WarningMessage.fireWarningWindow("SORRY", "You don't have enough gold!");
-				}
-				else 
-				{
-					WarningMessage.fireWarningWindow("SORRY", "You have too many cards already!");
-				}
-			}
+			WarningMessage.fireWarningWindow("SORRY", "You have too many cards already!");
+		}
+		else if ((!testCase) && (customer.getGold() < 1000))
+		{
+			WarningMessage.fireWarningWindow("SORRY", "You don't have enough gold!");
 		}
 	}
 	
