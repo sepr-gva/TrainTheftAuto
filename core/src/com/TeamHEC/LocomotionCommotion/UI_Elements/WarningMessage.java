@@ -1,5 +1,6 @@
 package com.TeamHEC.LocomotionCommotion.UI_Elements;
 
+import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -37,6 +38,10 @@ public class WarningMessage {
 			@Override
 			protected void onClicked(){
 				killWarningWindow();
+				
+				if (LocomotionCommotion.gameFinished == true){
+					Gdx.app.exit();
+				}
 			}
 		};
 		

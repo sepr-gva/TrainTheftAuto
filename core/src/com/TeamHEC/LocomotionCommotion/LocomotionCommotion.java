@@ -22,14 +22,13 @@ public class LocomotionCommotion extends Game {
 
 	public static int screenX = 1680;
 	public static int screenY = 1050;
-
-	public final static ArrayList<LocomotionCommotion> gameStateList = new ArrayList<LocomotionCommotion>();
 	
 	//StartMenuOptions
 	public static String gameMode, player1name, player2name;
 	public static int turnChoice;
 
 	private static LocomotionCommotion INSTANCE = new LocomotionCommotion();
+	public static boolean gameFinished = false;
 
 	public static LocomotionCommotion getInstance()
 	{

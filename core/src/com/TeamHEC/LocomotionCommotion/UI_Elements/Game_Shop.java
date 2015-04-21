@@ -466,15 +466,13 @@ public class Game_Shop {
 				buyButton = new SpriteButton(posx+75,posy+20,Game_TextureManager.getInstance().game_shop_buybtn){
 					@Override
 					protected void onClicked(){
-						if (Game_Shop.actorManager.buy){						
-							if(GameScreen.game.getPlayerTurn().getCards().size()<7){
-								int newAdditionIndex = GameScreen.game.getPlayerTurn().getCards().size();
-								GameScreen.game.getPlayerTurn().getShop().buyCard(false);
-								if(GameScreen.game.getPlayerTurn().getCards().size()>newAdditionIndex){
-									Game_CardHand.actorManager.addCard(GameScreen.game.getPlayerTurn().getCards().get(newAdditionIndex));
-									GameScreenUI.refreshResources();
-									Game_ShopManager.refreshgold(GameScreen.game.getPlayerTurn().getGold());
-								}
+						if (Game_Shop.actorManager.buy){
+							int newAdditionIndex = GameScreen.game.getPlayerTurn().getCards().size();
+							GameScreen.game.getPlayerTurn().getShop().buyCard(false);
+							if(GameScreen.game.getPlayerTurn().getCards().size()>newAdditionIndex){
+								Game_CardHand.actorManager.addCard(GameScreen.game.getPlayerTurn().getCards().get(newAdditionIndex));
+								GameScreenUI.refreshResources();
+								Game_ShopManager.refreshgold(GameScreen.game.getPlayerTurn().getGold());
 							}
 						}
 						if (Game_Shop.actorManager.sell){

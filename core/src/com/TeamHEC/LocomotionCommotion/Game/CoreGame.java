@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.TeamHEC.LocomotionCommotion.Card.Card;
 import com.TeamHEC.LocomotionCommotion.Goal.Goal;
 import com.TeamHEC.LocomotionCommotion.Map.MapObj;
@@ -152,22 +153,17 @@ public class CoreGame {
      * It will increase the turn count and switch the player's turns.
 	 */
 	public void EndTurn() {
-
-        //Adds an extra turn if score is equal
-        if (turnCount >= turnLimit && player1.getPoints() != player2.getPoints()){
-            EndGame();
+        playerTurn.lineBonuses();
+        turnCount = (turnCount + 1);
+        if (playerTurn == player1)
+            playerTurn = player2;
+        else
+            playerTurn = player1;
+        
+        if (turnCount >= turnLimit){
+        	EndGame();
         }
-
-        else {
-            playerTurn.lineBonuses();
-            turnCount = (turnCount + 1);
-            if (playerTurn == player1)
-                playerTurn = player2;
-            else
-                playerTurn = player1;
-            StartTurn();
-        }
-
+        StartTurn(); 
 	}
 
 	/**
@@ -190,27 +186,9 @@ public class CoreGame {
 	 * Ends the current game.
      * Only call once one player has a higher score than another
 	 */
-	private void EndGame() {
-
-        Player winner;
-
-        if ( player1.getPoints() > player2.getPoints() ) {
-            player1.setAsWinner();
-            player2.setAsLoser();
-            winner = player1;
-        }
-
-        else if ( player1.getPoints() < player2.getPoints()) {
-            player1.setAsLoser();
-            player2.setAsWinner();
-            winner = player2;
-        }
-
-        else {
-            return; //Game should not end if there is a draw
-        }
-
-        WarningMessage.fireWarningWindow("End of Game", "Congratulations to " + winner.getName() + ". You have won!");
+	private void EndGame() 
+	{
+		LocomotionCommotion.gameFinished = true;
 	}
 
 	/**

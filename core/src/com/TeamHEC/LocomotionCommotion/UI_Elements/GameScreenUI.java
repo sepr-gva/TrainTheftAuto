@@ -30,6 +30,8 @@ import com.badlogic.gdx.utils.Array;
 public class GameScreenUI {
 
 	private final static Array<Actor> actors = new Array<Actor>();
+	private String victorName;
+	private int victorScore;
 
 	//Upper UI Elements (On the top)
 	public static Label playerScore;
@@ -182,36 +184,59 @@ public class GameScreenUI {
 			@Override
 			protected void onClicked()
 			{
-
-                if ( Game_Map_Manager.isMoving ) {
-                    WarningMessage.fireWarningWindow("TURN STILL IN PROGESS", "Your train is still moving.");
-                    return;
-                }
-
-				ArrayList<Train> playerTrains = GameScreen.game.getPlayerTurn().getTrains();	
-				for(Train t : playerTrains)
+				if (LocomotionCommotion.gameFinished == false)
 				{
-					t.moveTrain();
-				}
+	                if ( Game_Map_Manager.isMoving ) {
+	                    WarningMessage.fireWarningWindow("TURN STILL IN PROGESS", "Your train is still moving.");
+	                    return;
+	                }
 
-				GameScreen.game.EndTurn();
-				GameScreenUI.refreshResources();
-				Game_Shop.actorManager.refreshgold(GameScreen.game.getPlayerTurn().getGold());
-				PlayerGoals.changePlayer(GameScreen.game.getPlayerTurn());
-				Game_CardHand.actorManager.changePlayer(GameScreen.game.getPlayerTurn());
-				playerScore.setText(GameScreen.game.getPlayer1().getName() + "    " + GameScreen.game.getPlayer1().getPoints() +
-                        "     SCORE     " + GameScreen.game.getPlayer2().getPoints() + "     " + GameScreen.game.getPlayer2().getName()
-                        + "     " + GameScreen.game.getPlayerTurn().getName() + " it's your turn "
-                        + "     Turn " + GameScreen.game.getTurnCount() + "/" + GameScreen.game.getTurnLimit());
-				currentPlayerName.setText(GameScreen.game.getPlayerTurn().getName()+"'s TURN");
-				GoalMenu.fillGoalScreen();
-				LocomotionCommotion.gameStateList.add(LocomotionCommotion.getInstance());
-				
-				for (int i = 0; i < LocomotionCommotion.gameStateList.size(); i++){
-					System.out.println("Turn " + i + ": " + LocomotionCommotion.gameStateList.get(i).gameScreen.game.getPlayer1().getTrains().get(0).isInStation());
+					ArrayList<Train> playerTrains = GameScreen.game.getPlayerTurn().getTrains();	
+					for(Train t : playerTrains)
+					{
+						t.moveTrain();
+					}
+
+					GameScreen.game.EndTurn();
+					GameScreenUI.refreshResources();
+					Game_Shop.actorManager.refreshgold(GameScreen.game.getPlayerTurn().getGold());
+					PlayerGoals.changePlayer(GameScreen.game.getPlayerTurn());
+					Game_CardHand.actorManager.changePlayer(GameScreen.game.getPlayerTurn());
+					playerScore.setText(GameScreen.game.getPlayer1().getName() + "    " + GameScreen.game.getPlayer1().getPoints() +
+	                        "     SCORE     " + GameScreen.game.getPlayer2().getPoints() + "     " + GameScreen.game.getPlayer2().getName()
+	                        + "     " + GameScreen.game.getPlayerTurn().getName() + " it's your turn "
+	                        + "     Turn " + GameScreen.game.getTurnCount() + "/" + GameScreen.game.getTurnLimit());
+					currentPlayerName.setText(GameScreen.game.getPlayerTurn().getName()+"'s TURN");
+					GoalMenu.fillGoalScreen();
 				}
-				System.out.println();
-			}
+				else
+				{
+					if (GameScreen.game.getPlayer1().getPoints() == GameScreen.game.getPlayer2().getPoints()){
+						//Tie
+						victorScore = GameScreen.game.getPlayer1().getPoints();
+						WarningMessage.fireWarningWindow("GAME OVER", "It's a tie! Both players got " + victorScore + " points.");
+					}
+					
+					else
+					{
+						if (GameScreen.game.getPlayer1().getPoints() > GameScreen.game.getPlayer2().getPoints())
+						{
+							//Player 1 victory
+							victorName = GameScreen.game.getPlayer1().getName();
+							victorScore = GameScreen.game.getPlayer1().getPoints();
+						}
+						
+						else
+						{
+							//Player 2 victory
+							victorName = GameScreen.game.getPlayer2().getName();
+							victorScore = GameScreen.game.getPlayer2().getPoints();
+						}
+						
+						WarningMessage.fireWarningWindow("GAME OVER", victorName + " wins with " + victorScore + " points!");
+					}
+				}
+			}	
 		};
 		actors.add(game_menuobject_endturnbutton);
 
