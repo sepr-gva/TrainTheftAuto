@@ -50,6 +50,8 @@ public class Game_Map_Manager {
 	public static Sprite mapInfo, mapLines, cityNames;
 
 	public static Array<ConnectionSprite> connectionSprites = new Array<ConnectionSprite>();
+	
+	public static boolean routingMode = false;
 
 	public static Sprite stationInfo;
 	public static Game_Map_StationBtn stationSelect;
@@ -201,6 +203,8 @@ public class Game_Map_Manager {
 							WarningMessage.fireWarningWindow("TRAIN NOT AT START STATION", "This train is not in the start station of the goal, choose another.");
 						}
 					}
+				}
+				else if (routingMode){
 					exitRoutingMode();
 				}
 			}
@@ -234,10 +238,7 @@ public class Game_Map_Manager {
 			@Override
 			protected void onClicked()
 			{
-				if(Game_Map_Manager.trainInfo.train != null){
-					Game_Map_Manager.trainInfo.train.route.cancelRoute();
-				}
-				else if (Game_Map_Manager.sellTrain){
+				if (Game_Map_Manager.sellTrain){
 					WarningMessage.fireWarningWindow("SALE ABORTED", "You did not sell a train.");
 					sellTrain = false;
 					confirmRouteBtn.setVisible(false);
@@ -272,6 +273,9 @@ public class Game_Map_Manager {
 					Game_CardHand.actorManager.organiseHand();
 					cardToggle();
 					cardToggle();
+				}
+				else if(Game_Map_Manager.trainInfo.train != null){
+					Game_Map_Manager.trainInfo.train.route.cancelRoute();
 				}
 			}
 		};
@@ -431,6 +435,7 @@ public class Game_Map_Manager {
 		routeRemaining.setVisible(true);
 		routeFuelCost.setVisible(true);
 		undoLastRouteButton.setVisible(true);
+		routingMode = true;
 	}
 
 	public static void exitRoutingMode()
@@ -453,6 +458,7 @@ public class Game_Map_Manager {
 		routeRemaining.setVisible(false);
 		routeFuelCost.setVisible(false);
 		undoLastRouteButton.setVisible(false);
+		routingMode = false;
 	}
 
 	public static void moveInfoBox(float x,float y){
