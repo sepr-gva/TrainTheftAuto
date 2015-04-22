@@ -13,7 +13,12 @@ public class RemoveRailCard extends Card{
 	@Override
 	public void implementCard()
 	{
-		Game_Map_Manager.implementRemoveConnection();
+		if (!Game_Map_Manager.implementRemoveConnection()){
+			Card card = new RemoveRailCard(this.getOwner());
+			this.getOwner().getCards().add(card);
+			Game_CardHand.actorManager.addCard(card);
+			Game_CardHand.actorManager.organiseHand();
+		}
 	}
 
 }

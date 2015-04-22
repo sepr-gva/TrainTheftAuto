@@ -17,6 +17,7 @@ public abstract class Train {
 	private String name;
 	private int baseSpeed, speedMod;
 	public Goal goal = null;
+	public boolean upgraded = false;
 	
 	private Fuel fuel;
 	public int fuelPerTurn;

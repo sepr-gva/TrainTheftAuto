@@ -126,6 +126,8 @@ public class Shop {
 		{
 			WarningMessage.fireWarningWindow("SORRY", "You don't have enough gold!");
 		}
+		Game_Map_Manager.cardToggle();
+		Game_Map_Manager.cardToggle();
 	}
 	
 	public void buyTrain()

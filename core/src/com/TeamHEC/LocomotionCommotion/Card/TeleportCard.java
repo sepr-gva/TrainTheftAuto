@@ -39,5 +39,7 @@ public class TeleportCard extends Card{
 		Game_Map_Manager.teleportTrain = true;
 		Game_Map_Manager.currentTeleportCard = this;
 		Game_Map_Manager.oponentUntouchable();
+		Game_Map_Manager.confirmRouteBtn.setVisible(true);
+		Game_Map_Manager.cancelRouteBtn.setVisible(true);
 	}
 }

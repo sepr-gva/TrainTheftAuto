@@ -94,7 +94,7 @@ public class CardActor extends Actor {
 					Game_CardHand.actorManager.sellCard(cardNumber+1);
 					Game_Map_Manager.sellCard = false;
 				}
-				if (isExpanded()) //if expanded, we run cardCollapse which puts the card back in position.
+				else if (isExpanded()) //if expanded, we run cardCollapse which puts the card back in position.
 				{
 					this.cardCollapse();
 					Game_CardHand.actorManager.usecardbtn.setVisible(false);	// hides the use card button

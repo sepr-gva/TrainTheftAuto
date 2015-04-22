@@ -2,13 +2,20 @@ package com.TeamHEC.LocomotionCommotion.MapActors;
 
 import java.util.ArrayList;
 
+import com.TeamHEC.LocomotionCommotion.Card.AddRailCard;
+import com.TeamHEC.LocomotionCommotion.Card.Card;
+import com.TeamHEC.LocomotionCommotion.Card.Game_CardHand;
+import com.TeamHEC.LocomotionCommotion.Card.GoFasterStripesCard;
+import com.TeamHEC.LocomotionCommotion.Card.RemoveRailCard;
 import com.TeamHEC.LocomotionCommotion.Card.TeleportCard;
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
+import com.TeamHEC.LocomotionCommotion.Goal.PlayerGoals;
 import com.TeamHEC.LocomotionCommotion.Map.Connection;
 import com.TeamHEC.LocomotionCommotion.Map.Junction;
 import com.TeamHEC.LocomotionCommotion.Map.MapObj;
 import com.TeamHEC.LocomotionCommotion.Map.Station;
 import com.TeamHEC.LocomotionCommotion.Map.WorldMap;
+import com.TeamHEC.LocomotionCommotion.Train.SpeedUpgrade;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
 import com.TeamHEC.LocomotionCommotion.Train.TrainInfoUI;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.GameScreenUI;
@@ -41,25 +48,25 @@ public class Game_Map_Manager {
 	private final static Array<Actor> trainInfoActors = new Array<Actor>();
 
 	public static Sprite mapInfo, mapLines, cityNames;
-	
+
 	public static Array<ConnectionSprite> connectionSprites = new Array<ConnectionSprite>();
-	
+
 	public static Sprite stationInfo;
 	public static Game_Map_StationBtn stationSelect;
-	
+
 	public static boolean firstAddCity = false, secondAddCity = false, firstRemoveCity = false,
 			secondRemoveCity = false, teleportCity = false, teleportTrain = false, goFasterTrain = false, sellCard = false;
-	
-	public static TeleportCard currentTeleportCard = null;
-	
-	public static MapObj currentCity = null;
-	
-	public static boolean buyTrain = false, sellTrain = false;
-	
 
-    // Checks if a train is moving or not.
-    public static boolean isMoving = false;
-	
+	public static TeleportCard currentTeleportCard = null;
+
+	public static MapObj currentCity = null;
+
+	public static boolean buyTrain = false, sellTrain = false;
+
+
+	// Checks if a train is moving or not.
+	public static boolean isMoving = false;
+
 	public static TrainInfoUI trainInfo;
 
 	public static boolean infoVisible= false;
@@ -75,7 +82,7 @@ public class Game_Map_Manager {
 	public Game_Map_Manager(){	}
 
 	public void create(Stage stage){
-	
+
 		actors.clear();
 		infoactors.clear();
 		resetMap();
@@ -83,9 +90,9 @@ public class Game_Map_Manager {
 		mapActors=0;
 		stationTracker=0;
 		numberOfStations=0;
-		
+
 		// Create the broken connection sprites
-		
+
 		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAmsterdamBerlin, Game_Map_TextureManager.getInstance().obsAmsterdamBerlinG, WorldMap.getInstance().stationsList.get(4), WorldMap.getInstance().stationsList.get(18)));
 		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAmsterdamDublin, Game_Map_TextureManager.getInstance().obsAmsterdamDublinG, WorldMap.getInstance().stationsList.get(4), WorldMap.getInstance().stationsList.get(3)));
 		connectionSprites.add(new ConnectionSprite(100, 60, Game_Map_TextureManager.getInstance().obsAthensRome, Game_Map_TextureManager.getInstance().obsAthensRomeG, WorldMap.getInstance().stationsList.get(17), WorldMap.getInstance().stationsList.get(13)));
@@ -123,32 +130,84 @@ public class Game_Map_Manager {
 		planBackground = new Sprite(-1,50,Game_TextureManager.getInstance().game_pause_blackoutscreen);
 		planBackground.setVisible(false);
 		actors.add(planBackground);
-		
+
 		routingModeWindow = new Sprite(-20,65,Game_TextureManager.getInstance().routingModeWindow);
 		routingModeWindow.setVisible(false);
 		actors.add(routingModeWindow);
-		
+
 		confirmRouteBtn = new SpriteButton(20, 125, Game_TextureManager.getInstance().confirmroutingModebtn){
 			@Override
 			protected void onClicked(){
-				if (sellTrain){
-					GameScreen.game.getPlayerTurn().getTrains().remove(Game_Map_Manager.trainInfo.train);
-					Game_Map_Manager.trainInfo.train.getActor().setTouchable(Touchable.disabled);
-					Game_Map_Manager.trainInfo.train.getActor().setVisible(false);
-					Game_Map_Manager.trainInfo.makeVisible(false);
-					WarningMessage.fireWarningWindow("TRAIN SOLD", Game_Map_Manager.trainInfo.train.getName() + " has been sold for 1000 gold.");
-					GameScreen.game.getPlayerTurn().addGold(1000);
-					sellTrain = false;
-					confirmRouteBtn.setVisible(false);
-					cancelRouteBtn.setVisible(false);
-					System.out.println(GameScreen.game.getPlayerTurn().getTrains().size());
+				if (trainInfo.isVisible()){
+					Train train = trainInfo.train;
+					if (sellTrain){
+						GameScreen.game.getPlayerTurn().getTrains().remove(Game_Map_Manager.trainInfo.train);
+						Game_Map_Manager.trainInfo.train.getActor().setTouchable(Touchable.disabled);
+						Game_Map_Manager.trainInfo.train.getActor().setVisible(false);
+						Game_Map_Manager.trainInfo.makeVisible(false);
+						WarningMessage.fireWarningWindow("TRAIN SOLD", Game_Map_Manager.trainInfo.train.getName() + " has been sold for 1000 gold.");
+						GameScreen.game.getPlayerTurn().addGold(1000);
+						sellTrain = false;
+						confirmRouteBtn.setVisible(false);
+						cancelRouteBtn.setVisible(false);
+						System.out.println(GameScreen.game.getPlayerTurn().getTrains().size());
+					}
+					if (Game_Map_Manager.teleportTrain || Game_Map_Manager.goFasterTrain){
+						if (Game_Map_Manager.teleportTrain == true && GameScreen.game.getPlayerTurn() == train.getOwner()){
+							Game_Map_Manager.currentTeleportCard.train = train;
+							WarningMessage.fireWarningWindow("Choose a City!", "Choose the City you would like to teleport "
+									+ train.getName() + " to.");
+							Game_Map_Manager.teleportTrain = false;
+							Game_Map_Manager.trainsUntouchable();
+							Game_Map_Manager.teleportCity = true;
+							Game_Map_Manager.trainInfo.makeVisible(false);
+							confirmRouteBtn.setVisible(false);
+							cancelRouteBtn.setVisible(false);
+						}
+						else if (Game_Map_Manager.goFasterTrain == true && GameScreen.game.getPlayerTurn() == train.getOwner()){
+							if (!train.upgraded){
+								Game_Map_Manager.goFasterTrain = false;
+								SpeedUpgrade speedUpgrade = new SpeedUpgrade(train);
+								train.addUpgrade(speedUpgrade);
+								Game_Map_Manager.oponentTouchable();
+								WarningMessage.fireWarningWindow("Go Faster Stripes Added!", "Go Faster Stripes were added to "
+										+ train.getName() + ".");
+								Game_Map_Manager.trainInfo.makeVisible(false);
+								confirmRouteBtn.setVisible(false);
+								cancelRouteBtn.setVisible(false);
+							}
+							else{
+								WarningMessage.fireWarningWindow("Train already Upgraded!", "This train has already been upgraded, choose another.");
+
+							}
+						}
+						else{
+							WarningMessage.fireWarningWindow("Not your Train!", "That is not your train, choose another.");
+						}
+					}
+					if(PlayerGoals.chooseTrain && GameScreen.game.getPlayerTurn() == train.getOwner())
+					{
+						if (PlayerGoals.selectedGoal.getSStationObject().getStation() == train.getRoute().getStation()){
+							PlayerGoals.selectedGoal.assignTrain(train);
+							PlayerGoals.selectedGoal.setActor(PlayerGoals.selectedGoalActor);
+							WarningMessage.fireWarningWindow("GOAL ASSIGNED", "Goal assigned to train. Now plan your route!");
+							PlayerGoals.chooseTrain = false;
+							Game_Map_Manager.oponentTouchable();
+							Game_Map_Manager.trainInfo.makeVisible(false);
+							confirmRouteBtn.setVisible(false);
+							cancelRouteBtn.setVisible(false);
+						}
+						else {
+							WarningMessage.fireWarningWindow("TRAIN NOT AT START STATION", "This train is not in the start station of the goal, choose another.");
+						}
+					}
+					exitRoutingMode();
 				}
-				exitRoutingMode();
 			}
 		};
 		confirmRouteBtn.setVisible(false);
 		actors.add(confirmRouteBtn);
-		
+
 		undoLastRouteButton = new SpriteButton(130, 125, Game_TextureManager.getInstance().undoRouteBtn){
 			@Override
 			protected void onClicked()
@@ -159,7 +218,7 @@ public class Game_Map_Manager {
 		};
 		undoLastRouteButton.setVisible(false);
 		actors.add(undoLastRouteButton);
-		
+
 		abortRouteBtn = new SpriteButton(130, 80, Game_TextureManager.getInstance().abortRouteBtn){
 			@Override
 			protected void onClicked()
@@ -170,7 +229,7 @@ public class Game_Map_Manager {
 		};
 		abortRouteBtn.setVisible(false);
 		actors.add(abortRouteBtn);
-		
+
 		cancelRouteBtn = new SpriteButton(20, 80, Game_TextureManager.getInstance().cancelRouteBtn){
 			@Override
 			protected void onClicked()
@@ -183,7 +242,36 @@ public class Game_Map_Manager {
 					sellTrain = false;
 					confirmRouteBtn.setVisible(false);
 					cancelRouteBtn.setVisible(false);
-					
+				}
+				else if (PlayerGoals.chooseTrain){
+					WarningMessage.fireWarningWindow("ASSIGN ABORTED!", "You did not assign a train to this goal.");
+					PlayerGoals.chooseTrain = false;
+					confirmRouteBtn.setVisible(false);
+					cancelRouteBtn.setVisible(false);
+				}
+				else if (teleportTrain){
+					WarningMessage.fireWarningWindow("TELEPORT ABORTED!", "You did not choose a train to teleport.");
+					teleportTrain = false;
+					confirmRouteBtn.setVisible(false);
+					cancelRouteBtn.setVisible(false);
+					Card card = new TeleportCard(currentTeleportCard.getOwner());
+					currentTeleportCard.getOwner().getCards().add(card);
+					Game_CardHand.actorManager.addCard(card);
+					Game_CardHand.actorManager.organiseHand();
+					cardToggle();
+					cardToggle();
+				}
+				else if (Game_Map_Manager.goFasterTrain){
+					WarningMessage.fireWarningWindow("UPGRADE ABORTED!", "You did not choose a train to upgrade.");
+					goFasterTrain = false;
+					confirmRouteBtn.setVisible(false);
+					cancelRouteBtn.setVisible(false);
+					Card card = new GoFasterStripesCard(GameScreen.game.getPlayerTurn());
+					GameScreen.game.getPlayerTurn().getCards().add(card);
+					Game_CardHand.actorManager.addCard(card);
+					Game_CardHand.actorManager.organiseHand();
+					cardToggle();
+					cardToggle();
 				}
 			}
 		};
@@ -192,17 +280,17 @@ public class Game_Map_Manager {
 
 		//mapLines = new Sprite(100, 60, Game_Map_TextureManager.getInstance().mapLines);		
 		//actors.add(mapLines);
-		
+
 		for (ConnectionSprite sprite : connectionSprites){
 			sprite.setVisible(false);
 			actors.add(sprite);
 			sprite.getGreySprite().setVisible(true);
 			actors.add(sprite.getGreySprite());
 		}
-		
+
 		cityNames = new Sprite(100, 60, Game_Map_TextureManager.getInstance().cityNames);
 		actors.add(cityNames);
-	
+
 		stationTracker=stage.getActors().size;
 		for(int i = 0; i < WorldMap.getInstance().stationsList.size(); i++)
 		{
@@ -215,19 +303,19 @@ public class Game_Map_Manager {
 		{
 			actors.add(WorldMap.getInstance().junction[i].getActor());
 		}
-		
+
 		// Creates UI Train blips for 6 trains:
 		for(int i = 0; i < 6; i++)
 		{
 			trainBlips.add(new Game_Map_Train());
 		}
 		actors.addAll(trainBlips);
-		
+
 		// Add train stuff
 
 		stationInfo = new Sprite(0, 0, Game_Map_TextureManager.getInstance().stationInfo);
 		infoactors.add(stationInfo);
-		
+
 		trainInfo = new TrainInfoUI();		
 		trainInfoActors.add(trainInfo);
 		trainInfoActors.addAll(trainInfo.getActors());
@@ -250,7 +338,7 @@ public class Game_Map_Manager {
 		stationLabelName = new Label(null, style);
 		stationLabelFuel = new Label(null, style);
 		stationLabelCost = new Label(null, style);
-			
+
 		stationLabelName.setText("LONDON");
 		stationLabelName.setAlignment(Align.center);		
 		stationLabelName.setColor(1,1,1,1);
@@ -268,20 +356,20 @@ public class Game_Map_Manager {
 		stationLabelCost.setColor(0,0,0,1);
 		stationLabelCost.setX(stationInfo.getX()+100);
 		stationLabelCost.setY(stationInfo.getY()+60);
-		
+
 		// Route Labels
 		routeLength = new Label(null, style);
 		routeRemaining = new Label(null, style);
 		routeFuelCost =  new Label(null, style);
-		
+
 		routeLength.setText("Route length: 0");
 		routeRemaining.setText("Route remaining: 0");
 		routeFuelCost.setText("Fuel cost (): 0");
-		
+
 		routeLength.setPosition(10, 245, Align.center);
 		routeRemaining.setPosition(10, 215, Align.center);
 		routeFuelCost.setPosition(10, 185, Align.center);
-		
+
 		routeLength.setVisible(false);
 		routeRemaining.setVisible(false);
 		routeFuelCost.setVisible(false);
@@ -295,15 +383,15 @@ public class Game_Map_Manager {
 		infoactors.add(stationLabelName);
 		infoactors.add(stationLabelFuel);
 		infoactors.add(stationLabelCost);
-		
+
 		for(Actor a : actors)
 		{
 			a.setTouchable(Touchable.enabled);
 			stage.addActor(a);
 		}
-		
+
 		stagestart = stage.getActors().size;
-		
+
 		for (Actor a : infoactors){
 			a.setTouchable(Touchable.enabled);
 			a.setVisible(false);
@@ -317,50 +405,50 @@ public class Game_Map_Manager {
 			a.setVisible(false);
 			stage.addActor(a);
 		}
-		
+
 		mapInfo = new Sprite(500, 100, Game_TextureManager.getInstance().mapInfo);
 
 		mapInfo.setVisible(infoVisible);
 		stage.addActor(mapInfo);
 	}
-	
+
 	public static void enterRoutingMode()
 	{		
 		trainInfo.train.getRoute().showRouteBlips();
-				
+
 		trainsUntouchable();
-		
+
 		GameScreenUI.game_menuobject_endturnbutton.setVisible(false);
-		
+
 		planBackground.setVisible(true);
 		routingModeWindow.setVisible(true);
 		confirmRouteBtn.setVisible(true);
 		undoLastRouteButton.setVisible(true);
 		abortRouteBtn.setVisible(true);
 		cancelRouteBtn.setVisible(true);
-		
+
 		routeLength.setVisible(true);
 		routeRemaining.setVisible(true);
 		routeFuelCost.setVisible(true);
 		undoLastRouteButton.setVisible(true);
 	}
-	
+
 	public static void exitRoutingMode()
 	{
 		trainInfo.unhighlightAdjacent();
 		trainInfo.train.getRoute().hideRouteBlips();
-		
+
 		trainsTouchable();
-		
+
 		GameScreenUI.game_menuobject_endturnbutton.setVisible(true);
-		
+
 		planBackground.setVisible(false);
 		routingModeWindow.setVisible(false);
 		confirmRouteBtn.setVisible(false);
 		undoLastRouteButton.setVisible(false);
 		abortRouteBtn.setVisible(false);
 		cancelRouteBtn.setVisible(false);
-		
+
 		routeLength.setVisible(false);
 		routeRemaining.setVisible(false);
 		routeFuelCost.setVisible(false);
@@ -418,7 +506,7 @@ public class Game_Map_Manager {
 			}
 		}
 	}
-	
+
 	public static void removeConnection(MapObj start, MapObj end){
 		//boolean for checking whether a valid connection is ever found between the map objects
 		boolean validConnection = false;
@@ -432,7 +520,7 @@ public class Game_Map_Manager {
 						//if it is already broken, dont break it, print a warning
 						if (!connection.getTraversable()){
 							System.out.println("Connection between " + start.getName() +
-							" and " + end.getName() + " is already broken.");
+									" and " + end.getName() + " is already broken.");
 						}
 						else{
 							//set first connection to this connection if it isnt broken
@@ -457,7 +545,7 @@ public class Game_Map_Manager {
 					if (connection.getDestination() == end){
 						if (!connection.getTraversable()){
 							System.out.println("Connection between " + start.getName() +
-							" and " + end.getName() + " is already broken.");
+									" and " + end.getName() + " is already broken.");
 						}
 						connection1 = connection;
 					}
@@ -471,7 +559,7 @@ public class Game_Map_Manager {
 				}
 			}
 		}
-		
+
 		//boolean to show whether there is a train on the rail
 		boolean trainOnRail = false;
 		//iterate over all player 1's trains if they have any
@@ -520,14 +608,14 @@ public class Game_Map_Manager {
 				}
 			}
 		}
-		
+
 		//if no valid connection is found print a warning to the console
 		if (!validConnection){
 			System.out.println("There is no connection between " + start.getName() + 
 					" and " + end.getName() + ".");
 		}
 	}
-	
+
 	/**
 	 * Purely for testing purposes, removes the check for whether a train is on the
 	 * piece of rail as when the test is run, the game is not fully set up and causes 
@@ -546,7 +634,7 @@ public class Game_Map_Manager {
 					if (connection.getDestination() == end){
 						if (!connection.getTraversable()){
 							System.out.println("Connection between " + start.getName() +
-							" and " + end.getName() + " is already broken.");
+									" and " + end.getName() + " is already broken.");
 						}
 						else{
 							connection1 = connection;
@@ -568,7 +656,7 @@ public class Game_Map_Manager {
 					if (connection.getDestination() == end){
 						if (!connection.getTraversable()){
 							System.out.println("Connection between " + start.getName() +
-							" and " + end.getName() + " is already broken.");
+									" and " + end.getName() + " is already broken.");
 						}
 						connection1 = connection;
 					}
@@ -582,27 +670,27 @@ public class Game_Map_Manager {
 				}
 			}
 		}
-		
+
 		if (connection1 != null && connection2 != null){
 			connection1.setTraversable(false);
 			connection2.setTraversable(false);
 			validConnection = true;
 			for (ConnectionSprite sprite : connectionSprites){
 				if ((connection1.getStartMapObj() == sprite.getCity1() &&
-					connection1.getDestination() == sprite.getCity2()) ||
-					connection1.getDestination() == sprite.getCity1() &&
-					connection1.getStartMapObj() == sprite.getCity2()){
+						connection1.getDestination() == sprite.getCity2()) ||
+						connection1.getDestination() == sprite.getCity1() &&
+						connection1.getStartMapObj() == sprite.getCity2()){
 					sprite.getGreySprite().setVisible(false);
 				}
 			}
 		}
-		
+
 		if (!validConnection){
 			System.out.println("There is no connection between " + start.getName() + 
 					" and " + end.getName() + ".");
 		}
 	}
-	
+
 	//done the exact same way as break rail, however as soon as a valid connection is found it is set to traversable
 	//because we dont have to worry about whether there is a train on the rail, connectionSprite also found
 	public static void addConnection(MapObj start, MapObj end){
@@ -613,7 +701,7 @@ public class Game_Map_Manager {
 					if (connection.getDestination() == end){
 						if (connection.getTraversable()){
 							System.out.println("Connection between " + start.getName() +
-							" and " + end.getName() + " is not broken.");
+									" and " + end.getName() + " is not broken.");
 						}
 						connection.setTraversable(true);
 						validConnection = true;
@@ -642,7 +730,7 @@ public class Game_Map_Manager {
 					if (connection.getDestination() == end){
 						if (connection.getTraversable()){
 							System.out.println("Connection between " + start.getName() +
-							" and " + end.getName() + " is not broken.");
+									" and " + end.getName() + " is not broken.");
 						}
 						connection.setTraversable(true);
 						validConnection = true;
@@ -670,31 +758,31 @@ public class Game_Map_Manager {
 					" and " + end.getName() + ".");
 		}
 	}
-	
+
 	public static void trainsUntouchable(){
 		// Allows you to click on stations that are covered by trains:
-				for(Train t : GameScreen.game.getPlayer1().getTrains())
-				{
-					t.getActor().setTouchable(Touchable.disabled);
-				}
-				for(Train t : GameScreen.game.getPlayer2().getTrains())
-				{
-					t.getActor().setTouchable(Touchable.disabled);
-				}
+		for(Train t : GameScreen.game.getPlayer1().getTrains())
+		{
+			t.getActor().setTouchable(Touchable.disabled);
+		}
+		for(Train t : GameScreen.game.getPlayer2().getTrains())
+		{
+			t.getActor().setTouchable(Touchable.disabled);
+		}
 	}
-	
+
 	public static void trainsTouchable(){
 		//Makes trains clickable again
-				for(Train t : GameScreen.game.getPlayer1().getTrains())
-				{
-					t.getActor().setTouchable(Touchable.enabled);
-				}
-				for(Train t : GameScreen.game.getPlayer2().getTrains())
-				{
-					t.getActor().setTouchable(Touchable.enabled);
-				}
+		for(Train t : GameScreen.game.getPlayer1().getTrains())
+		{
+			t.getActor().setTouchable(Touchable.enabled);
+		}
+		for(Train t : GameScreen.game.getPlayer2().getTrains())
+		{
+			t.getActor().setTouchable(Touchable.enabled);
+		}
 	}
-	
+
 	public static void oponentUntouchable(){
 		if (GameScreen.game.getPlayerTurn() == GameScreen.game.getPlayer1()){
 			for(Train t : GameScreen.game.getPlayer2().getTrains())
@@ -709,7 +797,7 @@ public class Game_Map_Manager {
 			}
 		}
 	}
-	
+
 	public static void oponentTouchable(){
 		if (GameScreen.game.getPlayerTurn() == GameScreen.game.getPlayer1()){
 			for(Train t : GameScreen.game.getPlayer2().getTrains())
@@ -724,8 +812,8 @@ public class Game_Map_Manager {
 			}
 		}
 	}
-	
-	public static void implementAddConnection(){
+
+	public static boolean implementAddConnection(){
 		boolean addAvailable = false;
 		for (ConnectionSprite sprite : connectionSprites){
 			if (!sprite.getGreySprite().isVisible()){
@@ -741,13 +829,19 @@ public class Game_Map_Manager {
 				sprite.toggleGrey();
 			}
 			WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to add.");
+			return true;
 		}
 		else{
 			WarningMessage.fireWarningWindow("MAP IS FULL", "There are no more connections available to add.");
+			Card card = new AddRailCard(GameScreen.game.getPlayerTurn());
+			GameScreen.game.getPlayerTurn().getCards().add(card);
+			Game_CardHand.actorManager.addCard(card);
+			Game_CardHand.actorManager.organiseHand();
+			return false;
 		}
 	}
-	
-	public static void implementRemoveConnection(){
+
+	public static boolean implementRemoveConnection(){
 		boolean removeAvailable = false;
 		for (ConnectionSprite sprite : connectionSprites){
 			if (!sprite.isVisible()){
@@ -760,9 +854,46 @@ public class Game_Map_Manager {
 			trainsUntouchable();
 			planBackground.setVisible(true);
 			WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to remove.");
+			return true;
 		}
 		else{
 			WarningMessage.fireWarningWindow("MAP IS EMPTY", "There are no connections in the map to remove.");
+			Card card = new RemoveRailCard(GameScreen.game.getPlayerTurn());
+			GameScreen.game.getPlayerTurn().getCards().add(card);
+			Game_CardHand.actorManager.addCard(card);
+			Game_CardHand.actorManager.organiseHand();
+			return false;
+		}
+	}
+
+	public static void cardToggle(){
+		if (Game_CardHand.actorManager.open== false)
+		{
+			Game_CardHand.actorManager.open= true; //set hand as open (visible)
+			for(int i=Game_CardHand.actorManager.stagestart; i<=Game_CardHand.actorManager.stagestart +Game_CardHand.actorManager.cardActors-1;i++)	//Range of Card Actors
+			{ 	
+				if (i > GameScreen.getStage().getActors().size-1)
+				{//This is just to avoid range errors
+				}
+				else
+					GameScreen.getStage().getActors().get(i).setVisible(true); //Make Card Actors Visible
+			}			
+		}
+		else
+		{	
+			Game_CardHand.actorManager.open= false; //set hand as closed (hidden)
+			for(int i=Game_CardHand.actorManager.stagestart; i<=Game_CardHand.actorManager.stagestart +Game_CardHand.actorManager.cardActors-1;i++) //Range of Card Actors
+			{		
+				if (i > GameScreen.getStage().getActors().size-1)
+				{//This is just to avoid range errors
+				}
+				else
+					GameScreen.getStage().getActors().get(i).setVisible(false); //Make Card Actors Hidden
+			}
+
+			Game_CardHand.actorManager.selectedCard=0;	// 0 means that no card is selected 
+			Game_CardHand.actorManager.organiseHand(); 	//call OrganiseDeck - see Game_CardHand.organiseDeck() documentation
+			Game_CardHand.actorManager.usecardbtn.setVisible(false);	//hide the usecard button
 		}
 	}
 }
