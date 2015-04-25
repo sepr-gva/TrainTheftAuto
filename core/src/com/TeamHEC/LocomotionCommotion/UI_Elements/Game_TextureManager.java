@@ -24,7 +24,7 @@ public class Game_TextureManager {
 	}	
 	
 	//Top Bar
-	public  CustomTexture game_menuobject_topbar = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/TopBar.png"));
+	public CustomTexture game_menuobject_topbar = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/TopBar.png"));
 	public CustomTexture game_menuobject_menubtn = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/menubtn.png"));
 	
 	//Resources

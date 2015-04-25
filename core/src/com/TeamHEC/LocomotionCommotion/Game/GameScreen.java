@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
 	public static SpriteBatch sb;
 	public OrthographicCamera camera;
 	public static Game_Map_Manager mapManager;
-	private Boolean replayMode;
+	private static Boolean replayMode;
 	/**
 	 * 
 	 */
@@ -85,7 +85,7 @@ public class GameScreen implements Screen {
 		PlayerGoals ticketManager = new PlayerGoals();
 		ticketManager.create(getStage());	
 		
-		Game_StartingSequence startgameManager = new Game_StartingSequence();
+		Game_StartingSequence startgameManager = new Game_StartingSequence(replayMode);
 		startgameManager.create(getStage());
 		
 		Game_Shop shop = new Game_Shop();

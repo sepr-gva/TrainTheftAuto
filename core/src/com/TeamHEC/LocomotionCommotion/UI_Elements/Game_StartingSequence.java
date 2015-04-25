@@ -34,8 +34,11 @@ public class Game_StartingSequence {
 	public static Label selectLabel;
 	public static boolean player1 = true, inProgress = true;
 	public static SpriteButton getStartedWindow;
+	public Boolean replayMode;
 
-	public Game_StartingSequence(){}
+	public Game_StartingSequence(Boolean replayModeChoice){
+		replayMode = replayModeChoice;
+	}
 
 	public void create(Stage stage)
 	{
@@ -52,7 +55,10 @@ public class Game_StartingSequence {
 				this.setVisible(false);
 			}
 		};
-		actors.add(getStartedWindow);
+		
+		if (!replayMode){
+			actors.add(getStartedWindow);
+		}
 
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/gillsans.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
@@ -70,8 +76,10 @@ public class Game_StartingSequence {
 		selectLabel.setAlignment(Align.center);
 		selectLabel.setX(790);
 		selectLabel.setY(575);
-
-		actors.add(selectLabel);
+		
+		if (!replayMode){
+			actors.add(selectLabel);	
+		}
 
 		stagestart= stage.getActors().size;
 		for (Actor a : actors){
