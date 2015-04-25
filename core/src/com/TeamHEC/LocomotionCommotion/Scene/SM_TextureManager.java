@@ -23,10 +23,10 @@ public class SM_TextureManager {
 	public CustomTexture sm_main_title = new CustomTexture(Gdx.files.internal("startMenu/sm_main/smTitle1.png"));
 	public CustomTexture sm_main_newgamebtn = new CustomTexture(Gdx.files.internal("startMenu/sm_main/sm_newgame.png"));
 	public CustomTexture sm_main_loadgamebtn = new CustomTexture(Gdx.files.internal("startMenu/sm_main/sm_loadgame.png"));
-	public CustomTexture sm_main_preferencesbtn = new CustomTexture(Gdx.files.internal("startMenu/sm_main/sm_preferences.png"));
+	public CustomTexture sm_main_replaymodebtn = new CustomTexture(Gdx.files.internal("startMenu/sm_main/sm_replaymode.png"));
 	public CustomTexture sm_main_howtoplaybtn = new CustomTexture(Gdx.files.internal("startMenu/sm_main/sm_howtoplay.png"));
 	public CustomTexture sm_main_exitButton = new CustomTexture(Gdx.files.internal("startMenu/sm_main/sm_exitgame.png"));
-	public CustomTexture sm_main_linesimg = new CustomTexture(Gdx.files.internal("startMenu/sm_main/lines.png"));
+	public CustomTexture sm_main_linesimg = new CustomTexture(Gdx.files.internal("startMenu/sm_main/linesNew.png"));
 	
 	//Start Menu NewGame Page
 	public CustomTexture sm_newgame_MenuText = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/newgamescreen_nomodes.png"));
@@ -49,13 +49,17 @@ public class SM_TextureManager {
 	public CustomTexture sm_loadgame_Examples = new CustomTexture(Gdx.files.internal("startMenu/sm_loadgame/loadgameexamples.png"));
 	
 	//StartMenu Preferences Page
+	/*
 	public CustomTexture sm_preferences_VertLine = new CustomTexture(Gdx.files.internal("startMenu/sm_preferences/vertline.png"));
 	public CustomTexture sm_preferences_Title = new CustomTexture(Gdx.files.internal("startMenu/sm_preferences/preferencestitle.png"));
 	public CustomTexture sm_preferences_GameSettingsBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_preferences/gamesettingsbtn.png"));
 	public CustomTexture sm_preferences_DisplaySettingsBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_preferences/displaysettingsbtn.png"));
 	public CustomTexture sm_preferences_SoundSettingsBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_preferences/soundsettingsbtn.png"));
 	public CustomTexture sm_preferences_ControlSettingsBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_preferences/controlsettingsbtn.png"));
+	*/
 	
+	//StartMenu Replay Mode Page
+	public CustomTexture sm_replaymode_Title = new CustomTexture(Gdx.files.internal("startMenu/sm_replaymode/replaymodetitle.png"));
 	
 	//StartMenu HowtoPlayPage
 	public CustomTexture sm_howtoplay_line = new CustomTexture(Gdx.files.internal("startMenu/sm_howtoplay/howtoplayline.png"));

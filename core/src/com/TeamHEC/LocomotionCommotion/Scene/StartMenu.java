@@ -12,7 +12,7 @@ public class StartMenu extends Scene{
 
 	private Sprite sm_main_title, sm_main_lines;
 	@SuppressWarnings("unused")
-	private SpriteButton newGameButton, loadGameButton, preferencesButton, howToPlayButton, exitButton;
+	private SpriteButton newGameButton, loadGameButton, replaymodeButton, howToPlayButton, exitButton;
 
 	//Start Menu NewGame Page
 	private Sprite sm_newgame_menutext;
@@ -23,12 +23,12 @@ public class StartMenu extends Scene{
 	private Sprite sm_loadgame_title, sm_loadgame_examples;
 
 	//Start Menu Preferences Page
-	private Sprite sm_preferences_vertline, sm_preferences_titletext;
+	private Sprite sm_preferences_vertline, sm_replaymode_titletext;
 
 	//Start Menu HowtoPlay Page
 	private Sprite sm_howtoplay_line, sm_howtoplay_title;
 	private Sprite sm_howtoplay_frame;
-	private SpriteButton loadGameBckButton, prefBackButton, settingsButton;
+	private SpriteButton loadGameBckButton, replaymodeBackButton, settingsButton;
 	private SpriteButton displayButton, soundButton, controlButton;
 	private SpriteButton homeButton, nextButton, prevButton, preferencesBackButton;
 
@@ -123,7 +123,7 @@ public class StartMenu extends Scene{
         // Not yet implemented. Hidden.
 		// actors.add(loadGameButton);
 
-		preferencesButton = new SpriteButton(590, 330, SM_TextureManager.getInstance().sm_main_preferencesbtn){
+		replaymodeButton = new SpriteButton(590, 330, SM_TextureManager.getInstance().sm_main_replaymodebtn){
 
 			@Override
 			public void onClicked()
@@ -165,8 +165,7 @@ public class StartMenu extends Scene{
 			}
 
 		};
-        // Not yet implemented. Hidden.
-        // actors.add(preferencesButton);
+        actors.add(replaymodeButton);
 
 		howToPlayButton = new SpriteButton(590, 255, SM_TextureManager.getInstance().sm_main_howtoplaybtn){
 			@Override
@@ -387,10 +386,10 @@ public class StartMenu extends Scene{
 
 		//Start Menu Preferences Page
 
-		sm_preferences_vertline = new Sprite(1420,-900+72, SM_TextureManager.getInstance().sm_preferences_VertLine);
-		actors.add(sm_preferences_vertline);
+		//sm_preferences_vertline = new Sprite(1420,-900+72, SM_TextureManager.getInstance().sm_preferences_VertLine);
+		//actors.add(sm_preferences_vertline);
 
-		prefBackButton = new SpriteButton(1390, -900+ 745, SM_TextureManager.getInstance().sm_newgame_BackBtn){
+		replaymodeBackButton = new SpriteButton(1390, -900+ 745, SM_TextureManager.getInstance().sm_newgame_BackBtn){
 
 			@Override
 			public void onClicked()
@@ -431,11 +430,12 @@ public class StartMenu extends Scene{
 				}
 			}
 		};
-		actors.add(prefBackButton);
+		actors.add(replaymodeBackButton);
 
-		sm_preferences_titletext = new Sprite(500,-900+720, SM_TextureManager.getInstance().sm_preferences_Title);
-		actors.add(sm_preferences_titletext);
+		sm_replaymode_titletext = new Sprite(500,-900+720, SM_TextureManager.getInstance().sm_replaymode_Title);
+		actors.add(sm_replaymode_titletext);
 
+		/*
 		settingsButton = new SpriteButton(890, -900+550, SM_TextureManager.getInstance().sm_preferences_GameSettingsBtn){
 
 			@Override
@@ -475,6 +475,7 @@ public class StartMenu extends Scene{
 			}
 		};
 		actors.add(controlButton);
+		*/
 
 		//StartMenu HowtoPlay screen
 

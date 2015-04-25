@@ -49,9 +49,14 @@ public class GameScreen implements Screen {
 	public static SpriteBatch sb;
 	public OrthographicCamera camera;
 	public static Game_Map_Manager mapManager;
+	private Boolean replayMode;
 	/**
 	 * 
 	 */
+	public GameScreen(Boolean replayModeChosen){
+		replayMode = replayModeChosen;
+	}
+	
 	public static void create(){
 		//Set up stage camera
 		stage = new Stage(new StretchViewport(1680, 1050)); 
@@ -101,6 +106,15 @@ public class GameScreen implements Screen {
 	
 	@Override
 	public void render(float delta) {
+		if (replayMode){
+			GameScreenUI.game_menuobject_cornerframe.setVisible(false);
+			GameScreenUI.game_menuobject_endturnbutton.setVisible(false);
+			GameScreenUI.game_menuobject_infobutton.setVisible(false);
+			GameScreenUI.game_menuobject_shopbtn.setVisible(false);
+			GameScreenUI.game_menuobject_goalscreenbtn.setVisible(false);
+			Game_PauseMenu.actorManager.game_pause_save.setVisible(false);
+		}
+		
 		getStage().getCamera().update();
 
 		Gdx.gl.glClearColor(1,1,1,1);

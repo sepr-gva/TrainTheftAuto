@@ -50,7 +50,6 @@ public class Game_StartingSequence {
 			protected void onClicked(){
 				Game_StartingSequence.selectLabel.setVisible(false);
 				this.setVisible(false);
-				
 			}
 		};
 		actors.add(getStartedWindow);
@@ -80,7 +79,6 @@ public class Game_StartingSequence {
 			stage.addActor(a);
 			startGameActors ++;
 		}
-
 	}
 
 	public static void startGame(){
@@ -95,7 +93,7 @@ public class Game_StartingSequence {
 		}
 
 		//Handle Text within Game
-		//Score and Who's Turn it is
+		//Score and whose turn it is
 		GameScreenUI.playerScore.setText(GameScreen.game.getPlayer1().getName()+"    " + 0 +
 				"     SCORE     "+ 0+"     "+GameScreen.game.getPlayer2().getName());
 		GameScreenUI.currentPlayerName.setText(GameScreen.game.getPlayerTurn().getName()+"'s TURN");
