@@ -60,6 +60,7 @@ public class SM_TextureManager {
 	
 	//StartMenu Replay Mode Page
 	public CustomTexture sm_replaymode_Title = new CustomTexture(Gdx.files.internal("startMenu/sm_replaymode/replaymodetitle.png"));
+	public CustomTexture sm_replaymode_GoButton = new CustomTexture(Gdx.files.internal("startmenu/sm_replaymode/basicgobutton.png"));
 	
 	//StartMenu HowtoPlayPage
 	public CustomTexture sm_howtoplay_line = new CustomTexture(Gdx.files.internal("startMenu/sm_howtoplay/howtoplayline.png"));

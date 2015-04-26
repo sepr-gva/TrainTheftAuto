@@ -52,10 +52,10 @@ public class LocomotionCommotion extends Game {
 	 * setting for all the relevant gameScreen objects.
 	 * Finally we set the screen to gameScreen.
 	 */
-	public void setGameScreen()
+	public void setGameScreen(Boolean replayMode)
 	{
 		SceneManager.getInstance().startScene.dispose();
-		gameScreen = new GameScreen(false);
+		gameScreen = new GameScreen(replayMode);
 		GameScreen.create();
 		gameScreen.resetScreen();
 		Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );

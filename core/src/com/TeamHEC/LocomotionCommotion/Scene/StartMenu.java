@@ -22,8 +22,9 @@ public class StartMenu extends Scene{
 	//Start Menu LoadGame Page
 	private Sprite sm_loadgame_title, sm_loadgame_examples;
 
-	//Start Menu Preferences Page
+	//Start Menu Preferences/Replay Mode Page
 	private Sprite sm_preferences_vertline, sm_replaymode_titletext;
+	private SpriteButton sm_replaymode_gobutton;
 
 	//Start Menu HowtoPlay Page
 	private Sprite sm_howtoplay_line, sm_howtoplay_title;
@@ -235,7 +236,7 @@ public class StartMenu extends Scene{
 				}
 				
 				LocomotionCommotion.turnChoice = turnChoice;
-				LocomotionCommotion.getInstance().setGameScreen();
+				LocomotionCommotion.getInstance().setGameScreen(false);
 
 				resetNewGameScreen();
 			}
@@ -554,6 +555,18 @@ public class StartMenu extends Scene{
 		};
 		actors.add(preferencesBackButton);
 
+		sm_replaymode_gobutton = new SpriteButton(1750, -850, SM_TextureManager.getInstance().sm_replaymode_GoButton){
+			@Override
+			public void onClicked(){
+				//Need to get player names and turn choice from JSON.
+				LocomotionCommotion.player1name = "Replay1";
+				LocomotionCommotion.player2name = "Replay2";
+				LocomotionCommotion.turnChoice = 50;
+				LocomotionCommotion.getInstance().setGameScreen(true);
+			}
+		};
+		actors.add(sm_replaymode_gobutton);
+		
 		//Text boxes for Player 1 and 2 names
 		Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
