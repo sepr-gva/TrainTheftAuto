@@ -171,7 +171,7 @@ public class Game_Map_Manager {
 								Game_Map_Manager.goFasterTrain = false;
 								SpeedUpgrade speedUpgrade = new SpeedUpgrade(train);
 								train.addUpgrade(speedUpgrade);
-								Game_Map_Manager.oponentTouchable();
+								Game_Map_Manager.opponentTouchable();
 								WarningMessage.fireWarningWindow("Go Faster Stripes Added!", "Go Faster Stripes were added to "
 										+ train.getName() + ".");
 								Game_Map_Manager.trainInfo.makeVisible(false);
@@ -194,7 +194,7 @@ public class Game_Map_Manager {
 							PlayerGoals.selectedGoal.setActor(PlayerGoals.selectedGoalActor);
 							WarningMessage.fireWarningWindow("GOAL ASSIGNED", "Goal assigned to train. Now plan your route!");
 							PlayerGoals.chooseTrain = false;
-							Game_Map_Manager.oponentTouchable();
+							Game_Map_Manager.opponentTouchable();
 							Game_Map_Manager.trainInfo.makeVisible(false);
 							confirmRouteBtn.setVisible(false);
 							cancelRouteBtn.setVisible(false);
@@ -789,7 +789,7 @@ public class Game_Map_Manager {
 		}
 	}
 
-	public static void oponentUntouchable(){
+	public static void opponentUntouchable(){
 		if (GameScreen.game.getPlayerTurn() == GameScreen.game.getPlayer1()){
 			for(Train t : GameScreen.game.getPlayer2().getTrains())
 			{
@@ -804,7 +804,7 @@ public class Game_Map_Manager {
 		}
 	}
 
-	public static void oponentTouchable(){
+	public static void opponentTouchable(){
 		if (GameScreen.game.getPlayerTurn() == GameScreen.game.getPlayer1()){
 			for(Train t : GameScreen.game.getPlayer2().getTrains())
 			{

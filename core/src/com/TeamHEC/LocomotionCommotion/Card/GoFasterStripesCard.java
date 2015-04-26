@@ -27,7 +27,7 @@ public class GoFasterStripesCard extends Card {
 		if (available){
 			WarningMessage.fireWarningWindow("Choose a Train!", "Choose the train you want to add Go Faster Stripes to.");
 			Game_Map_Manager.goFasterTrain = true;
-			Game_Map_Manager.oponentUntouchable();
+			Game_Map_Manager.opponentUntouchable();
 			Game_Map_Manager.confirmRouteBtn.setVisible(true);
 			Game_Map_Manager.cancelRouteBtn.setVisible(true);
 		}

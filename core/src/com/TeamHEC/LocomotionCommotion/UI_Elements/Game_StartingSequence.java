@@ -85,7 +85,7 @@ public class Game_StartingSequence {
 		for (Actor a : actors){
 			a.setTouchable(Touchable.enabled);
 			stage.addActor(a);
-			startGameActors ++;
+			startGameActors++;
 		}
 	}
 
@@ -94,7 +94,8 @@ public class Game_StartingSequence {
 		for(int i=GameScreenUI.getStageStart(); i<=GameScreenUI.getStageEnd();i++)	
 		{ 	
 			if (i > GameScreen.getStage().getActors().size-1)
-			{//This is just to avoid range errors
+			{
+				//This is just to avoid range errors
 			}
 			else
 				GameScreen.getStage().getActors().get(i).setVisible(true);
