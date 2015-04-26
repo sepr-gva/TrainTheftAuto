@@ -13,6 +13,7 @@ import com.TeamHEC.LocomotionCommotion.UI_Elements.GameScreenUI;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_PauseMenu;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_Shop;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_StartingSequence;
+import com.TeamHEC.LocomotionCommotion.UI_Elements.ReplayModeUI;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.WarningMessage;
 import com.TeamHEC.LocomotionCommotion.Map.WorldMap;
 import com.badlogic.gdx.Gdx;
@@ -98,16 +99,21 @@ public class GameScreen implements Screen {
 		WarningMessage warningMessage = new WarningMessage();
 		warningMessage.create(getStage());
 		
-		if (replayMode && Game_StartingSequence.inProgress){
-			WorldMap replayMap = WorldMap.getInstance();
-			Game_StartingSequence.player1 = false;
-			//p1station and p2station need to receive their values from a JSON object.
-			Station p1station = replayMap.stationsList.get(0);
-			Station p2station = replayMap.stationsList.get(1);
-			createCoreGame(p1station, p2station);
-			Game_StartingSequence.startGame();
-			GameScreenUI.refreshResources();
-			Game_StartingSequence.inProgress = false;
+		if (replayMode){
+			ReplayModeUI replayUI = new ReplayModeUI();
+			replayUI.create(getStage());
+			
+			if (Game_StartingSequence.inProgress){
+				WorldMap replayMap = WorldMap.getInstance();
+				Game_StartingSequence.player1 = false;
+				//p1station and p2station need to receive their values from a JSON object.
+				Station p1station = replayMap.stationsList.get(0);
+				Station p2station = replayMap.stationsList.get(1);
+				createCoreGame(p1station, p2station);
+				Game_StartingSequence.startGame();
+				GameScreenUI.refreshResources();
+				Game_StartingSequence.inProgress = false;
+			}
 		}
 	}
 	
