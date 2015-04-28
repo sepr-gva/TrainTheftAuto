@@ -113,6 +113,8 @@ public class PlayerGoals {
 					if (trainInStation == true){
 						WarningMessage.fireWarningWindow("TRAIN SELECTION", "Please select a train for this goal");
 						Game_Map_Manager.opponentUntouchable();
+						Game_Map_Manager.confirmRouteBtn.setVisible(true);
+						Game_Map_Manager.cancelRouteBtn.setVisible(true);
 						chooseTrain = true;
 					}
 					else{

@@ -57,7 +57,8 @@ public class Game_Map_Manager {
 	public static Game_Map_StationBtn stationSelect;
 
 	public static boolean firstAddCity = false, secondAddCity = false, firstRemoveCity = false,
-			secondRemoveCity = false, teleportCity = false, teleportTrain = false, goFasterTrain = false, sellCard = false;
+			secondRemoveCity = false, teleportCity = false, teleportTrain = false, goFasterTrain = false,
+			sellCard = false, giveAddRail = false, giveRemoveRail = false;
 
 	public static TeleportCard currentTeleportCard = null;
 
@@ -146,6 +147,7 @@ public class Game_Map_Manager {
 						GameScreen.game.getPlayerTurn().getTrains().remove(Game_Map_Manager.trainInfo.train);
 						Game_Map_Manager.trainInfo.train.getActor().setTouchable(Touchable.disabled);
 						Game_Map_Manager.trainInfo.train.getActor().setVisible(false);
+						trainInfo.train.getActor().setClickCountZero();
 						Game_Map_Manager.trainInfo.makeVisible(false);
 						WarningMessage.fireWarningWindow("TRAIN SOLD", Game_Map_Manager.trainInfo.train.getName() + " has been sold for 1000 gold.");
 						GameScreen.game.getPlayerTurn().addGold(1000);
@@ -162,9 +164,9 @@ public class Game_Map_Manager {
 							Game_Map_Manager.teleportTrain = false;
 							Game_Map_Manager.trainsUntouchable();
 							Game_Map_Manager.teleportCity = true;
+							trainInfo.train.getActor().setClickCountZero();
 							Game_Map_Manager.trainInfo.makeVisible(false);
 							confirmRouteBtn.setVisible(false);
-							cancelRouteBtn.setVisible(false);
 						}
 						else if (Game_Map_Manager.goFasterTrain == true && GameScreen.game.getPlayerTurn() == train.getOwner()){
 							if (!train.upgraded){
@@ -174,13 +176,13 @@ public class Game_Map_Manager {
 								Game_Map_Manager.opponentTouchable();
 								WarningMessage.fireWarningWindow("Go Faster Stripes Added!", "Go Faster Stripes were added to "
 										+ train.getName() + ".");
+								trainInfo.train.getActor().setClickCountZero();
 								Game_Map_Manager.trainInfo.makeVisible(false);
 								confirmRouteBtn.setVisible(false);
 								cancelRouteBtn.setVisible(false);
 							}
 							else{
 								WarningMessage.fireWarningWindow("Train already Upgraded!", "This train has already been upgraded, choose another.");
-
 							}
 						}
 						else{
@@ -195,7 +197,6 @@ public class Game_Map_Manager {
 							WarningMessage.fireWarningWindow("GOAL ASSIGNED", "Goal assigned to train. Now plan your route!");
 							PlayerGoals.chooseTrain = false;
 							Game_Map_Manager.opponentTouchable();
-							Game_Map_Manager.trainInfo.makeVisible(false);
 							confirmRouteBtn.setVisible(false);
 							cancelRouteBtn.setVisible(false);
 						}
@@ -207,6 +208,7 @@ public class Game_Map_Manager {
 				else if (routingMode){
 					exitRoutingMode();
 				}
+				
 			}
 		};
 		confirmRouteBtn.setVisible(false);
@@ -243,12 +245,20 @@ public class Game_Map_Manager {
 					sellTrain = false;
 					confirmRouteBtn.setVisible(false);
 					cancelRouteBtn.setVisible(false);
+					if (trainInfo.isVisible()){
+						trainInfo.makeVisible(false);
+						trainInfo.train.getActor().setClickCountZero();
+					}
 				}
 				else if (PlayerGoals.chooseTrain){
 					WarningMessage.fireWarningWindow("ASSIGN ABORTED!", "You did not assign a train to this goal.");
 					PlayerGoals.chooseTrain = false;
 					confirmRouteBtn.setVisible(false);
 					cancelRouteBtn.setVisible(false);
+					if (trainInfo.isVisible()){
+						trainInfo.makeVisible(false);
+						trainInfo.train.getActor().setClickCountZero();
+					}
 				}
 				else if (teleportTrain){
 					WarningMessage.fireWarningWindow("TELEPORT ABORTED!", "You did not choose a train to teleport.");
@@ -261,6 +271,27 @@ public class Game_Map_Manager {
 					Game_CardHand.actorManager.organiseHand();
 					cardToggle();
 					cardToggle();
+					if (trainInfo.isVisible()){
+						trainInfo.makeVisible(false);
+						trainInfo.train.getActor().setClickCountZero();
+					}
+				}
+				else if (teleportCity){
+					WarningMessage.fireWarningWindow("TELEPORT ABORTED!", "You did not choose a city to teleport.");
+					teleportCity = false;
+					trainsTouchable();
+					hideInfoBox();
+					cancelRouteBtn.setVisible(false);
+					Card card = new TeleportCard(currentTeleportCard.getOwner());
+					currentTeleportCard.getOwner().getCards().add(card);
+					Game_CardHand.actorManager.addCard(card);
+					Game_CardHand.actorManager.organiseHand();
+					cardToggle();
+					cardToggle();
+					if (trainInfo.isVisible()){
+						trainInfo.makeVisible(false);
+						trainInfo.train.getActor().setClickCountZero();
+					}
 				}
 				else if (Game_Map_Manager.goFasterTrain){
 					WarningMessage.fireWarningWindow("UPGRADE ABORTED!", "You did not choose a train to upgrade.");
@@ -268,6 +299,38 @@ public class Game_Map_Manager {
 					confirmRouteBtn.setVisible(false);
 					cancelRouteBtn.setVisible(false);
 					Card card = new GoFasterStripesCard(GameScreen.game.getPlayerTurn());
+					GameScreen.game.getPlayerTurn().getCards().add(card);
+					Game_CardHand.actorManager.addCard(card);
+					Game_CardHand.actorManager.organiseHand();
+					cardToggle();
+					cardToggle();
+					if (trainInfo.isVisible()){
+						trainInfo.makeVisible(false);
+						trainInfo.train.getActor().setClickCountZero();
+					}
+				}
+				else if (firstRemoveCity || secondRemoveCity){
+					WarningMessage.fireWarningWindow("REMOVE RAIL ABORTED", "You did not remove any rail.");
+					firstRemoveCity = false;
+					secondRemoveCity = false;
+					cancelRouteBtn.setVisible(false);
+					Game_Map_Manager.trainsTouchable();
+					Game_Map_Manager.planBackground.setVisible(false);
+					Card card = new RemoveRailCard(GameScreen.game.getPlayerTurn());
+					GameScreen.game.getPlayerTurn().getCards().add(card);
+					Game_CardHand.actorManager.addCard(card);
+					Game_CardHand.actorManager.organiseHand();
+					cardToggle();
+					cardToggle();
+				}
+				else if (firstAddCity || secondAddCity){
+					WarningMessage.fireWarningWindow("ADD RAIL ABORTED", "You did not add any rail.");
+					firstAddCity = false;
+					secondAddCity = false;
+					cancelRouteBtn.setVisible(false);
+					Game_Map_Manager.trainsTouchable();
+					Game_Map_Manager.planBackground.setVisible(false);
+					Card card = new AddRailCard(GameScreen.game.getPlayerTurn());
 					GameScreen.game.getPlayerTurn().getCards().add(card);
 					Game_CardHand.actorManager.addCard(card);
 					Game_CardHand.actorManager.organiseHand();
@@ -829,6 +892,7 @@ public class Game_Map_Manager {
 		}
 		if (addAvailable){
 			firstAddCity = true;
+			cancelRouteBtn.setVisible(true);
 			trainsUntouchable();
 			planBackground.setVisible(true);
 			for (ConnectionSprite sprite : connectionSprites){
@@ -839,10 +903,7 @@ public class Game_Map_Manager {
 		}
 		else{
 			WarningMessage.fireWarningWindow("MAP IS FULL", "There are no more connections available to add.");
-			Card card = new AddRailCard(GameScreen.game.getPlayerTurn());
-			GameScreen.game.getPlayerTurn().getCards().add(card);
-			Game_CardHand.actorManager.addCard(card);
-			Game_CardHand.actorManager.organiseHand();
+			giveAddRail = true;
 			return false;
 		}
 	}
@@ -857,6 +918,7 @@ public class Game_Map_Manager {
 		}
 		if (removeAvailable){
 			firstRemoveCity = true;
+			cancelRouteBtn.setVisible(true);
 			trainsUntouchable();
 			planBackground.setVisible(true);
 			WarningMessage.fireWarningWindow("CHOOSE FIRST STATION", "Choose the start city of the connection you want to remove.");
@@ -864,10 +926,7 @@ public class Game_Map_Manager {
 		}
 		else{
 			WarningMessage.fireWarningWindow("MAP IS EMPTY", "There are no connections in the map to remove.");
-			Card card = new RemoveRailCard(GameScreen.game.getPlayerTurn());
-			GameScreen.game.getPlayerTurn().getCards().add(card);
-			Game_CardHand.actorManager.addCard(card);
-			Game_CardHand.actorManager.organiseHand();
+			giveRemoveRail = true;
 			return false;
 		}
 	}
