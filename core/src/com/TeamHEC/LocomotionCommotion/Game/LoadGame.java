@@ -42,11 +42,8 @@ public class LoadGame {
 	public int turnCount;
 	public int turnLimit;
 	
-	public LoadGame(File file){
-		JSONObject obj = createJSONObject(file);
-		
+	private void initialise(JSONObject obj){
 		jsonplayer1 = obj.getJSONObject("player1");
-		System.out.println(jsonplayer1.toString(0));
 		player1resources = jsonplayer1.getJSONObject("resources");
 		
 		gold1 = player1resources.getInt("gold");
@@ -84,12 +81,13 @@ public class LoadGame {
 		turnLimit = obj.getInt("turnLimit");
 	}
 	
-	private JSONObject createJSONObject(File file){
+	public JSONObject createJSONObject(File file){
 		JSONObject newObj;
 		try{
 			InputStream inputStream = new FileInputStream(file);
 			JSONTokener tokener = new JSONTokener(inputStream);
 			newObj = new JSONObject(tokener);
+			initialise(newObj);
 		}
 		catch (Exception e){
 			newObj = null;

@@ -443,11 +443,10 @@ public class StartMenu extends Scene{
 			@Override
 			public void onClicked(){
 				if (replayChosen){
-					LoadGame gameLoadTest = new LoadGame(replayFile);
-					System.out.println(gameLoadTest.coal1);
+					LocomotionCommotion.loadedReplay.createJSONObject(replayFile);
 					LocomotionCommotion.player1name = "Replay1";
 					LocomotionCommotion.player2name = "Replay2";
-					LocomotionCommotion.turnChoice = 50;
+					LocomotionCommotion.turnChoice = LocomotionCommotion.loadedReplay.turnLimit;
 					LocomotionCommotion.getInstance().setGameScreen(true);
 				}
 			}

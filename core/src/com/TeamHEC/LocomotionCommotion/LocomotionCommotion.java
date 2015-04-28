@@ -2,10 +2,12 @@ package com.TeamHEC.LocomotionCommotion;
 
 import com.TeamHEC.LocomotionCommotion.Game.CoreGame;
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
+import com.TeamHEC.LocomotionCommotion.Game.LoadGame;
 import com.TeamHEC.LocomotionCommotion.Scene.SceneManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+
 import java.util.ArrayList;
 /**
  * 
@@ -29,6 +31,8 @@ public class LocomotionCommotion extends Game {
 
 	private static LocomotionCommotion INSTANCE = new LocomotionCommotion();
 	public static boolean gameFinished = false;
+	
+	public static LoadGame loadedReplay = new LoadGame();
 
 	public static LocomotionCommotion getInstance()
 	{
