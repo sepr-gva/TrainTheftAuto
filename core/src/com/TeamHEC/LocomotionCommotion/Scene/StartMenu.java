@@ -4,7 +4,11 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
+import com.TeamHEC.LocomotionCommotion.Game.LoadGame;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Sprite;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.SpriteButton;
 import com.badlogic.gdx.Gdx;
@@ -28,21 +32,28 @@ public class StartMenu extends Scene{
 
 	//Start Menu Preferences/Replay Mode Page
 	private Sprite sm_preferences_vertline, sm_replaymode_titletext;
-	private SpriteButton sm_replaymode_gobutton;
+	private SpriteButton sm_replaymode_gobutton, sm_replaymode_browsebutton;
 
 	//Start Menu HowtoPlay Page
 	private Sprite sm_howtoplay_line, sm_howtoplay_title;
 	private Sprite sm_howtoplay_frame;
-	private SpriteButton loadGameBckButton, replaymodeBackButton, settingsButton;
+	private SpriteButton loadGameBckButton, sm_replaymode_backbutton, settingsButton;
 	private SpriteButton displayButton, soundButton, controlButton;
 	private SpriteButton homeButton, nextButton, prevButton, preferencesBackButton;
 
 	// Other stuff
-	public static String gameName, player1name, player2name;
+	public static String gameName, player1name, player2name, replayName;
 	public static int turnChoice = 50;
-	public static TextField gameNameBox, playerNameBox1, playerNameBox2;
-	private static boolean gameNameEntered, player1NameEntered, player2NameEntered;
+	public static TextField gameNameBox, playerNameBox1, playerNameBox2, replayChosenBox;
+	private static boolean gameNameEntered, player1NameEntered, player2NameEntered, replayChosen;
 
+	Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+	
+	private final JFileChooser replayChooser = new JFileChooser();
+	private FileNameExtensionFilter fNameFilter;
+	File replayFile;
+	int returnVal;
+	
 	public StartMenu()
 	{
 		sm_main_title = new Sprite(6, 650, SM_TextureManager.getInstance().sm_main_title);
@@ -404,12 +415,46 @@ public class StartMenu extends Scene{
 		sm_loadgame_examples = new Sprite(1680+350,500, SM_TextureManager.getInstance().sm_loadgame_Examples);
 		actors.add(sm_loadgame_examples);
 
-		//Start Menu Preferences Page
-
-		//sm_preferences_vertline = new Sprite(1420,-900+72, SM_TextureManager.getInstance().sm_preferences_VertLine);
-		//actors.add(sm_preferences_vertline);
-
-		replaymodeBackButton = new SpriteButton(1390, -900+ 745, SM_TextureManager.getInstance().sm_newgame_BackBtn){
+		//Start Menu Replay Mode Page
+		replayChosenBox = new TextField("", skin);
+		skin.getFont("default-font").setScale(1.5f, 1.5f);
+		replayChosenBox.setX(560);
+		replayChosenBox.setY(-320);
+		replayChosenBox.setSize(430, 60);
+		replayChosenBox.setMessageText("Click ... to select a file.");
+		replayChosen = false;
+		
+		sm_replaymode_browsebutton = new SpriteButton(1000, -320, SM_TextureManager.getInstance().sm_replaymode_BrowseButton){
+			public void onClicked(){
+				fNameFilter = new FileNameExtensionFilter("JSON Files", "json");
+				replayChooser.setFileFilter(fNameFilter);
+				returnVal = replayChooser.showOpenDialog(null);
+				
+				if (returnVal == JFileChooser.APPROVE_OPTION){
+					replayFile = replayChooser.getSelectedFile();
+					replayChosen = true;
+					replayChosenBox.setText(replayFile.getAbsolutePath());
+				}
+			}
+		};
+		actors.add(sm_replaymode_browsebutton);
+		
+		sm_replaymode_gobutton = new SpriteButton(1750, -850, SM_TextureManager.getInstance().sm_replaymode_GoButton){
+			@Override
+			public void onClicked(){
+				if (replayChosen){
+					LoadGame gameLoadTest = new LoadGame(replayFile);
+					System.out.println(gameLoadTest.coal1);
+					LocomotionCommotion.player1name = "Replay1";
+					LocomotionCommotion.player2name = "Replay2";
+					LocomotionCommotion.turnChoice = 50;
+					LocomotionCommotion.getInstance().setGameScreen(true);
+				}
+			}
+		};
+		actors.add(sm_replaymode_gobutton);
+		
+		sm_replaymode_backbutton = new SpriteButton(1390, -900+ 745, SM_TextureManager.getInstance().sm_newgame_BackBtn){
 
 			@Override
 			public void onClicked()
@@ -450,55 +495,12 @@ public class StartMenu extends Scene{
 				}
 			}
 		};
-		actors.add(replaymodeBackButton);
+		actors.add(sm_replaymode_backbutton);
 
 		sm_replaymode_titletext = new Sprite(500,-900+720, SM_TextureManager.getInstance().sm_replaymode_Title);
 		actors.add(sm_replaymode_titletext);
 
-		/*
-		settingsButton = new SpriteButton(890, -900+550, SM_TextureManager.getInstance().sm_preferences_GameSettingsBtn){
-
-			@Override
-			public void onClicked()
-			{
-				changeCam(0, 0);
-			}
-		};
-		actors.add(settingsButton);
-
-		displayButton = new SpriteButton(890-37, -900+450, SM_TextureManager.getInstance().sm_preferences_DisplaySettingsBtn){
-
-			@Override
-			public void onClicked()
-			{
-				changeCam(0, 0);
-			}
-		};
-		actors.add(displayButton);
-
-		soundButton = new SpriteButton(890-37, -900+550-175, SM_TextureManager.getInstance().sm_preferences_SoundSettingsBtn){
-
-			@Override
-			public void onClicked()
-			{
-				changeCam(0, 0);
-			}
-		};
-		actors.add(soundButton);
-
-		controlButton = new SpriteButton(890-80, -900+550-300, SM_TextureManager.getInstance().sm_preferences_ControlSettingsBtn){
-
-			@Override
-			public void onClicked()
-			{
-				changeCam(0, 0);
-			}
-		};
-		actors.add(controlButton);
-		*/
-
 		//StartMenu HowtoPlay screen
-
 		sm_howtoplay_line = new Sprite(-1700+1300,175, SM_TextureManager.getInstance().sm_howtoplay_line);
 		actors.add(sm_howtoplay_line);
 
@@ -573,21 +575,8 @@ public class StartMenu extends Scene{
 
 		};
 		actors.add(preferencesBackButton);
-
-		sm_replaymode_gobutton = new SpriteButton(1750, -850, SM_TextureManager.getInstance().sm_replaymode_GoButton){
-			@Override
-			public void onClicked(){
-				//Need to get player names and turn choice from JSON.
-				LocomotionCommotion.player1name = "Replay1";
-				LocomotionCommotion.player2name = "Replay2";
-				LocomotionCommotion.turnChoice = 50;
-				LocomotionCommotion.getInstance().setGameScreen(true);
-			}
-		};
-		actors.add(sm_replaymode_gobutton);
 		
 		//Text boxes for Player 1 and 2 names
-		Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		
 		gameNameBox = new TextField("", skin);
 		skin.getFont("default-font").setScale(1.5f, 1.5f);
@@ -639,5 +628,6 @@ public class StartMenu extends Scene{
 		actors.add(gameNameBox);
 		actors.add(playerNameBox1);
 		actors.add(playerNameBox2);
+		actors.add(replayChosenBox);
 	}
 }

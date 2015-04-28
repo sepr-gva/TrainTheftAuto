@@ -1,5 +1,7 @@
 package com.TeamHEC.LocomotionCommotion.Game;
 
+import java.io.File;
+
 import org.json.*;
 
 public class LoadGame {
@@ -38,7 +40,7 @@ public class LoadGame {
 	public String turnCount;
 	public String turnLimit;
 	
-	public LoadGame(String file){
+	public LoadGame(File file){
 		JSONObject obj = new JSONObject(file);
 		
 		jsonplayer1 = obj.getJSONObject("Player1");
