@@ -1,6 +1,7 @@
 package com.TeamHEC.LocomotionCommotion.Game;
 
 import java.io.File;
+import org.json.*;
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.TeamHEC.LocomotionCommotion.Card.Game_CardHand;
 import com.TeamHEC.LocomotionCommotion.Goal.GoalMenu;
@@ -106,8 +107,20 @@ public class GameScreen implements Screen {
 				WorldMap replayMap = WorldMap.getInstance();
 				Game_StartingSequence.player1 = false;
 				//p1station and p2station need to receive their values from a JSON object.
+				
 				Station p1station = replayMap.stationsList.get(0);
+				for (Station station : replayMap.stationsList){
+					if (station.getName().equals(LocomotionCommotion.loadedReplay.stations1.getJSONObject(0).getString("stationName"))){
+						p1station = station;
+					}
+				}
 				Station p2station = replayMap.stationsList.get(1);
+				for (Station station : replayMap.stationsList){
+					if (station.getName().equals(LocomotionCommotion.loadedReplay.stations2.getJSONObject(0).getString("stationName"))){
+						p2station = station;
+					}
+				}
+				
 				createCoreGame(p1station, p2station);
 				Game_StartingSequence.startGame();
 				GameScreenUI.refreshResources();

@@ -44,6 +44,7 @@ public class LoadGame {
 	
 	private void initialise(JSONObject obj){
 		jsonplayer1 = obj.getJSONObject("player1");
+		
 		player1resources = jsonplayer1.getJSONObject("resources");
 		
 		gold1 = player1resources.getInt("gold");
