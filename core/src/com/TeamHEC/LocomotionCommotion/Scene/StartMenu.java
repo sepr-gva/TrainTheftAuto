@@ -180,7 +180,7 @@ public class StartMenu extends Scene{
 				
 				try {
 					File userManual = new File(getClass().getClassLoader().getResource(".").getPath() + "userManual.pdf");
-					Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler " + userManual);
+					Desktop.getDesktop().open(userManual);
 				}
 				catch (IOException e){
 					System.out.println("Cannot open PDF");
@@ -261,7 +261,7 @@ public class StartMenu extends Scene{
 				turn150Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn);
 				player1name= null;
 				player2name= null;
-				turnChoice=0;
+				turnChoice=50;
 			}
 		};
 		actors.add(newGameGoButton);

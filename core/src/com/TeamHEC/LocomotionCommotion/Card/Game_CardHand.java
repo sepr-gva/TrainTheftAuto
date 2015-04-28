@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
+import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.Player.Player;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.GameScreenUI;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Game_TextureManager;
@@ -156,6 +157,24 @@ public class Game_CardHand {
 				GameScreenUI.refreshResources();
 				Game_CardHand.actorManager.organiseHand();
 				Game_CardHand.actorManager.usecardbtn.setVisible(false);			//hide the use card button
+				if (Game_Map_Manager.giveAddRail){
+					Card card = new AddRailCard(GameScreen.game.getPlayerTurn());
+					GameScreen.game.getPlayerTurn().getCards().add(card);
+					Game_CardHand.actorManager.addCard(card);
+					Game_CardHand.actorManager.organiseHand();
+					Game_Map_Manager.cardToggle();
+					Game_Map_Manager.cardToggle();
+					Game_Map_Manager.giveAddRail = false;
+				}
+				else if (Game_Map_Manager.giveRemoveRail){
+					Card card = new RemoveRailCard(GameScreen.game.getPlayerTurn());
+					GameScreen.game.getPlayerTurn().getCards().add(card);
+					Game_CardHand.actorManager.addCard(card);
+					Game_CardHand.actorManager.organiseHand();
+					Game_Map_Manager.cardToggle();
+					Game_Map_Manager.cardToggle();
+					Game_Map_Manager.giveRemoveRail = false;
+				}
 			}
 
 

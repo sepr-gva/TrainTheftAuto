@@ -4,6 +4,10 @@
 	<classpathentry kind="src" path="testsrc"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
+<<<<<<< HEAD
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jackson"/>
 	<classpathentry kind="lib" path="/usr/userfs/j/jc1528/Downloads/json-20141113.jar"/>
+=======
+>>>>>>> 483fc1921350d423a0a490dca8fc0ef153e80653
 	<classpathentry kind="output" path="bin"/>
 </classpath>

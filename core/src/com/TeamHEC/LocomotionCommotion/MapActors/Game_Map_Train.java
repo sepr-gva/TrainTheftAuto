@@ -131,20 +131,6 @@ public class Game_Map_Train extends Actor{
 			else if (TrainsInPos.isEmpty())
 				clickCount = 1;
 		}
-		
-		if(PlayerGoals.chooseTrain && GameScreen.game.getPlayerTurn() == train.getOwner())
-		{
-			if (PlayerGoals.selectedGoal.getSStationObject().getStation() == train.getRoute().getStation()){
-				PlayerGoals.selectedGoal.assignTrain(train);
-				PlayerGoals.selectedGoal.setActor(PlayerGoals.selectedGoalActor);
-				WarningMessage.fireWarningWindow("GOAL ASSIGNED", "Goal assigned to train. Now plan your route!");
-				PlayerGoals.chooseTrain = false;
-				Game_Map_Manager.opponentTouchable();
-			}
-			else {
-				WarningMessage.fireWarningWindow("TRAIN NOT AT START STATION", "This train is not in the start station of the goal, choose another.");
-			}
-		}
 	}
 	
 	public void toggleHighlight(boolean highlighted)
@@ -197,4 +183,7 @@ public class Game_Map_Train extends Actor{
 		batch.draw(texture, train.route.getTrainPos().x + offset, train.route.getTrainPos().y + offset);
 	}
 	
+	public void setClickCountZero(){
+		clickCount = 0;
+	}
 }
