@@ -2,11 +2,13 @@ package com.TeamHEC.LocomotionCommotion.Game;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.TeamHEC.LocomotionCommotion.Card.Card;
@@ -243,36 +245,73 @@ public class CoreGame {
 	 * Saves the game to a .json file in the user's home directory in a folder called LocomotionCommotion.
 	 * @param gameName The name of the .json file the game is saved to. (No extension).
 	 */
-	public void saveGameJSON(String gameName)
+	public void appendToJSON(String gameName)
 	{
-		String finalJSON = "{";
-		//Save Players
-		finalJSON += "\"player1\": " + savePlayerJSON(player1) + ", ";
-		finalJSON += "\"player2\": " + savePlayerJSON(player2) + ", ";
-		
-		//Save Turn - whose turn, turn count, turnLimit
-		finalJSON += "\"playerTurn\": \"" + playerTurn.getName() + "\", ";
-		finalJSON += "\"turnCount\": " + turnCount + ", ";
-		finalJSON += "\"turnLimit\": " + turnLimit;
-		
-		finalJSON += "}";
-		//Write to file
-		try
-		{
+		String finalJSON = "";
+		String fileContents = null;
+		Boolean createNew = false;
+		File tempFile = null;
+
+		//File path
 		File saveLocation = new File(System.getProperty("user.home")
 				+ System.getProperty("file.separator")
 				+ "LocomotionCommotion"
 				+ System.getProperty("file.separator") + gameName + ".json");
 		
-		if (!saveLocation.exists()){
-			saveLocation.getParentFile().mkdirs();
-			saveLocation.createNewFile();
+		//Create the file if it doesn't exist
+		//Also initialises the file ready for adding the state of the next turn.
+		try {
+			
+			if (!saveLocation.exists()){
+				saveLocation.getParentFile().mkdirs();
+				saveLocation.createNewFile();
+				finalJSON += "[{";
+			}
+			else {
+				//Read contents of JSON file into string
+				Scanner fileContentsScanner = new Scanner(saveLocation);
+				fileContents = fileContentsScanner.useDelimiter("\\Z").next();
+				fileContentsScanner.close();
+				
+				//Remove last two characters from string, and add a comma
+				String newFileContents = fileContents.substring(0, fileContents.length()-2);
+				newFileContents += ", ";
+				
+				//Write new string to a temporary file and overwrite the old file
+				tempFile = File.createTempFile("foo", ".json");
+				FileWriter writer = new FileWriter(tempFile);
+				writer.write(newFileContents);
+				writer.close();
+				createNew = true;
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
 		}
 		
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(saveLocation, true)));
-		out.println(finalJSON);
-		out.close();
-
+		if (createNew){
+			saveLocation.delete();
+			tempFile.renameTo(saveLocation);
+		}
+		
+		finalJSON += "\"" + turnCount + "\": {";
+		
+		//Save Turn - whose turn, turn count, turnLimit
+		finalJSON += "\"playerTurn\": \"" + playerTurn.getName() + "\", ";
+		//finalJSON += "\"turnCount\": " + turnCount + ", ";
+		finalJSON += "\"turnLimit\": " + turnLimit + ", ";
+		
+		//Save Players
+		finalJSON += "\"player1\": " + savePlayerJSON(player1) + ", ";
+		finalJSON += "\"player2\": " + savePlayerJSON(player2) + "}";
+		finalJSON += "}]";
+		
+		//Write to file
+		try
+		{		
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(saveLocation, true)));
+			out.println(finalJSON);
+			out.close();
 		}
 		catch (Exception ex)
 		{

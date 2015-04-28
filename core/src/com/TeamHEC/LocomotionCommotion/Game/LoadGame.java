@@ -10,6 +10,7 @@ public class LoadGame {
 	
 	JSONObject jsonplayer1;
 	JSONObject jsonplayer2;
+	JSONObject turn0;
 	
 	JSONObject player1resources;
 	JSONObject player2resources;
@@ -36,15 +37,29 @@ public class LoadGame {
 	JSONArray stations2;
 	JSONArray goals2;
 
-	/* -------------------------- */
-	
 	public String playerTurn;
 	public int turnCount;
 	public int turnLimit;
 	
+	public JSONObject[] turnArray;
+	
 	private void initialise(JSONObject obj){
-		jsonplayer1 = obj.getJSONObject("player1");
+		turn0 = obj.getJSONObject("0");
+		turnArray = new JSONObject[obj.getInt("turnLimit")];
+		System.out.println(turnArray);
+		JSONObject tempObj = turn0;
+		for (int i = 0; i < obj.getInt("turnLimit"); i++){
+			try {
+				tempObj = obj.getJSONObject(String.valueOf(i));
+			}
+			catch (Exception e){
+				tempObj = null;
+			}
+			turnArray[i] = tempObj;
+		}
 		
+		/*
+		jsonplayer1 = obj.getJSONObject("player1");
 		player1resources = jsonplayer1.getJSONObject("resources");
 		
 		gold1 = player1resources.getInt("gold");
@@ -59,8 +74,6 @@ public class LoadGame {
 		goals1 = jsonplayer1.getJSONArray("goals");
 				
 		
-		/* ------------------------------------ */
-		
 		jsonplayer2 = obj.getJSONObject("player2");
 		player2resources = jsonplayer2.getJSONObject("resources");
 		
@@ -74,12 +87,12 @@ public class LoadGame {
 		trains2 = jsonplayer2.getJSONArray("trains");
 		stations2 = jsonplayer2.getJSONArray("stations");
 		goals2 = jsonplayer2.getJSONArray("goals");
-		
-		/* ---------------------------------- */
+
 		
 		playerTurn = obj.getString("playerTurn");
 		turnCount = obj.getInt("turnCount");
 		turnLimit = obj.getInt("turnLimit");
+		*/
 	}
 	
 	public JSONObject createJSONObject(File file){

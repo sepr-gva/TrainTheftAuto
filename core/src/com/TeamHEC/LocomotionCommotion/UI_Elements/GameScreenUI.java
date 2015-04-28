@@ -183,6 +183,8 @@ public class GameScreenUI {
 			@Override
 			protected void onClicked()
 			{
+				GameScreen.game.appendToJSON(LocomotionCommotion.gameName);
+				
 				if (LocomotionCommotion.gameFinished == false)
 				{
 	                if ( Game_Map_Manager.isMoving ) {
