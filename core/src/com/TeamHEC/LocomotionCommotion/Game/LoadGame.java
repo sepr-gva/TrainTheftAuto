@@ -39,13 +39,14 @@ public class LoadGame {
 	/* -------------------------- */
 	
 	public String playerTurn;
-	public String turnCount;
-	public String turnLimit;
+	public int turnCount;
+	public int turnLimit;
 	
 	public LoadGame(File file){
 		JSONObject obj = createJSONObject(file);
 		
 		jsonplayer1 = obj.getJSONObject("player1");
+		System.out.println(jsonplayer1.toString(0));
 		player1resources = jsonplayer1.getJSONObject("resources");
 		
 		gold1 = player1resources.getInt("gold");
@@ -54,10 +55,10 @@ public class LoadGame {
 		electric1 = player1resources.getInt("electric");
 		nuclear1 = player1resources.getInt("nuclear");
 		
-		cards1 = player1resources.getJSONArray("cards");
-		trains1 = player1resources.getJSONArray("trains");
-		stations1 = player1resources.getJSONArray("stations");
-		goals1 = player1resources.getJSONArray("goals");
+		cards1 = jsonplayer1.getJSONArray("cards");
+		trains1 = jsonplayer1.getJSONArray("trains");
+		stations1 = jsonplayer1.getJSONArray("stations");
+		goals1 = jsonplayer1.getJSONArray("goals");
 				
 		
 		/* ------------------------------------ */
@@ -71,16 +72,16 @@ public class LoadGame {
 		electric2 = player2resources.getInt("electric");
 		nuclear2 = player2resources.getInt("nuclear");
 		
-		cards2 = player2resources.getJSONArray("cards");
-		trains2 = player2resources.getJSONArray("trains");
-		stations2 = player2resources.getJSONArray("stations");
-		goals2 = player2resources.getJSONArray("goals");
+		cards2 = jsonplayer2.getJSONArray("cards");
+		trains2 = jsonplayer2.getJSONArray("trains");
+		stations2 = jsonplayer2.getJSONArray("stations");
+		goals2 = jsonplayer2.getJSONArray("goals");
 		
 		/* ---------------------------------- */
 		
 		playerTurn = obj.getString("playerTurn");
-		turnCount = obj.getString("turnCount");
-		turnLimit = obj.getString("turnLimit");
+		turnCount = obj.getInt("turnCount");
+		turnLimit = obj.getInt("turnLimit");
 	}
 	
 	private JSONObject createJSONObject(File file){
