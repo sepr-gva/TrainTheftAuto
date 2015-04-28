@@ -38,10 +38,10 @@ public class StartMenu extends Scene{
 	private SpriteButton homeButton, nextButton, prevButton, preferencesBackButton;
 
 	// Other stuff
-	public static String player1name, player2name;
+	public static String gameName, player1name, player2name;
 	public static int turnChoice = 50;
-	public static TextField textbox1, textbox2;
-	private static boolean player1NameEntered, player2NameEntered;
+	public static TextField gameNameBox, playerNameBox1, playerNameBox2;
+	private static boolean gameNameEntered, player1NameEntered, player2NameEntered;
 
 	public StartMenu()
 	{
@@ -231,7 +231,7 @@ public class StartMenu extends Scene{
 			public void onClicked()
 			{
 				if (player1NameEntered){
-					LocomotionCommotion.player1name=textbox1.getText();
+					LocomotionCommotion.player1name=playerNameBox1.getText();
 				}
 				
 				else{
@@ -239,11 +239,19 @@ public class StartMenu extends Scene{
 				}
 				
 				if (player2NameEntered){
-					LocomotionCommotion.player2name=textbox2.getText();
+					LocomotionCommotion.player2name=playerNameBox2.getText();
 				}
 				
 				else{
 					LocomotionCommotion.player2name="Orange";
+				}
+				
+				if (gameNameEntered){
+					LocomotionCommotion.gameName=gameNameBox.getText();
+				}
+				else{
+					//Could find the smallest available integer for saving replay information
+					LocomotionCommotion.gameName="TestGame";
 				}
 				
 				LocomotionCommotion.turnChoice = turnChoice;
@@ -254,8 +262,8 @@ public class StartMenu extends Scene{
 			
 			public void resetNewGameScreen()
 			{
-				textbox1.setText("");
-				textbox2.setText("");
+				playerNameBox1.setText("");
+				playerNameBox2.setText("");
 				turn50Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn50Btn);
 				turn100Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn);
 				turn150Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn);
@@ -300,8 +308,8 @@ public class StartMenu extends Scene{
 			}
 
 			public void resetNewGameScreen(){
-				StartMenu.textbox1.setText("");
-				StartMenu.textbox2.setText("");
+				StartMenu.playerNameBox1.setText("");
+				StartMenu.playerNameBox2.setText("");
 				turn50Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn50Btn);
 				turn100Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn);
 				turn150Button.setTexture(SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn);
@@ -312,7 +320,7 @@ public class StartMenu extends Scene{
 		};
 		actors.add(newGameBackButton);
 
-		turn50Button = new SpriteButton(490, 1497, SM_TextureManager.getInstance().sm_newgame_Turn50Btn){
+		turn50Button = new SpriteButton(490, 1412, SM_TextureManager.getInstance().sm_newgame_Turn50Btn){
 
 			@Override
 			public void onClicked()
@@ -326,7 +334,7 @@ public class StartMenu extends Scene{
 		};
 		actors.add(turn50Button);
 
-		turn100Button = new SpriteButton(590, 1497, SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn){
+		turn100Button = new SpriteButton(590, 1412, SM_TextureManager.getInstance().sm_newgame_Turn100_unselected_Btn){
 
 			@Override
 			public void onClicked()
@@ -340,7 +348,7 @@ public class StartMenu extends Scene{
 		};
 		actors.add(turn100Button);
 
-		turn150Button = new SpriteButton(690, 1497, SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn){
+		turn150Button = new SpriteButton(690, 1412, SM_TextureManager.getInstance().sm_newgame_Turn150_unselected_Btn){
 
 			@Override
 			public void onClicked()
@@ -580,38 +588,56 @@ public class StartMenu extends Scene{
 		
 		//Text boxes for Player 1 and 2 names
 		Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-
-		textbox1 = new TextField("", skin);
+		
+		gameNameBox = new TextField("", skin);
 		skin.getFont("default-font").setScale(1.5f, 1.5f);
-		textbox1.setX(480);
-		textbox1.setY(1150+532);
-		textbox1.setSize(430, 60);
-		textbox1.setMessageText("Player 1");
+		gameNameBox.setX(480);
+		gameNameBox.setY(1150+532);
+		gameNameBox.setSize(430, 60);
+		gameNameBox.setMessageText("Game Name");
+		gameNameEntered = false;
+		TextFieldListener gameField = new TextFieldListener(){
+			public void keyTyped (TextField textbox0, char key){
+				if (key == '\n') textbox0.getOnscreenKeyboard().show(false);
+				gameName = textbox0.getText();
+				gameNameEntered = true;
+			}
+		};
+		gameNameBox.setTextFieldListener(gameField);
+		
+		playerNameBox1 = new TextField("", skin);
+		skin.getFont("default-font").setScale(1.5f, 1.5f);
+		playerNameBox1.setX(480);
+		playerNameBox1.setY(1150+447);
+		playerNameBox1.setSize(430, 60);
+		playerNameBox1.setMessageText("Player One");
 		player1NameEntered = false;
 		TextFieldListener player1 = new TextFieldListener() {
 			public void keyTyped (TextField textbox1, char key) {
 				if (key == '\n') textbox1.getOnscreenKeyboard().show(false);
 				player1name = textbox1.getText();
 				player1NameEntered = true;
-			}};
+			}
+		};
+		playerNameBox1.setTextFieldListener(player1);
 
-			textbox1.setTextFieldListener(player1);
+		playerNameBox2 = new TextField("", skin);
+		playerNameBox2.setX(480);
+		playerNameBox2.setY(1150+362);
+		playerNameBox2.setSize(430, 60);
+		playerNameBox2.setMessageText("Player Two");
+		player2NameEntered = false;
+		TextFieldListener player2 = new TextFieldListener() {
+			public void keyTyped (TextField textbox2, char key) {
+				if (key == '\n') textbox2.getOnscreenKeyboard().show(false);
+				player2name = textbox2.getText();
+				player2NameEntered = true;
+			}
+		};
+		playerNameBox2.setTextFieldListener(player2);
 
-			textbox2 = new TextField("", skin);
-			textbox2.setX(480);
-			textbox2.setY(1150+447);
-			textbox2.setSize(430, 60);
-			textbox2.setMessageText("Player 2");
-			player2NameEntered = false;
-			TextFieldListener player2 = new TextFieldListener() {
-				public void keyTyped (TextField textbox2, char key) {
-					if (key == '\n') textbox2.getOnscreenKeyboard().show(false);
-					player2name = textbox2.getText();
-					player2NameEntered = true;
-				}};
-				textbox2.setTextFieldListener(player2);
-
-				actors.add(textbox1);
-				actors.add(textbox2);
+		actors.add(gameNameBox);
+		actors.add(playerNameBox1);
+		actors.add(playerNameBox2);
 	}
 }

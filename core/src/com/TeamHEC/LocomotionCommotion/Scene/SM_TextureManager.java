@@ -33,10 +33,6 @@ public class SM_TextureManager {
 	public CustomTexture sm_newgame_BackBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/backButton.png"));
 	public CustomTexture sm_newgame_GoBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/goBtn.png"));
 	public CustomTexture sm_newgame_TempTextBox = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/tempTextBox.png"));
-	public CustomTexture sm_newgame_TurnTimeOutBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/turnTimeoutBtn.png"));
-	public CustomTexture sm_newgameTurnTimeOut_unselected_Btn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/turnTimeout_unselected_Btn.png"));
-	public CustomTexture sm_newgame_StationDomBtn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/stationDominationBtn.png"));
-	public CustomTexture sm_newgame_StationDom_unselected_Btn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/stationDomination_unselected_Btn.png"));
 	public CustomTexture sm_newgame_Turn50Btn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/turn50.png"));
 	public CustomTexture sm_newgame_Turn100Btn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/turn100.png"));
 	public CustomTexture sm_newgame_Turn150Btn = new CustomTexture(Gdx.files.internal("startMenu/sm_newgame/turn150.png"));
