@@ -1,6 +1,8 @@
 package com.TeamHEC.LocomotionCommotion.Game;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import org.json.*;
 
@@ -12,17 +14,17 @@ public class LoadGame {
 	JSONObject player1resources;
 	JSONObject player2resources;
 	
-	public String gold1;
-	public String coal1;
-	public String oil1;
-	public String electric1;
-	public String nuclear1;
+	public Integer gold1;
+	public Integer coal1;
+	public Integer oil1;
+	public Integer electric1;
+	public Integer nuclear1;
 	
-	public String gold2;
-	public String coal2;
-	public String oil2;
-	public String electric2;
-	public String nuclear2;
+	public Integer gold2;
+	public Integer coal2;
+	public Integer oil2;
+	public Integer electric2;
+	public Integer nuclear2;
 	
 	JSONArray cards1;
 	JSONArray trains1;
@@ -41,16 +43,16 @@ public class LoadGame {
 	public String turnLimit;
 	
 	public LoadGame(File file){
-		JSONObject obj = new JSONObject(file);
+		JSONObject obj = createJSONObject(file);
 		
-		jsonplayer1 = obj.getJSONObject("Player1");
+		jsonplayer1 = obj.getJSONObject("player1");
 		player1resources = jsonplayer1.getJSONObject("resources");
 		
-		gold1 = player1resources.getString("gold");
-		coal1 = player1resources.getString("coal");
-		oil1 = player1resources.getString("oil"); 
-		electric1 = player1resources.getString("electric");
-		nuclear1 = player1resources.getString("nuclear");
+		gold1 = player1resources.getInt("gold");
+		coal1 = player1resources.getInt("coal");
+		oil1 = player1resources.getInt("oil"); 
+		electric1 = player1resources.getInt("electric");
+		nuclear1 = player1resources.getInt("nuclear");
 		
 		cards1 = player1resources.getJSONArray("cards");
 		trains1 = player1resources.getJSONArray("trains");
@@ -60,14 +62,14 @@ public class LoadGame {
 		
 		/* ------------------------------------ */
 		
-		jsonplayer2 = obj.getJSONObject("Player2");
+		jsonplayer2 = obj.getJSONObject("player2");
 		player2resources = jsonplayer2.getJSONObject("resources");
 		
-		gold2 = player2resources.getString("gold");
-		coal2 = player2resources.getString("coal");
-		oil2 = player2resources.getString("oil"); 
-		electric2 = player2resources.getString("electric");
-		nuclear2 = player2resources.getString("nuclear");
+		gold2 = player2resources.getInt("gold");
+		coal2 = player2resources.getInt("coal");
+		oil2 = player2resources.getInt("oil"); 
+		electric2 = player2resources.getInt("electric");
+		nuclear2 = player2resources.getInt("nuclear");
 		
 		cards2 = player2resources.getJSONArray("cards");
 		trains2 = player2resources.getJSONArray("trains");
@@ -79,5 +81,18 @@ public class LoadGame {
 		playerTurn = obj.getString("playerTurn");
 		turnCount = obj.getString("turnCount");
 		turnLimit = obj.getString("turnLimit");
+	}
+	
+	private JSONObject createJSONObject(File file){
+		JSONObject newObj;
+		try{
+			InputStream inputStream = new FileInputStream(file);
+			JSONTokener tokener = new JSONTokener(inputStream);
+			newObj = new JSONObject(tokener);
+		}
+		catch (Exception e){
+			newObj = null;
+		}
+		return newObj;
 	}
 }
