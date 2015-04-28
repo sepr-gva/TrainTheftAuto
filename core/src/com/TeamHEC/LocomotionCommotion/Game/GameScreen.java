@@ -106,7 +106,6 @@ public class GameScreen implements Screen {
 			if (Game_StartingSequence.inProgress){
 				WorldMap replayMap = WorldMap.getInstance();
 				Game_StartingSequence.player1 = false;
-				//p1station and p2station need to receive their values from a JSON object.
 				
 				Station p1station = replayMap.stationsList.get(0);
 				for (Station station : replayMap.stationsList){

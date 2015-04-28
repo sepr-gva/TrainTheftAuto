@@ -76,8 +76,7 @@ public class Game_PauseMenu {
 			game_pause_save = new SpriteButton(Game_PauseMenu.actorManager.game_pause_resume.getX(),Game_PauseMenu.actorManager.game_pause_resume.getY()-100,Game_TextureManager.getInstance().game_pause_savegame){
 				@Override
 				protected void onClicked(){
-					String gameName = "test";
-					GameScreen.game.saveGameJSON(gameName);
+					GameScreen.game.saveGameJSON(LocomotionCommotion.gameName);
 				}
 
 			};
