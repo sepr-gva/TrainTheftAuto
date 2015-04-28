@@ -1,5 +1,9 @@
 package com.TeamHEC.LocomotionCommotion.Scene;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Sprite;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.SpriteButton;
@@ -124,7 +128,7 @@ public class StartMenu extends Scene{
         // Not yet implemented. Hidden.
 		// actors.add(loadGameButton);
 
-		replaymodeButton = new SpriteButton(590, 330, SM_TextureManager.getInstance().sm_main_replaymodebtn){
+		replaymodeButton = new SpriteButton(577, 325, SM_TextureManager.getInstance().sm_main_replaymodebtn){
 
 			@Override
 			public void onClicked()
@@ -172,7 +176,15 @@ public class StartMenu extends Scene{
 			@Override
 			public void onClicked()
 			{
-				started = true;
+				started = false;
+				
+				try {
+					File userManual = new File(getClass().getClassLoader().getResource(".").getPath() + "userManual.pdf");
+					Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler " + userManual);
+				}
+				catch (IOException e){
+					System.out.println("Cannot open PDF");
+				}
 			}
 
 			int animationTracker1, animationTracker2;
@@ -201,8 +213,7 @@ public class StartMenu extends Scene{
 			}
 
 		};
-        // Not yet implemented. Hidden.
-        // actors.add(howToPlayButton);
+        actors.add(howToPlayButton);
 
 		exitButton = new SpriteButton(600, 86, SM_TextureManager.getInstance().sm_main_exitButton){
 
