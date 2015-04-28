@@ -77,7 +77,6 @@ public class Game_PauseMenu {
 				@Override
 				protected void onClicked(){
 					String gameName = "test";
-					GameScreen.testJSON(gameName);
 				}
 
 			};
