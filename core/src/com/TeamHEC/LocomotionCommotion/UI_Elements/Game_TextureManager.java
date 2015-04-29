@@ -38,7 +38,7 @@ public class Game_TextureManager {
 	//public CustomTexture game_menuobject_replaypausebutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/pausebutton.png"));
 	public CustomTexture game_menuobject_replaynextbutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/nextButton.png"));
 	public CustomTexture game_menuobject_replaypreviousbutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/prevButton.png"));
-		
+
 	//Map
 	public CustomTexture map = new CustomTexture(Gdx.files.internal("gameScreen/game_map/map.png"));
 	public CustomTexture mapInfo = new CustomTexture(Gdx.files.internal("gameScreen/game_map/mapinfo.png"));

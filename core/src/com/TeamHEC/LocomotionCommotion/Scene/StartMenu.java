@@ -8,7 +8,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
-import com.TeamHEC.LocomotionCommotion.Game.LoadGame;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.Sprite;
 import com.TeamHEC.LocomotionCommotion.UI_Elements.SpriteButton;
 import com.badlogic.gdx.Gdx;
@@ -31,14 +30,13 @@ public class StartMenu extends Scene{
 	private Sprite sm_loadgame_title, sm_loadgame_examples;
 
 	//Start Menu Preferences/Replay Mode Page
-	private Sprite sm_preferences_vertline, sm_replaymode_titletext;
+	private Sprite sm_replaymode_titletext;
 	private SpriteButton sm_replaymode_gobutton, sm_replaymode_browsebutton;
 
 	//Start Menu HowtoPlay Page
 	private Sprite sm_howtoplay_line, sm_howtoplay_title;
 	private Sprite sm_howtoplay_frame;
-	private SpriteButton loadGameBckButton, sm_replaymode_backbutton, settingsButton;
-	private SpriteButton displayButton, soundButton, controlButton;
+	private SpriteButton loadGameBckButton, sm_replaymode_backbutton;
 	private SpriteButton homeButton, nextButton, prevButton, preferencesBackButton;
 
 	// Other stuff

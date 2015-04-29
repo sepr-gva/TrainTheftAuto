@@ -9,8 +9,6 @@ import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Map.Connection;
 import com.TeamHEC.LocomotionCommotion.Map.MapObj;
 import com.TeamHEC.LocomotionCommotion.Map.Station;
-import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
-import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Train;
 import com.TeamHEC.LocomotionCommotion.Player.Player;
 import com.TeamHEC.LocomotionCommotion.Train.CoalTrain;
 import com.TeamHEC.LocomotionCommotion.Train.ElectricTrain;
@@ -64,6 +62,7 @@ public class ReplayModeUI {
 			}
 		};
 		actors.add(nextButton);
+
 		/*	
 		playPauseButton = new SpriteButton(1494, 117, Game_TextureManager.getInstance().game_menuobject_replayplaybutton){
 			@Override
@@ -80,6 +79,7 @@ public class ReplayModeUI {
 		//actors.add(playPauseButton);
 		 * 
 		 */
+
 		
 		for (Actor a : actors){
 			a.setTouchable(Touchable.enabled);

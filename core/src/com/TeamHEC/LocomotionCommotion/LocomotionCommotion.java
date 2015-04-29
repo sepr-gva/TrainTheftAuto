@@ -8,8 +8,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
-import java.util.ArrayList;
-
 import org.json.JSONObject;
 /**
  * 

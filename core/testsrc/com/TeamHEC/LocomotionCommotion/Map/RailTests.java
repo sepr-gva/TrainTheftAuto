@@ -4,9 +4,7 @@ import static org.junit.Assert.*;
 
 import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.Mocking.GdxTestRunner;
-import com.TeamHEC.LocomotionCommotion.Game.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
