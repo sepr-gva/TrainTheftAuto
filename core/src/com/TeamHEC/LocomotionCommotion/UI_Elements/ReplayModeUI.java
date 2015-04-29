@@ -46,7 +46,10 @@ public class ReplayModeUI {
 		previousButton = new SpriteButton(1412, 117, Game_TextureManager.getInstance().game_menuobject_replaypreviousbutton){
 			@Override
 			protected void onClicked(){
-				
+				if (LocomotionCommotion.replayTurnSelected != 0){
+					LocomotionCommotion.replayTurnSelected -= 1;
+					updateUI();
+				}
 			}
 		};
 		actors.add(previousButton);
@@ -56,27 +59,12 @@ public class ReplayModeUI {
 			protected void onClicked(){
 				if (LocomotionCommotion.replayTurnSelected < LocomotionCommotion.loadedReplay.turnArray.length()-1){			
 					LocomotionCommotion.replayTurnSelected += 1;
-					
-					updateTrains(1);
-					updateTrains(2);
-					
-					if (LocomotionCommotion.replayTurnSelected % 2 == 0){
-						updateResources(1);
-					}
-					else {
-						updateResources(2);
-					}
-					
-					GameScreenUI.playerScore.setText(GameScreen.game.getPlayer1().getName() + "    " 
-							+ LocomotionCommotion.getReplayTurn().getJSONObject("player1").getJSONObject("resources").getInt("points") + "     SCORE     "
-							+ LocomotionCommotion.getReplayTurn().getJSONObject("player2").getJSONObject("resources").getInt("points")
-							+ "     " + GameScreen.game.getPlayer2().getName()+ "     " + LocomotionCommotion.getReplayTurn().getString("playerTurn") 
-							+ " played this turn "+ "     Turn " + LocomotionCommotion.replayTurnSelected + "/" + GameScreen.game.getTurnLimit());
+					updateUI();
 				}
 			}
 		};
 		actors.add(nextButton);
-		
+			
 		playPauseButton = new SpriteButton(1494, 117, Game_TextureManager.getInstance().game_menuobject_replayplaybutton){
 			@Override
 			protected void onClicked(){
@@ -95,6 +83,24 @@ public class ReplayModeUI {
 			a.setTouchable(Touchable.enabled);
 			stage.addActor(a);
 		}
+	}
+	
+	private void updateUI(){
+		updateTrains(1);
+		updateTrains(2);
+		
+		if (LocomotionCommotion.replayTurnSelected % 2 == 0){
+			updateResources(1);
+		}
+		else {
+			updateResources(2);
+		}
+		
+		GameScreenUI.playerScore.setText(GameScreen.game.getPlayer1().getName() + "    " 
+				+ LocomotionCommotion.getReplayTurn().getJSONObject("player1").getJSONObject("resources").getInt("points") + "     SCORE     "
+				+ LocomotionCommotion.getReplayTurn().getJSONObject("player2").getJSONObject("resources").getInt("points")
+				+ "     " + GameScreen.game.getPlayer2().getName()+ "     " + LocomotionCommotion.getReplayTurn().getString("playerTurn") 
+				+ " played this turn "+ "     Turn " + LocomotionCommotion.replayTurnSelected + "/" + GameScreen.game.getTurnLimit());
 	}
 	
 	private void updateResources(int playerNum){
