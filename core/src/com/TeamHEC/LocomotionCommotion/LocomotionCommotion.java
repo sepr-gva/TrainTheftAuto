@@ -36,6 +36,7 @@ public class LocomotionCommotion extends Game {
 	
 	public static LoadGame loadedReplay = new LoadGame();
 	public static int replayTurnSelected = 0;
+	public static Boolean replayPlaying = false;
 
 	public static LocomotionCommotion getInstance()
 	{
