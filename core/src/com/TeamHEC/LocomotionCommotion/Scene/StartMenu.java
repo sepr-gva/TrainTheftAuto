@@ -444,8 +444,8 @@ public class StartMenu extends Scene{
 			public void onClicked(){
 				if (replayChosen){
 					LocomotionCommotion.loadedReplay.createJSONObject(replayFile);
-					LocomotionCommotion.player1name = "Replay1";
-					LocomotionCommotion.player2name = "Replay2";
+					LocomotionCommotion.player1name = "Player One";
+					LocomotionCommotion.player2name = "Player Two";
 					LocomotionCommotion.turnChoice = LocomotionCommotion.getReplayTurn().getInt("turnLimit");
 					LocomotionCommotion.getInstance().setGameScreen(true);
 				}

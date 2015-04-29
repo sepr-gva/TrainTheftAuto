@@ -66,6 +66,12 @@ public class ReplayModeUI {
 					else {
 						updateResources(2);
 					}
+					
+					GameScreenUI.playerScore.setText(GameScreen.game.getPlayer1().getName() + "    " 
+							+ LocomotionCommotion.getReplayTurn().getJSONObject("player1").getJSONObject("resources").getInt("points") + "     SCORE     "
+							+ LocomotionCommotion.getReplayTurn().getJSONObject("player2").getJSONObject("resources").getInt("points")
+							+ "     " + GameScreen.game.getPlayer2().getName()+ "     " + LocomotionCommotion.getReplayTurn().getString("playerTurn") 
+							+ " played this turn "+ "     Turn " + LocomotionCommotion.replayTurnSelected + "/" + GameScreen.game.getTurnLimit());
 				}
 			}
 		};

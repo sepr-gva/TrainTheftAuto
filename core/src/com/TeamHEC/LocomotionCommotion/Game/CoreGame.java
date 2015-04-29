@@ -333,7 +333,8 @@ public class CoreGame {
 		playerJSON += "\"coal\" : " 	+ player.getFuel("Coal") + ",";
 		playerJSON += "\"oil\" : " 		+ player.getFuel("Oil") + ",";
 		playerJSON += "\"electric\" : " + player.getFuel("Electric") + ",";
-		playerJSON += "\"nuclear\" : " 	+ player.getFuel("Nuclear");
+		playerJSON += "\"nuclear\" : " 	+ player.getFuel("Nuclear") + ",";
+		playerJSON += "\"points\" : "	+ player.getPoints();
 		playerJSON += "}, ";
 		
 		//Save Player cards
