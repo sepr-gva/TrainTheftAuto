@@ -1,7 +1,16 @@
 package com.TeamHEC.LocomotionCommotion.Game;
 
+import java.io.File;
+
+import org.json.*;
+
 import com.TeamHEC.LocomotionCommotion.LocomotionCommotion;
+import com.TeamHEC.LocomotionCommotion.Card.AddRailCard;
+import com.TeamHEC.LocomotionCommotion.Card.Card;
 import com.TeamHEC.LocomotionCommotion.Card.Game_CardHand;
+import com.TeamHEC.LocomotionCommotion.Card.GoFasterStripesCard;
+import com.TeamHEC.LocomotionCommotion.Card.RemoveRailCard;
+import com.TeamHEC.LocomotionCommotion.Card.TeleportCard;
 import com.TeamHEC.LocomotionCommotion.Goal.GoalMenu;
 import com.TeamHEC.LocomotionCommotion.Goal.PlayerGoals;
 import com.TeamHEC.LocomotionCommotion.Map.Station;
@@ -150,16 +159,42 @@ public class GameScreen implements Screen {
 
 		getStage().act(Gdx.graphics.getDeltaTime());
 		getStage().draw();
-		
+		/* JUST FOR TESTING
 		if (Gdx.input.isKeyJustPressed(Keys.A)){
-			Game_Map_Manager.implementAddConnection();
+			Card card = new AddRailCard(GameScreen.game.getPlayerTurn());
+			GameScreen.game.getPlayerTurn().getCards().add(card);
+			Game_CardHand.actorManager.addCard(card);
+			Game_CardHand.actorManager.organiseHand();
+			Game_Map_Manager.cardToggle();
+			Game_Map_Manager.cardToggle();
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.R)){
-			Game_Map_Manager.implementRemoveConnection();
+			Card card = new RemoveRailCard(GameScreen.game.getPlayerTurn());
+			GameScreen.game.getPlayerTurn().getCards().add(card);
+			Game_CardHand.actorManager.addCard(card);
+			Game_CardHand.actorManager.organiseHand();
+			Game_Map_Manager.cardToggle();
+			Game_Map_Manager.cardToggle();
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.T)){
+			Card card = new TeleportCard(GameScreen.game.getPlayerTurn());
+			GameScreen.game.getPlayerTurn().getCards().add(card);
+			Game_CardHand.actorManager.addCard(card);
+			Game_CardHand.actorManager.organiseHand();
+			Game_Map_Manager.cardToggle();
+			Game_Map_Manager.cardToggle();
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.G)){
+			Card card = new GoFasterStripesCard(GameScreen.game.getPlayerTurn());
+			GameScreen.game.getPlayerTurn().getCards().add(card);
+			Game_CardHand.actorManager.addCard(card);
+			Game_CardHand.actorManager.organiseHand();
+			Game_Map_Manager.cardToggle();
+			Game_Map_Manager.cardToggle();
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.M)){
 			game.getPlayerTurn().addGold(1000);
-		}
+		}*/
 	}
 
 	@Override

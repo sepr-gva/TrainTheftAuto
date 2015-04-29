@@ -62,6 +62,24 @@ public class ReplayModeUI {
 			}
 		};
 		actors.add(nextButton);
+
+		/*	
+		playPauseButton = new SpriteButton(1494, 117, Game_TextureManager.getInstance().game_menuobject_replayplaybutton){
+			@Override
+			protected void onClicked(){
+				if (this.getTexture() == Game_TextureManager.getInstance().game_menuobject_replayplaybutton){
+					this.setTexture(Game_TextureManager.getInstance().game_menuobject_replaypausebutton);
+				}
+				else {
+					this.setTexture(Game_TextureManager.getInstance().game_menuobject_replayplaybutton);
+				}
+				
+			}
+		};
+		//actors.add(playPauseButton);
+		 * 
+		 */
+
 		
 		for (Actor a : actors){
 			a.setTouchable(Touchable.enabled);
