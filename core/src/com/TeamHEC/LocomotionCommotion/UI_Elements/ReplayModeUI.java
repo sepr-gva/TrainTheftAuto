@@ -10,6 +10,7 @@ import com.TeamHEC.LocomotionCommotion.Map.Connection;
 import com.TeamHEC.LocomotionCommotion.Map.MapObj;
 import com.TeamHEC.LocomotionCommotion.Map.Station;
 import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
+import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Train;
 import com.TeamHEC.LocomotionCommotion.Player.Player;
 import com.TeamHEC.LocomotionCommotion.Train.CoalTrain;
 import com.TeamHEC.LocomotionCommotion.Train.ElectricTrain;
@@ -98,7 +99,6 @@ public class ReplayModeUI {
 		
 		for (Train train: playerGetter.getTrains()){
 			GameScreen.getStage().getActors().removeValue(train.getActor(), false);
-			Game_Map_Manager.trainBlips.removeValue(train.getActor(), false);
 		}
 		
 		playerGetter.trains = new ArrayList<Train>(); 
@@ -148,7 +148,6 @@ public class ReplayModeUI {
 			else
 				replayTrain = new OilTrain(speedMod, inStation, replayRoute, playerGetter); 
 			
-			System.out.println(GameScreen.getStage().getActors().size);
 			playerGetter.addTrain(replayTrain);
 		}
 	}
