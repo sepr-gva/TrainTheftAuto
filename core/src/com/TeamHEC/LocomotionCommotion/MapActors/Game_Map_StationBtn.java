@@ -248,6 +248,7 @@ public class Game_Map_StationBtn extends SpriteButton {
 						GameScreen.game.getPlayerTurn().subGold(1500);
 						Game_Map_Manager.buyTrain = false;
 						Game_Map_Manager.trainsTouchable();
+						Game_Map_Manager.cancelRouteBtn.setVisible(false);
 					}
 				}
 				//Buy Stations in game
