@@ -39,7 +39,7 @@ public class Player implements RouteListener{
 	private ArrayList<Card> cards;
 	private Shop shop;
 	private ArrayList<Goal> goals;
-	private ArrayList<Train> trains;
+	public ArrayList<Train> trains;
 	private ArrayList<Station> stations = new ArrayList<Station>();
 	private int[] lines = new int[8];
 

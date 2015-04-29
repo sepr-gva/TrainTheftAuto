@@ -45,8 +45,8 @@ public class LocomotionCommotion extends Game {
 	private LocomotionCommotion(){}
 	public static final String TITLE = "Train Theft Auto", VERSION = "0.0.0.1";
 
-	public static JSONObject getReplayTurn(int i){
-		return loadedReplay.turnArray.getJSONObject(i).getJSONObject(String.valueOf(i));
+	public static JSONObject getReplayTurn(){
+		return loadedReplay.turnArray.getJSONObject(replayTurnSelected).getJSONObject(String.valueOf(replayTurnSelected));
 	}
 	
 	/**

@@ -352,7 +352,13 @@ public class CoreGame {
 			playerJSON += "{";
 			playerJSON += "\"type\" : \"" + player.getTrains().get(i).getFuelType() + "\", ";
 			playerJSON += "\"inStation\" : " + player.getTrains().get(i).isInStation() + ", ";
-			playerJSON += "\"station\" : " + player.getTrains().get(i).getRoute().getStation().getName() + ", ";
+			
+			if (player.getTrains().get(i).getRoute().getStation() != null){
+				playerJSON += "\"station\" : \"" + player.getTrains().get(i).getRoute().getStation().getName() + "\", ";
+			}
+			else {
+				playerJSON += "\"station\" : \"" + null + "\", ";
+			}
 			playerJSON += "\"route\" : " + saveRouteJSON(player.getTrains().get(i).getRoute()) + ", ";
 			playerJSON += "\"speedMod\" : " + player.getTrains().get(i).getSpeedMod();
 			playerJSON += "}";

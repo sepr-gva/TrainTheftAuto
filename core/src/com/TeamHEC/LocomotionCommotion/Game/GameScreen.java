@@ -109,13 +109,13 @@ public class GameScreen implements Screen {
 				
 				Station p1station = replayMap.stationsList.get(0);
 				for (Station station : replayMap.stationsList){
-					if (station.getName().equals(LocomotionCommotion.getReplayTurn(0).getJSONObject("player1").getJSONArray("stations").getJSONObject(0).getString("stationName"))){
+					if (station.getName().equals(LocomotionCommotion.getReplayTurn().getJSONObject("player1").getJSONArray("stations").getJSONObject(0).getString("stationName"))){
 						p1station = station;
 					}
 				}
 				Station p2station = replayMap.stationsList.get(1);
 				for (Station station : replayMap.stationsList){
-					if (station.getName().equals(LocomotionCommotion.getReplayTurn(0).getJSONObject("player2").getJSONArray("stations").getJSONObject(0).getString("stationName"))){
+					if (station.getName().equals(LocomotionCommotion.getReplayTurn().getJSONObject("player2").getJSONArray("stations").getJSONObject(0).getString("stationName"))){
 						p2station = station;
 					}
 				}

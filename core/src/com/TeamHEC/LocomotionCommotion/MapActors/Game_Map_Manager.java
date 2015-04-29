@@ -381,7 +381,7 @@ public class Game_Map_Manager {
 		}
 
 		// Creates UI Train blips for 6 trains:
-		for(int i = 0; i < 6; i++)
+		for(int i = 0; i < 900; i++)
 		{
 			trainBlips.add(new Game_Map_Train());
 		}
