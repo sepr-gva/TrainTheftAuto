@@ -81,7 +81,7 @@ public class Game_PauseMenu {
 
 			};
             // Not yet implemented. Hidden.
-            actors.add(game_pause_save);
+            //actors.add(game_pause_save);
             
 			game_pause_settings = new SpriteButton(Game_PauseMenu.actorManager.game_pause_resume.getX(),Game_PauseMenu.actorManager.game_pause_resume.getY()-200,Game_TextureManager.getInstance().game_pause_settings){
 				@Override
