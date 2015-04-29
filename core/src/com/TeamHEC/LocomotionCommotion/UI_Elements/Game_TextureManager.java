@@ -34,10 +34,10 @@ public class Game_TextureManager {
 	public CustomTexture game_menuobject_cornerframe = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/cornerframe.png"));
 	public CustomTexture game_menuobject_infobutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/infobutton.png"));
 	public CustomTexture game_menuobject_replaycornerframe = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/replaycornerframe.png"));
-	public CustomTexture game_menuobject_replayplaybutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/playbutton.png"));
-	public CustomTexture game_menuobject_replaypausebutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/pausebutton.png"));
-	public CustomTexture game_menuobject_replaynextbutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/nextbutton.png"));
-	public CustomTexture game_menuobject_replaypreviousbutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/prevbutton.png"));
+	//public CustomTexture game_menuobject_replayplaybutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/playbutton.png"));
+	//public CustomTexture game_menuobject_replaypausebutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/pausebutton.png"));
+	public CustomTexture game_menuobject_replaynextbutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/nextButton.png"));
+	public CustomTexture game_menuobject_replaypreviousbutton = new CustomTexture(Gdx.files.internal("gameScreen/game_MenuObjects/prevButton.png"));
 		
 	//Map
 	public CustomTexture map = new CustomTexture(Gdx.files.internal("gameScreen/game_map/map.png"));
