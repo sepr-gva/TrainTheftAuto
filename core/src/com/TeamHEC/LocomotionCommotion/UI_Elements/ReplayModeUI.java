@@ -59,6 +59,13 @@ public class ReplayModeUI {
 					
 					updateTrains(1);
 					updateTrains(2);
+					
+					if (LocomotionCommotion.replayTurnSelected % 2 == 0){
+						updateResources(1);
+					}
+					else {
+						updateResources(2);
+					}
 				}
 			}
 		};
@@ -85,7 +92,17 @@ public class ReplayModeUI {
 	}
 	
 	private void updateResources(int playerNum){
+		JSONObject playerResources = LocomotionCommotion.getReplayTurn().getJSONObject("player1").getJSONObject("resources");
 		
+		if (playerNum == 2){
+			playerResources = LocomotionCommotion.getReplayTurn().getJSONObject("player2").getJSONObject("resources");
+		}
+		
+		GameScreenUI.goldQuant.setText(Integer.toString(playerResources.getInt("gold")));
+		GameScreenUI.coalQuant.setText(Integer.toString(playerResources.getInt("coal")));
+		GameScreenUI.oilQuant.setText(Integer.toString(playerResources.getInt("oil")));
+		GameScreenUI.electricityQuant.setText(Integer.toString(playerResources.getInt("electric")));
+		GameScreenUI.nuclearQuant.setText(Integer.toString(playerResources.getInt("nuclear")));
 	}
 	
 	private void updateTrains(int playerNum){
