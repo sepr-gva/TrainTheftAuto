@@ -108,17 +108,17 @@ public class GameScreen implements Screen {
 				Game_StartingSequence.player1 = false;
 				
 				Station p1station = replayMap.stationsList.get(0);
-				//for (Station station : replayMap.stationsList){
-				//	if (station.getName().equals(LocomotionCommotion.loadedReplay.stations1.getJSONObject(0).getString("stationName"))){
-				//		p1station = station;
-				//	}
-				//}
+				for (Station station : replayMap.stationsList){
+					if (station.getName().equals(LocomotionCommotion.getReplayTurn(0).getJSONObject("player1").getJSONArray("stations").getJSONObject(0).getString("stationName"))){
+						p1station = station;
+					}
+				}
 				Station p2station = replayMap.stationsList.get(1);
-				//for (Station station : replayMap.stationsList){
-				//	if (station.getName().equals(LocomotionCommotion.loadedReplay.stations2.getJSONObject(0).getString("stationName"))){
-				//		p2station = station;
-				//	}
-				//}
+				for (Station station : replayMap.stationsList){
+					if (station.getName().equals(LocomotionCommotion.getReplayTurn(0).getJSONObject("player2").getJSONArray("stations").getJSONObject(0).getString("stationName"))){
+						p2station = station;
+					}
+				}
 				
 				createCoreGame(p1station, p2station);
 				Game_StartingSequence.startGame();

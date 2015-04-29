@@ -41,23 +41,10 @@ public class LoadGame {
 	public int turnCount;
 	public int turnLimit;
 	
-	public JSONObject[] turnArray;
+	public JSONArray turnArray;
 	
 	private void initialise(JSONObject obj){
-		turn0 = obj.getJSONObject("0");
-		turnArray = new JSONObject[obj.getInt("turnLimit")];
-		System.out.println(turnArray);
-		JSONObject tempObj = turn0;
-		for (int i = 0; i < obj.getInt("turnLimit"); i++){
-			try {
-				tempObj = obj.getJSONObject(String.valueOf(i));
-			}
-			catch (Exception e){
-				tempObj = null;
-			}
-			turnArray[i] = tempObj;
-		}
-		
+		turnArray = obj.getJSONArray("gameInfo");
 		/*
 		jsonplayer1 = obj.getJSONObject("player1");
 		player1resources = jsonplayer1.getJSONObject("resources");
@@ -95,7 +82,7 @@ public class LoadGame {
 		*/
 	}
 	
-	public JSONObject createJSONObject(File file){
+	public void createJSONObject(File file){
 		JSONObject newObj;
 		try{
 			InputStream inputStream = new FileInputStream(file);
@@ -106,6 +93,5 @@ public class LoadGame {
 		catch (Exception e){
 			newObj = null;
 		}
-		return newObj;
 	}
 }

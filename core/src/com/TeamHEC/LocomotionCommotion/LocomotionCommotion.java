@@ -9,6 +9,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
 import java.util.ArrayList;
+
+import org.json.JSONObject;
 /**
  * 
  * @author Robert Precious <rp825@york.ac.uk>
@@ -42,6 +44,10 @@ public class LocomotionCommotion extends Game {
 	private LocomotionCommotion(){}
 	public static final String TITLE = "Train Theft Auto", VERSION = "0.0.0.1";
 
+	public static JSONObject getReplayTurn(int i){
+		return loadedReplay.turnArray.getJSONObject(i).getJSONObject(String.valueOf(i));
+	}
+	
 	/**
 	 * Create sets the screen to show the start scene
 	 */

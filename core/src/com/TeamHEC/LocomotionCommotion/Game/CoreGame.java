@@ -265,7 +265,7 @@ public class CoreGame {
 			if (!saveLocation.exists()){
 				saveLocation.getParentFile().mkdirs();
 				saveLocation.createNewFile();
-				finalJSON += "[{";
+				finalJSON += "{\"gameInfo\": [";
 			}
 			else {
 				//Read contents of JSON file into string
@@ -294,7 +294,7 @@ public class CoreGame {
 			tempFile.renameTo(saveLocation);
 		}
 		
-		finalJSON += "\"" + turnCount + "\": {";
+		finalJSON += "{\"" + turnCount + "\": {";
 		
 		//Save Turn - whose turn, turn count, turnLimit
 		finalJSON += "\"playerTurn\": \"" + playerTurn.getName() + "\", ";
@@ -304,7 +304,7 @@ public class CoreGame {
 		//Save Players
 		finalJSON += "\"player1\": " + savePlayerJSON(player1) + ", ";
 		finalJSON += "\"player2\": " + savePlayerJSON(player2) + "}";
-		finalJSON += "}]";
+		finalJSON += "}]}";
 		
 		//Write to file
 		try
