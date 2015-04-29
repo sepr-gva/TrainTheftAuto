@@ -2,7 +2,6 @@ package com.TeamHEC.LocomotionCommotion.Map;
 
 import java.util.ArrayList;
 
-import com.TeamHEC.LocomotionCommotion.MapActors.Game_Map_Manager;
 import com.TeamHEC.LocomotionCommotion.Resource.*;
 
 /**

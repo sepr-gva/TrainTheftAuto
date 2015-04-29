@@ -1,6 +1,5 @@
 package com.TeamHEC.LocomotionCommotion.MapActors;
 
-import com.TeamHEC.LocomotionCommotion.Game.GameScreen;
 import com.TeamHEC.LocomotionCommotion.Map.Connection;
 import com.TeamHEC.LocomotionCommotion.Map.Junction;
 import com.TeamHEC.LocomotionCommotion.Train.Train;
