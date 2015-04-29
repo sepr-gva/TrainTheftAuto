@@ -37,7 +37,12 @@ public class ReplayModeUI {
 		nextButton = new SpriteButton(1576, 117, Game_TextureManager.getInstance().game_menuobject_replaynextbutton){
 			@Override
 			protected void onClicked(){
-				
+				if (LocomotionCommotion.replayTurnSelected < LocomotionCommotion.loadedReplay.turnArray.length()){
+					
+					
+					
+					LocomotionCommotion.replayTurnSelected += 1;
+				}
 			}
 		};
 		actors.add(nextButton);
