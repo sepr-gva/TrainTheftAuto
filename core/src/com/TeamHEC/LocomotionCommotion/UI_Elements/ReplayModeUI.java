@@ -77,7 +77,7 @@ public class ReplayModeUI {
 				
 			}
 		};
-		actors.add(playPauseButton);
+		//actors.add(playPauseButton);
 		
 		for (Actor a : actors){
 			a.setTouchable(Touchable.enabled);
