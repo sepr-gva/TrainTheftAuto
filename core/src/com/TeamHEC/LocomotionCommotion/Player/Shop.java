@@ -126,8 +126,10 @@ public class Shop {
 		{
 			WarningMessage.fireWarningWindow("SORRY", "You don't have enough gold!");
 		}
-		Game_Map_Manager.cardToggle();
-		Game_Map_Manager.cardToggle();
+		if (!testCase){
+			Game_Map_Manager.cardToggle();
+			Game_Map_Manager.cardToggle();
+		}
 	}
 	
 	public void buyTrain()
@@ -158,7 +160,7 @@ public class Shop {
 					}
 				}
 			}
-			
+			Game_Map_Manager.cancelRouteBtn.setVisible(true);
 			WarningMessage.fireWarningWindow("NEW TRAIN", "Choose a station for your new train.");
 			Game_Map_Manager.buyTrain = true;
 			Game_Map_Manager.trainsUntouchable();

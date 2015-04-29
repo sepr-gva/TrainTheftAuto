@@ -19,6 +19,7 @@ public class Goal implements RouteListener{
 	protected Station fStation;
 	protected int timeConstraint;
 	private String cargo;
+	private boolean complete = false;
 
 	protected boolean special;
 	private int reward;
@@ -147,8 +148,13 @@ public class Goal implements RouteListener{
 		startStationPassed = false;
 		isAbsolute = false;
 		finalStationPassed = false;
+		complete = true;
 		
         return true;
+	}
+	
+	public boolean isGoalComplete(){
+		return complete;
 	}
 	
 	

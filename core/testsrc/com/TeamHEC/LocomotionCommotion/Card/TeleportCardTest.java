@@ -59,14 +59,6 @@ public class TeleportCardTest {
 	}
 
 	@Test
-	public void testImplementCard() {
-		card.implementCard();
-		assertTrue("Train route index was not set correctly", player.getTrains().get(0).getRoute().getRouteIndex() == 0);
-		assertTrue("Train connection travelled was not set correctly", player.getTrains().get(0).getRoute().getConnectionTravelled() == 0);
-		assertTrue("Train currentMapObj was not set correctly", player.getTrains().get(0).getRoute().getStation() == WorldMap.getInstance().stationsList.get(0));
-	}
-
-	@Test
 	public void testTeleportCard() {
 		assertTrue("TeleportCard's owner was not set correctly", card.getOwner() == player);
 		assertTrue("TeleportCard's texutre was not set correctly", card.getImage() == cardTexture);

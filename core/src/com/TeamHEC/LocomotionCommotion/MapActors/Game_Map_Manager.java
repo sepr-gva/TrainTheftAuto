@@ -250,6 +250,15 @@ public class Game_Map_Manager {
 						trainInfo.train.getActor().setClickCountZero();
 					}
 				}
+				else if (Game_Map_Manager.buyTrain){
+					WarningMessage.fireWarningWindow("BUY ABORTED", "You did not buy a train.");
+					buyTrain = false;
+					cancelRouteBtn.setVisible(false);
+					if (trainInfo.isVisible()){
+						trainInfo.makeVisible(false);
+						trainInfo.train.getActor().setClickCountZero();
+					}
+				}
 				else if (PlayerGoals.chooseTrain){
 					WarningMessage.fireWarningWindow("ASSIGN ABORTED!", "You did not assign a train to this goal.");
 					PlayerGoals.chooseTrain = false;

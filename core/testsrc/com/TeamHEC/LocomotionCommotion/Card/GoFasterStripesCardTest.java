@@ -55,12 +55,6 @@ public class GoFasterStripesCardTest {
 	}
 
 	@Test
-	public void testImplementCard() {
-		card.implementCard();
-		assertTrue("Player's train speedMod was not improved", player.getTrains().get(0).getSpeedMod() == currentSpeedUpgrade);
-	}
-
-	@Test
 	public void testGoFasterStripesCard() {
 		assertTrue("Card name was not set correctly", card.getName() == "GoFasterStripes");
 		assertTrue("Card texture was not set correctly", card.getImage() == Game_TextureManager.getInstance().game_card_gofasterstripescard);

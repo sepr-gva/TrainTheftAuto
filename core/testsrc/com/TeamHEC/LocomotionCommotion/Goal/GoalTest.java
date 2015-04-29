@@ -154,22 +154,22 @@ public class GoalTest {
         assertEquals("Optimal Duration should be 3 turns", 3, goal.estimateOptimalDuration());
         int expectedEndingScore = goal.estimateOptimalDuration() * goal.getReward() / 3; //I.e. as optimal route chosen, Score = Reward
 
-        assertFalse("Goal should not yet be complete", goal.goalComplete());  //At 0 so far
+        assertFalse("Goal should not yet be complete", goal.isGoalComplete());  //At 0 so far
 
         train.route.update(train.getSpeed()); //Train is travelling at 80 per turn
         goal.incrementCurrentGoalDuration(); //Turn #1
 
-        assertFalse("Goal should not yet be complete", goal.goalComplete()); //At 80 so far
+        assertFalse("Goal should not yet be complete", goal.isGoalComplete()); //At 80 so far
 
         train.route.update(train.getSpeed()); //Train is travelling at 80 per turn
         goal.incrementCurrentGoalDuration(); //Turn #2
 
-        assertFalse("Goal should not yet be complete", goal.goalComplete()); //At 160 so far
+        assertFalse("Goal should not yet be complete", goal.isGoalComplete()); //At 160 so far
 
         train.route.update(train.getSpeed()); //Train is travelling at 80 per turn
         goal.incrementCurrentGoalDuration(); //Turn #3
 
-        assertFalse("Goal should not yet be complete", goal.goalComplete()); //At 240 so far
+        assertFalse("Goal should not yet be complete", goal.isGoalComplete()); //At 240 so far
 
         train.route.update(train.getSpeed()); //Train is travelling at 80 per turn
         goal.incrementCurrentGoalDuration(); //Turn #4
@@ -203,7 +203,7 @@ public class GoalTest {
         for (int turnNo = 0; turnNo < 17; turnNo++){
             train.route.update(train.getSpeed()); //Train is travelling at 80 per turn
             goal.incrementCurrentGoalDuration();
-            assertFalse("Goal should not yet be complete", goal.goalComplete());
+            assertFalse("Goal should not yet be complete", goal.isGoalComplete());
         }
 
         //Last turn
