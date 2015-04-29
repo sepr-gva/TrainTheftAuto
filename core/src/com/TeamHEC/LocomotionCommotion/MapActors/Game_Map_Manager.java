@@ -262,6 +262,7 @@ public class Game_Map_Manager {
 				else if (PlayerGoals.chooseTrain){
 					WarningMessage.fireWarningWindow("ASSIGN ABORTED!", "You did not assign a train to this goal.");
 					PlayerGoals.chooseTrain = false;
+					opponentTouchable();
 					confirmRouteBtn.setVisible(false);
 					cancelRouteBtn.setVisible(false);
 					if (trainInfo.isVisible()){
