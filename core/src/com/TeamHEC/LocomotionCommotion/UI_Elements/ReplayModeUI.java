@@ -48,6 +48,9 @@ public class ReplayModeUI {
 					LocomotionCommotion.replayTurnSelected -= 1;
 					updateUI();
 				}
+				else {
+					WarningMessage.fireWarningWindow("BEGINNING OF REPLAY", "You have reached the first turn played for this replay!");
+				}
 			}
 		};
 		actors.add(previousButton);
@@ -58,6 +61,9 @@ public class ReplayModeUI {
 				if (LocomotionCommotion.replayTurnSelected < LocomotionCommotion.loadedReplay.turnArray.length()-1){			
 					LocomotionCommotion.replayTurnSelected += 1;
 					updateUI();
+				}
+				else {
+					WarningMessage.fireWarningWindow("END OF REPLAY", "You have reached the last turn played for this replay!");
 				}
 			}
 		};

@@ -159,7 +159,7 @@ public class GameScreen implements Screen {
 
 		getStage().act(Gdx.graphics.getDeltaTime());
 		getStage().draw();
-		/* JUST FOR TESTING
+		//JUST FOR TESTING
 		if (Gdx.input.isKeyJustPressed(Keys.A)){
 			Card card = new AddRailCard(GameScreen.game.getPlayerTurn());
 			GameScreen.game.getPlayerTurn().getCards().add(card);
@@ -194,7 +194,7 @@ public class GameScreen implements Screen {
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.M)){
 			game.getPlayerTurn().addGold(1000);
-		}*/
+		}
 	}
 
 	@Override
